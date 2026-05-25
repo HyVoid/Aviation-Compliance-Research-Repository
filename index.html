@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Dispatch - CARs Part 702/705 Web Console</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+            color: #051C2C;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbar for data tables to ensure layout preservation */
+        .saas-grid::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .saas-grid::-webkit-scrollbar-track {
+            background: #F5F5F5;
+        }
+        .saas-grid::-webkit-scrollbar-thumb {
+            background: #E5E5E5;
+            border-radius: 4px;
+        }
+        .saas-grid::-webkit-scrollbar-thumb:hover {
+            background: #D1D1D1;
+        }
+        /* Page animation transitions */
+        .tab-content {
+            animation: tabFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between">
+            
+            <!-- Brand Identity -->
+            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                <div class="bg-[#2251FF] text-white p-2.5 rounded-xl flex items-center justify-center shadow-md shadow-[#2251FF]/10">
+                    <i class="fa-solid fa-plane-shield text-lg"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs uppercase tracking-widest font-semibold text-slate-400">Operations Control</span>
+                        <span class="text-[9px] bg-[#2251FF]/10 text-[#2251FF] border border-[#2251FF]/20 px-1.5 py-0.5 rounded font-mono font-bold">LIVE</span>
+                    </div>
+                    <h1 class="text-base font-bold tracking-tight text-[#051C2C]">
+                        Sovereign Dispatch Console
+                    </h1>
+                </div>
+            </div>
+
+            <!-- SaaS Dynamic Navigation Header Links -->
+            <nav class="flex space-x-6">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn py-1 px-1 relative text-xs uppercase tracking-wider font-bold transition-all text-[#2251FF]">
+                    Dashboard
+                    <span id="indicator-dashboard" class="absolute bottom-[-19px] left-0 right-0 h-[2px] bg-[#2251FF] rounded-full"></span>
+                </button>
+                <button onclick="switchTab('logs')" id="btn-logs" class="nav-btn py-1 px-1 relative text-xs uppercase tracking-wider font-bold transition-all text-slate-500 hover:text-[#051C2C]">
+                    Duty Records
+                    <span id="indicator-logs" class="absolute bottom-[-19px] left-0 right-0 h-[2px] bg-transparent rounded-full"></span>
+                </button>
+                <button onclick="switchTab('pilots')" id="btn-pilots" class="nav-btn py-1 px-1 relative text-xs uppercase tracking-wider font-bold transition-all text-slate-500 hover:text-[#051C2C]">
+                    Crew Directory
+                    <span id="indicator-pilots" class="absolute bottom-[-19px] left-0 right-0 h-[2px] bg-transparent rounded-full"></span>
+                </button>
+                <button onclick="switchTab('rules')" id="btn-rules" class="nav-btn py-1 px-1 relative text-xs uppercase tracking-wider font-bold transition-all text-slate-500 hover:text-[#051C2C]">
+                    CARs Reference Matrix
+                    <span id="indicator-rules" class="absolute bottom-[-19px] left-0 right-0 h-[2px] bg-transparent rounded-full"></span>
+                </button>
+            </nav>
+
+            <!-- Status Indicator Horizon -->
+            <div class="hidden lg:flex items-center space-x-4">
+                <div class="text-right text-[11px]">
+                    <span class="text-slate-400 font-medium block">UTC Operational Horizon</span>
+                    <span class="text-[#051C2C] font-semibold code-font" id="current-utc-time">2026-05-24 15:00</span>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <span class="text-[10px] px-3 py-1.5 bg-[#2251FF]/5 rounded-full text-[#2251FF] border border-[#2251FF]/10 flex items-center gap-2 font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#2251FF] animate-pulse"></span>
+                    Engine Sync Active
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 flex flex-col space-y-6">
+
+        <!-- TAB 1: Dashboard -->
+        <section id="tab-dashboard" class="tab-content space-y-6 flex flex-col flex-grow">
+            
+            <!-- Standard Performance Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Active Crew Profiles</p>
+                        <p class="text-xl font-bold mt-1 text-[#051C2C]" id="kpi-active-pilots">--</p>
+                        <span class="text-[10px] text-slate-400 block mt-0.5">Enrolled for scheduling</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 text-[#051C2C] rounded-xl"><i class="fa-solid fa-user-pilot text-base"></i></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Total Flight Hours (28d)</p>
+                        <p class="text-xl font-bold mt-1 text-[#2251FF]" id="kpi-total-hours">--</p>
+                        <span class="text-[10px] text-slate-400 block mt-0.5">Rolling hours accumulated</span>
+                    </div>
+                    <div class="p-3 bg-[#2251FF]/5 text-[#2251FF] rounded-xl"><i class="fa-solid fa-hourglass-half text-base"></i></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Fatigue Warnings</p>
+                        <p class="text-xl font-bold mt-1 text-[#051C2C]" id="kpi-warning-count">--</p>
+                        <span class="text-[10px] text-slate-400 block mt-0.5">Detected limit overruns</span>
+                    </div>
+                    <div class="p-3 bg-slate-100 text-slate-600 rounded-xl"><i class="fa-solid fa-triangle-exclamation text-base"></i></div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">AOC Compliance Safe</p>
+                        <p class="text-xl font-bold mt-1 text-[#2251FF]">100%</p>
+                        <span class="text-[10px] text-slate-400 block mt-0.5">CARs 702 & 705 active</span>
+                    </div>
+                    <div class="p-3 bg-[#2251FF]/5 text-[#2251FF] rounded-xl"><i class="fa-solid fa-shield text-base"></i></div>
+                </div>
+            </div>
+
+            <!-- Dashboard Split Workspace Panel -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                
+                <!-- Sandbox Pre-flight planner card -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded bg-[#2251FF]"></span>
+                                <h2 class="font-bold text-[#051C2C] text-xs uppercase tracking-wider">
+                                    Pre-Flight Dispatch Sandbox
+                                </h2>
+                            </div>
+                            <span class="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-mono font-bold uppercase tracking-wider border border-slate-200">Interactive</span>
+                        </div>
+                        
+                        <!-- Premium inputs fields -->
+                        <div class="mt-5 space-y-4 text-xs">
+                            <div>
+                                <label class="block text-slate-500 font-bold mb-1.5 uppercase tracking-wider text-[10px]">Select Flight Crew Profile</label>
+                                <select id="sandbox-pilot" onchange="runSandboxCheck()" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] focus:outline-none focus:border-[#2251FF] font-semibold transition">
+                                    <!-- Dynamic pilots selection -->
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-slate-500 font-bold mb-1.5 uppercase tracking-wider text-[10px]">Duty Reporting Time</label>
+                                    <input type="datetime-local" id="sandbox-start" oninput="runSandboxCheck()" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-mono font-medium focus:outline-none focus:border-[#2251FF] transition">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-500 font-bold mb-1.5 uppercase tracking-wider text-[10px]">Sector Legs</label>
+                                    <input type="number" id="sandbox-sectors" min="1" max="10" value="1" oninput="runSandboxCheck()" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-semibold focus:outline-none focus:border-[#2251FF] transition">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-slate-500 font-bold mb-1.5 uppercase tracking-wider text-[10px]">Expected Flight Block Hours</label>
+                                <input type="number" step="0.1" id="sandbox-block" value="4.0" oninput="runSandboxCheck()" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-semibold focus:outline-none focus:border-[#2251FF] transition">
+                            </div>
+                        </div>
+
+                        <!-- Computations Matrix (Clean minimalist output) -->
+                        <div class="mt-6 bg-[#F5F5F5] p-5 rounded-2xl border border-slate-200 space-y-3.5 text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-500 font-medium">Prior Continuous Rest Offered:</span>
+                                <span id="sandbox-rest-provided" class="font-mono text-[#051C2C] font-bold">--</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-500 font-medium">Rest Legality State:</span>
+                                <span id="sandbox-rest-compliance" class="font-bold tracking-wide">--</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-slate-200/60 pt-3">
+                                <span class="text-slate-500 font-medium">FDP Max Legal Limit:</span>
+                                <span id="sandbox-max-fdp" class="font-mono text-[#051C2C] font-bold">--</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-500 font-medium">Projected 28-Day Accumulation:</span>
+                                <span id="sandbox-sum-28d" class="font-mono text-[#051C2C] font-bold">--</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-slate-200 pt-3.5 text-sm">
+                                <span class="font-bold text-[#051C2C]">Legal Dispatch Decision:</span>
+                                <span id="sandbox-decision" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100">
+                        <button onclick="writeSandboxToLogs()" class="w-full bg-[#2251FF] hover:bg-[#1A3ECC] text-white py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-[#2251FF]/10">
+                            <i class="fa-solid fa-file-export"></i>
+                            Commit Scheduled Dispatch Record
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active crew monitor monitor list -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded bg-[#051C2C]"></span>
+                                <h2 class="font-bold text-[#051C2C] text-xs uppercase tracking-wider">
+                                    Current Crew Status Monitor
+                                </h2>
+                            </div>
+                            <span class="text-[9px] bg-[#2251FF]/5 text-[#2251FF] px-2 py-0.5 rounded font-mono font-bold uppercase border border-[#2251FF]/10">Automated Audit</span>
+                        </div>
+                        <p class="text-xs text-slate-400 my-4 leading-relaxed">
+                            This panel displays active pilot compliance states compiled from historical duty entries against regulatory targets.
+                        </p>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-200">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-[#F5F5F5] text-slate-500 border-b border-slate-200 font-bold text-[10px] uppercase tracking-wider">
+                                        <th class="p-3">Pilot ID</th>
+                                        <th class="p-3">Full Legal Name</th>
+                                        <th class="p-3">Operating Regime</th>
+                                        <th class="p-3 text-right">28d Accumulation</th>
+                                        <th class="p-3 text-right">90d Accumulation</th>
+                                        <th class="p-3 text-center">Status state</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="active-monitor-tbody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Clean legend bar -->
+                    <div class="bg-[#F5F5F5] p-3 rounded-xl border border-slate-200 text-slate-400 text-[10px] uppercase tracking-wider flex items-center justify-between mt-4 font-semibold">
+                        <div class="flex items-center gap-4">
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#2251FF]"></span> Eligible</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-300"></span> In Rest</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#051C2C]"></span> Violations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: tbl_DutyLogs (Structured Grid) -->
+        <section id="tab-logs" class="tab-content hidden space-y-4 flex flex-col flex-grow">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3 border-b border-slate-200">
+                <div>
+                    <h2 class="text-base font-bold text-[#051C2C] flex items-center gap-2">
+                        <i class="fa-solid fa-table text-[#2251FF]"></i>
+                        tbl_DutyLogs Dashboard Console
+                    </h2>
+                    <p class="text-xs text-slate-400">All registered flights and calculated parameters are displayed here in high visibility. Custom values computed dynamically via CARs equations.</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="openAddLogModal()" class="bg-[#2251FF] hover:bg-[#1A3ECC] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-md shadow-[#2251FF]/10">
+                        <i class="fa-solid fa-plus"></i> New Duty Record
+                    </button>
+                    <button onclick="clearAllLogs()" class="bg-white hover:bg-slate-50 text-[#051C2C] border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition">
+                        <i class="fa-solid fa-trash-can"></i> Flush All Logs
+                    </button>
+                </div>
+            </div>
+
+            <!-- Clear full-width modern tabular data card -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-database text-[#2251FF]"></i> Primary Duty Log Database</span>
+                    <span class="font-mono text-[9px] bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-500">Live Computed Metrics</span>
+                </div>
+
+                <div class="saas-grid overflow-x-auto w-full max-h-[550px] mt-3">
+                    <table class="w-full text-xs text-left border-collapse border border-slate-200">
+                        <thead>
+                            <tr class="bg-[#F5F5F5] text-slate-500 border-b border-slate-200 font-bold uppercase tracking-wider text-[10px]">
+                                <th class="p-3 border-r border-slate-200 text-center sticky left-0 bg-[#F5F5F5] z-10 w-12">No.</th>
+                                <th class="p-3 border-r border-slate-200 min-w-[120px]">Log ID</th>
+                                <th class="p-3 border-r border-slate-200 min-w-[80px]">Pilot ID</th>
+                                <th class="p-3 border-r border-slate-200 min-w-[150px]">Pilot Name</th>
+                                <th class="p-3 border-r border-slate-200 min-w-[140px]">FDP Start (LT)</th>
+                                <th class="p-3 border-r border-slate-200 min-w-[140px]">FDP End (LT)</th>
+                                <th class="p-3 border-r border-slate-200 text-center">Sectors</th>
+                                <th class="p-3 border-r border-slate-200 text-right min-w-[90px]">Block Hrs</th>
+                                <th class="p-3 border-r border-slate-200 text-center">Base End</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-center min-w-[80px]">Regime</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-right min-w-[80px]">Calc FDP</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-right min-w-[85px]">Max FDP</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-center min-w-[100px]">FDP Legality</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-right min-w-[85px]">Rest Hours</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-center min-w-[100px]">Rest Legality</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-right min-w-[90px]">Rolling 28d</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#2251FF]/5 text-[#2251FF] text-right min-w-[90px]">Rolling 90d</th>
+                                <th class="p-3 bg-[#2251FF]/5 text-[#2251FF] text-center min-w-[110px]">Cumulative</th>
+                            </tr>
+                        </thead>
+                        <tbody id="excel-grid-tbody" class="divide-y divide-slate-100 font-medium">
+                            <!-- Populated dynamically via script with enhanced styles -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: tbl_Pilots (Crew Registry) -->
+        <section id="tab-pilots" class="tab-content hidden space-y-6 flex flex-col flex-grow">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                <div>
+                    <h2 class="text-base font-bold text-[#051C2C] flex items-center gap-2">
+                        <i class="fa-solid fa-user-group text-[#2251FF]"></i>
+                        Registered Crew Directory
+                    </h2>
+                    <p class="text-xs text-slate-400">Add or deactivate flight deck profiles. Define statutory limits configuration mappings.</p>
+                </div>
+                <button onclick="openAddPilotModal()" class="bg-[#2251FF] hover:bg-[#1A3ECC] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-md shadow-[#2251FF]/10">
+                    <i class="fa-solid fa-plus"></i> Register Pilot
+                </button>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex-grow">
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-[#F5F5F5] text-slate-500 border-b border-slate-200 font-bold uppercase tracking-wider text-[10px]">
+                                <th class="p-3.5">Pilot ID</th>
+                                <th class="p-3.5">Full Legal Name</th>
+                                <th class="p-3.5">Operating Regulatory Regime</th>
+                                <th class="p-3.5">Home Base Timezone</th>
+                                <th class="p-3.5 text-center">Status Status</th>
+                                <th class="p-3.5 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pilots-table-body" class="divide-y divide-slate-100 font-medium">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: Ref_CARs -->
+        <section id="tab-rules" class="tab-content hidden space-y-6 flex flex-col flex-grow">
+            <div class="pb-3 border-b border-slate-200">
+                <h2 class="text-base font-bold text-[#051C2C] flex items-center gap-2">
+                    <i class="fa-solid fa-gavel text-[#2251FF]"></i>
+                    Canadian Aviation Regulations (CARs) Reference Matrix
+                </h2>
+                <p class="text-xs text-slate-400">Hardcoded statutory benchmarks loaded during lookup and intersection matrices to check dispatch status.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                
+                <!-- Part 705 FDP Lookup Table -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="border-b border-slate-100 pb-3 mb-4">
+                        <h3 class="font-bold text-[#051C2C] text-xs uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded bg-[#2251FF]"></span>
+                            Table 2.1: Part 705 Maximum FDP (Decimal Hours)
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">Matrix indexed dynamically via local reporting check-in hour and operational legs.</p>
+                    </div>
+                    
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-xs text-center border-collapse border border-slate-200 font-mono">
+                            <thead>
+                                <tr class="bg-[#F5F5F5] text-slate-500 border-b border-slate-200 font-semibold text-[10px] uppercase">
+                                    <th class="p-3 border-r border-slate-200 text-left font-sans font-bold">Reporting Hour Band</th>
+                                    <th class="p-3 border-r border-slate-200 font-bold">Sectors 1-2</th>
+                                    <th class="p-3 border-r border-slate-200 font-bold">Sector 3</th>
+                                    <th class="p-3 border-r border-slate-200 font-bold">Sector 4</th>
+                                    <th class="p-3 border-r border-slate-200 font-bold">Sector 5</th>
+                                    <th class="p-3 font-bold">Sectors 6+</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600 divide-y divide-slate-200">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 border-r border-slate-200 text-left font-sans font-medium text-slate-800">00:00 - 03:59 (Late Night)</td>
+                                    <td class="p-3 border-r border-slate-200">9.0</td>
+                                    <td class="p-3 border-r border-slate-200">9.0</td>
+                                    <td class="p-3 border-r border-slate-200">9.0</td>
+                                    <td class="p-3 border-r border-slate-200">9.0</td>
+                                    <td class="p-3 text-slate-800 font-semibold">9.0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 border-r border-slate-200 text-left font-sans font-medium text-slate-800">04:00 - 05:59 (Early Morning)</td>
+                                    <td class="p-3 border-r border-slate-200">11.0</td>
+                                    <td class="p-3 border-r border-slate-200">10.5</td>
+                                    <td class="p-3 border-r border-slate-200">10.0</td>
+                                    <td class="p-3 border-r border-slate-200">9.5</td>
+                                    <td class="p-3 text-slate-800 font-semibold">9.0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 border-r border-slate-200 text-left font-sans font-medium text-slate-800">06:00 - 06:59 (Morning Pivot)</td>
+                                    <td class="p-3 border-r border-slate-200">12.0</td>
+                                    <td class="p-3 border-r border-slate-200">11.5</td>
+                                    <td class="p-3 border-r border-slate-200">11.0</td>
+                                    <td class="p-3 border-r border-slate-200">10.5</td>
+                                    <td class="p-3 text-slate-800 font-semibold">10.0</td>
+                                </tr>
+                                <tr class="bg-[#2251FF]/5 text-[#2251FF] font-bold">
+                                    <td class="p-3 border-r border-slate-200 text-left font-sans">07:00 - 12:59 (Standard Peak Day)</td>
+                                    <td class="p-3 border-r border-slate-200">13.0</td>
+                                    <td class="p-3 border-r border-slate-200">12.5</td>
+                                    <td class="p-3 border-r border-slate-200">12.0</td>
+                                    <td class="p-3 border-r border-slate-200">11.5</td>
+                                    <td class="p-3">11.0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 border-r border-slate-200 text-left font-sans font-medium text-slate-800">13:00 - 16:59 (Afternoon Pivot)</td>
+                                    <td class="p-3 border-r border-slate-200">12.0</td>
+                                    <td class="p-3 border-r border-slate-200">11.5</td>
+                                    <td class="p-3 border-r border-slate-200">11.0</td>
+                                    <td class="p-3 border-r border-slate-200">10.5</td>
+                                    <td class="p-3 text-slate-800 font-semibold">10.0</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 border-r border-slate-200 text-left font-sans font-medium text-slate-800">17:00 - 23:59 (Evening Shift)</td>
+                                    <td class="p-3 border-r border-slate-200">11.0</td>
+                                    <td class="p-3 border-r border-slate-200">10.5</td>
+                                    <td class="p-3 border-r border-slate-200">10.0</td>
+                                    <td class="p-3 border-r border-slate-200">9.5</td>
+                                    <td class="p-3 text-slate-800 font-semibold">9.0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Part 702 and Cumulative Limit Requirements -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="border-b border-slate-100 pb-3 mb-4">
+                            <h3 class="font-bold text-[#051C2C] text-xs uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded bg-[#051C2C]"></span>
+                                Table 2.2: Rolling Flight Time Limitations
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1">Chronological rolling blocks to prevent persistent fatigue build-up.</p>
+                        </div>
+                        
+                        <div class="overflow-x-auto rounded-xl border border-slate-200">
+                            <table class="w-full text-xs text-left border-collapse border border-slate-200 font-mono">
+                                <thead>
+                                    <tr class="bg-[#F5F5F5] text-slate-500 border-b border-slate-200 font-bold text-[10px] uppercase">
+                                        <th class="p-3 border-r border-slate-200 font-sans">Regulatory Subpart</th>
+                                        <th class="p-3 border-r border-slate-200 font-sans">Rolling Timeframe Window</th>
+                                        <th class="p-3 font-sans">Flight Duration Threshold</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-600 divide-y divide-slate-100 font-medium">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 border-r border-slate-200 font-sans text-[#2251FF]">Part 702 (Aerial Work)</td>
+                                        <td class="p-3 border-r border-slate-200">28 Days</td>
+                                        <td class="p-3 font-bold text-[#051C2C]">120.0 Hours</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 border-r border-slate-200 font-sans text-[#2251FF]">Part 702 (Aerial Work)</td>
+                                        <td class="p-3 border-r border-slate-200">90 Days</td>
+                                        <td class="p-3 font-bold text-[#051C2C]">300.0 Hours</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 border-r border-slate-200 font-sans text-[#2251FF]">Part 702 (Aerial Work)</td>
+                                        <td class="p-3 border-r border-slate-200">365 Days</td>
+                                        <td class="p-3 font-bold text-[#051C2C]">1200.0 Hours</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 border-r border-slate-200 font-sans text-[#2251FF]">Part 705 (Commercial Transit)</td>
+                                        <td class="p-3 border-r border-slate-200">28 Days</td>
+                                        <td class="p-3 font-bold text-[#051C2C]">112.0 Hours</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 border-r border-slate-200 font-sans text-[#2251FF]">Part 705 (Commercial Transit)</td>
+                                        <td class="p-3 border-r border-slate-200">90 Days</td>
+                                        <td class="p-3 font-bold text-[#051C2C]">300.0 Hours</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 border-r border-slate-200 font-sans text-[#2251FF]">Part 705 (Commercial Transit)</td>
+                                        <td class="p-3 border-r border-slate-200">365 Days</td>
+                                        <td class="p-3 font-bold text-[#051C2C]">1000.0 Hours</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Continuous Rest Specifications -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-[#051C2C] text-xs uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded bg-slate-300"></span>
+                            Table 2.3: Standard Required Recovery Rest
+                        </h3>
+                        <ul class="space-y-3 text-xs text-slate-500 font-medium">
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#2251FF] mt-1.5 shrink-0"></span>
+                                <span><strong>Part 702 Operations:</strong> Requires minimum continuous off-duty rest period of <strong>10.0 Hours</strong> between FDPs.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#051C2C] mt-1.5 shrink-0"></span>
+                                <span><strong>Part 705 (At Home Base):</strong> Duty release at assigned base demands increased protection of <strong>12.0 Hours</strong>.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0"></span>
+                                <span><strong>Part 705 (Away Base):</strong> Release at non-home stations allows reduction to <strong>10.0 Hours</strong> to facilitate return routings.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal: Add New Pilot Profile -->
+    <div id="modal-add-pilot" class="fixed inset-0 bg-[#051C2C]/30 backdrop-blur-sm flex items-center justify-center hidden z-50">
+        <div class="bg-white border border-slate-200 p-6 rounded-2xl w-full max-w-md space-y-4 shadow-xl">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-[#051C2C] font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-[#2251FF]"></i>
+                    Enroll New Fleet Profile
+                </h3>
+                <button onclick="closeAddPilotModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Pilot ID</label>
+                    <input type="text" id="p-form-id" placeholder="e.g., P005" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                </div>
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Full Legal Name</label>
+                    <input type="text" id="p-form-name" placeholder="Firstname Lastname" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                </div>
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Operating Regulatory Regime</label>
+                    <select id="p-form-reg" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                        <option value="Part 705">Part 705 (Commercial Air Transport)</option>
+                        <option value="Part 702">Part 702 (Aerial Work/Operations)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Home Base Timezone</label>
+                    <input type="text" id="p-form-tz" value="EST" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                </div>
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Roster State</label>
+                    <select id="p-form-status" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                        <option value="Active">Active (Eligible for Roster)</option>
+                        <option value="Inactive">Inactive (On Leave / Grounded)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 text-xs pt-4 border-t border-slate-100">
+                <button onclick="closeAddPilotModal()" class="px-4 py-2 bg-slate-100 text-slate-500 rounded-xl font-bold hover:bg-slate-200 transition">Cancel</button>
+                <button onclick="savePilot()" class="px-4 py-2 bg-[#2251FF] hover:bg-[#1A3ECC] text-white rounded-xl font-bold transition">Register Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Log Flight Event -->
+    <div id="modal-add-log" class="fixed inset-0 bg-[#051C2C]/30 backdrop-blur-sm flex items-center justify-center hidden z-50">
+        <div class="bg-white border border-slate-200 p-6 rounded-2xl w-full max-w-md space-y-4 shadow-xl">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-[#051C2C] font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-file-pen text-[#2251FF]"></i>
+                    Log New Flight Duty Event
+                </h3>
+                <button onclick="closeAddLogModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Operating Pilot</label>
+                    <select id="log-form-pilot" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">FDP Start Time</label>
+                        <input type="datetime-local" id="log-form-start" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-mono font-semibold focus:outline-none focus:border-[#2251FF] transition">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">FDP End Release Time</label>
+                        <input type="datetime-local" id="log-form-end" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-mono font-semibold focus:outline-none focus:border-[#2251FF] transition">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Block Flight Hours</label>
+                        <input type="number" step="0.01" id="log-form-block" value="3.5" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Sector Legs Conducted</label>
+                        <input type="number" id="log-form-sectors" value="1" min="1" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-slate-500 mb-1.5 font-bold uppercase tracking-wider">Release Station Location</label>
+                    <select id="log-form-base" class="w-full bg-[#F5F5F5] border border-slate-200 rounded-xl px-3 py-2.5 text-[#051C2C] font-bold focus:outline-none focus:border-[#2251FF] transition">
+                        <option value="TRUE">Home Base Station (Demands standard 12h Rest)</option>
+                        <option value="FALSE">Away Base Station (Muted to 10h Rest)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 text-xs pt-4 border-t border-slate-100">
+                <button onclick="closeAddLogModal()" class="px-4 py-2 bg-slate-100 text-slate-500 rounded-xl font-bold hover:bg-slate-200 transition">Cancel</button>
+                <button onclick="saveLogFromModal()" class="px-4 py-2 bg-[#2251FF] hover:bg-[#1A3ECC] text-white rounded-xl font-bold transition">Post Event</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Minimal Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 space-y-2 z-[9999]"></div>
+
+    <script>
+        // Set standard baseline data structures in english
+        let pilots = [
+            { Pilot_ID: "P001", Full_Name: "Capt. Alan Mercier", Reg_Type: "Part 705", Home_Base_TZ: "EST", Status: "Active" },
+            { Pilot_ID: "P002", Full_Name: "Capt. Sarah Connor", Reg_Type: "Part 705", Home_Base_TZ: "EST", Status: "Active" },
+            { Pilot_ID: "P003", Full_Name: "Capt. Leo Vance", Reg_Type: "Part 702", Home_Base_TZ: "PST", Status: "Active" },
+            { Pilot_ID: "P004", Full_Name: "Capt. Diana Prince", Reg_Type: "Part 702", Home_Base_TZ: "CST", Status: "Active" }
+        ];
+
+        let logs = [
+            { Log_ID: "DL-2026-00001", Pilot_ID: "P001", FDP_Start_LT: "2026-05-18 08:00", FDP_End_LT: "2026-05-18 16:30", Sectors: 2, Block_Time: 5.50, Is_Home_Base: true },
+            { Log_ID: "DL-2026-00002", Pilot_ID: "P001", FDP_Start_LT: "2026-05-20 07:30", FDP_End_LT: "2026-05-20 18:00", Sectors: 3, Block_Time: 6.25, Is_Home_Base: true },
+            { Log_ID: "DL-2026-00003", Pilot_ID: "P001", FDP_Start_LT: "2026-05-22 09:00", FDP_End_LT: "2026-05-22 17:00", Sectors: 1, Block_Time: 4.50, Is_Home_Base: true },
+            { Log_ID: "DL-2026-00004", Pilot_ID: "P003", FDP_Start_LT: "2026-05-19 06:00", FDP_End_LT: "2026-05-19 19:30", Sectors: 1, Block_Time: 8.50, Is_Home_Base: true },
+            { Log_ID: "DL-2026-00005", Pilot_ID: "P003", FDP_Start_LT: "2026-05-21 07:00", FDP_End_LT: "2026-05-21 20:00", Sectors: 1, Block_Time: 9.00, Is_Home_Base: true }
+        ];
+
+        const Ref_CARs_Limits = {
+            "Part 702": { "28": 120.0, "90": 300.0, "365": 1200.0 },
+            "Part 705": { "28": 112.0, "90": 300.0, "365": 1000.0 }
+        };
+
+        // UI Toast notifications replacing alerts
+        function triggerToast(message, variant = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgStyle = 'bg-[#051C2C] text-white border-l-4 border-[#2251FF]';
+            if (variant === 'warning') {
+                bgStyle = 'bg-[#051C2C] text-white border-l-4 border-amber-500';
+            }
+            
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold ${bgStyle} transition-all duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `
+                <i class="fa-solid ${variant === 'warning' ? 'fa-triangle-exclamation text-amber-500' : 'fa-circle-check text-[#2251FF]'}"></i>
+                <span class="flex-grow">${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-white/60 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Clean tab switcher logic
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn py-1 px-1 relative text-xs uppercase tracking-wider font-bold transition-all text-slate-500 hover:text-[#051C2C]";
+            });
+            document.querySelectorAll('nav span').forEach(span => {
+                span.className = "absolute bottom-[-19px] left-0 right-0 h-[2px] bg-transparent rounded-full transition-all";
+            });
+
+            document.getElementById('btn-' + tabName).className = "nav-btn py-1 px-1 relative text-xs uppercase tracking-wider font-bold transition-all text-[#2251FF]";
+            document.getElementById('indicator-' + tabName).className = "absolute bottom-[-19px] left-0 right-0 h-[2px] bg-[#2251FF] rounded-full transition-all";
+        }
+
+        window.addEventListener('load', () => {
+            document.getElementById('sandbox-start').value = "2026-05-24 08:30".replace(" ", "T");
+            document.getElementById('log-form-start').value = "2026-05-24 08:30".replace(" ", "T");
+            document.getElementById('log-form-end').value = "2026-05-24 17:30".replace(" ", "T");
+
+            rebuildPilotSelects();
+            recalcCoreState();
+        });
+
+        function rebuildPilotSelects() {
+            const selectSandbox = document.getElementById('sandbox-pilot');
+            const selectLog = document.getElementById('log-form-pilot');
+            
+            selectSandbox.innerHTML = '';
+            selectLog.innerHTML = '';
+            
+            pilots.forEach(p => {
+                if (p.Status === "Active") {
+                    const opt1 = document.createElement('option');
+                    opt1.value = p.Pilot_ID;
+                    opt1.textContent = `${p.Pilot_ID} - ${p.Full_Name}`;
+                    selectSandbox.appendChild(opt1);
+                    
+                    const opt2 = document.createElement('option');
+                    opt2.value = p.Pilot_ID;
+                    opt2.textContent = `${p.Pilot_ID} - ${p.Full_Name}`;
+                    selectLog.appendChild(opt2);
+                }
+            });
+        }
+
+        function getPilotName(id) {
+            const found = pilots.find(p => p.Pilot_ID === id);
+            return found ? found.Full_Name : "Unknown Pilot";
+        }
+
+        function getRegType(id) {
+            const found = pilots.find(p => p.Pilot_ID === id);
+            return found ? found.Reg_Type : "Part 705";
+        }
+
+        function calculateFDP(startStr, endStr) {
+            const start = new Date(startStr);
+            const end = new Date(endStr);
+            return Math.round(((end - start) / (1000 * 60 * 60)) * 100) / 100;
+        }
+
+        function getMaxAllowedFDP(regType, startTimeStr, sectors) {
+            if (regType === "Part 702") return 14.0;
+            const hour = new Date(startTimeStr).getHours();
+            let rowIdx = 0;
+            if (hour >= 0 && hour <= 3) rowIdx = 0;
+            else if (hour >= 4 && hour <= 5) rowIdx = 1;
+            else if (hour === 6) rowIdx = 2;
+            else if (hour >= 7 && hour <= 12) rowIdx = 3;
+            else if (hour >= 13 && hour <= 16) rowIdx = 4;
+            else if (hour >= 17 && hour <= 23) rowIdx = 5;
+
+            let colIdx = 0; // 1-2 sectors
+            if (sectors === 3) colIdx = 1;
+            else if (sectors === 4) colIdx = 2;
+            else if (sectors === 5) colIdx = 3;
+            else if (sectors >= 6) colIdx = 4;
+
+            const matrix = [
+                [9.0, 9.0, 9.0, 9.0, 9.0],       // 00:00 - 03:59
+                [11.0, 10.5, 10.0, 9.5, 9.0],    // 04:00 - 05:59
+                [12.0, 11.5, 11.0, 10.5, 10.0],   // 06:00 - 06:59
+                [13.0, 12.5, 12.0, 11.5, 11.0],   // 07:00 - 12:59
+                [12.0, 11.5, 11.0, 10.5, 10.0],   // 13:00 - 16:59
+                [11.0, 10.5, 10.0, 9.5, 9.0]     // 17:00 - 23:59
+            ];
+            return matrix[rowIdx][colIdx];
+        }
+
+        // Retrieve the most recent historical duty finish timestamp
+        function getPriorDutyEnd(pilotId, currentStartStr, logsList) {
+            const currentStart = new Date(currentStartStr.replace(' ', 'T')).getTime();
+            let maxEnd = 0;
+            logsList.forEach(log => {
+                if (log.Pilot_ID === pilotId) {
+                    const logEnd = new Date(log.FDP_End_LT.replace(' ', 'T')).getTime();
+                    if (logEnd < currentStart && logEnd > maxEnd) {
+                        maxEnd = logEnd;
+                    }
+                }
+            });
+            if (maxEnd === 0) return "";
+            const d = new Date(maxEnd);
+            const pad = (n) => n < 10 ? '0' + n : n;
+            return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+
+        // Calculate rolling accumulative duty hours
+        function getRollingSum(pilotId, currentStartStr, days, logsList) {
+            const currentStart = new Date(currentStartStr.replace(' ', 'T')).getTime();
+            const limitMs = days * 24 * 60 * 60 * 1000;
+            let sum = 0;
+            logsList.forEach(log => {
+                if (log.Pilot_ID === pilotId) {
+                    const logStart = new Date(log.FDP_Start_LT.replace(' ', 'T')).getTime();
+                    if (logStart <= currentStart && logStart >= (currentStart - limitMs)) {
+                        sum += parseFloat(log.Block_Time || 0);
+                    }
+                }
+            });
+            return Math.round(sum * 100) / 100;
+        }
+
+        function recalcCoreState() {
+            // Sort historically by check-in time
+            logs.sort((a,b) => new Date(a.FDP_Start_LT.replace(' ', 'T')) - new Date(b.FDP_Start_LT.replace(' ', 'T')));
+            
+            const monitorBody = document.getElementById('active-monitor-tbody');
+            monitorBody.innerHTML = '';
+            
+            const anchorDateStr = "2026-05-24 15:00";
+            const anchorTime = new Date(anchorDateStr.replace(' ', 'T')).getTime();
+            
+            let totalHoursThisMonth = 0;
+            let warningsCount = 0;
+
+            pilots.forEach(p => {
+                if (p.Status !== "Active") return;
+                
+                const pid = p.Pilot_ID;
+                const lastEndStr = getPriorDutyEnd(pid, anchorDateStr, logs);
+                
+                const sum28 = getRollingSum(pid, anchorDateStr, 28, logs);
+                const sum90 = getRollingSum(pid, anchorDateStr, 90, logs);
+                const lim28 = Ref_CARs_Limits[p.Reg_Type]["28"];
+                
+                let statusStr = "Eligible";
+                let statusClass = "bg-[#2251FF]/10 text-[#2251FF] border border-[#2251FF]/20";
+                
+                if (sum28 > lim28) {
+                    statusStr = "Violation Limit";
+                    statusClass = "bg-[#051C2C] text-white border border-[#051C2C]";
+                    warningsCount++;
+                } else if (lastEndStr) {
+                    const lastEndTime = new Date(lastEndStr.replace(' ', 'T')).getTime();
+                    const restElapseHours = (anchorTime - lastEndTime) / (1000 * 60 * 60);
+                    const minRest = p.Reg_Type === "Part 702" ? 10 : 12;
+                    
+                    if (restElapseHours < minRest) {
+                        statusStr = "Off-Duty Rest";
+                        statusClass = "bg-slate-100 text-slate-500 border border-slate-200";
+                    }
+                }
+                
+                totalHoursThisMonth += sum28;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/50 border-b border-slate-100 transition-colors";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-[#051C2C] font-mono">${pid}</td>
+                    <td class="p-3 text-slate-800 font-semibold">${p.Full_Name}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.Reg_Type === 'Part 705' ? 'bg-[#2251FF]/10 text-[#2251FF]' : 'bg-slate-100 text-slate-600 border border-slate-200'}">${p.Reg_Type}</span></td>
+                    <td class="p-3 font-mono text-right text-[#051C2C] font-bold">${sum28.toFixed(1)}h / <span class="text-slate-400 font-medium">${lim28}h</span></td>
+                    <td class="p-3 font-mono text-right text-slate-500 font-bold">${sum90.toFixed(1)}h</td>
+                    <td class="p-3 text-center"><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase ${statusClass}">${statusStr}</span></td>
+                `;
+                monitorBody.appendChild(tr);
+            });
+
+            document.getElementById('kpi-active-pilots').textContent = pilots.filter(p=>p.Status==='Active').length + " Active";
+            document.getElementById('kpi-total-hours').textContent = totalHoursThisMonth.toFixed(1) + " hrs";
+            document.getElementById('kpi-warning-count').textContent = warningsCount + " Alerts";
+
+            const gridBody = document.getElementById('excel-grid-tbody');
+            gridBody.innerHTML = '';
+            
+            logs.forEach((log, index) => {
+                const rowNum = index + 1; 
+                const p_name = getPilotName(log.Pilot_ID);
+                const reg_type = getRegType(log.Pilot_ID);
+                const calc_fdp = calculateFDP(log.FDP_Start_LT, log.FDP_End_LT);
+                const max_fdp = getMaxAllowedFDP(reg_type, log.FDP_Start_LT, log.Sectors);
+                const fdp_compliance = calc_fdp <= max_fdp ? "Compliant" : "FDP Overrun";
+                
+                const prior_end = getPriorDutyEnd(log.Pilot_ID, log.FDP_Start_LT, logs.slice(0, index));
+                let rest_hrs = 999.0;
+                if (prior_end) {
+                    rest_hrs = Math.round(((new Date(log.FDP_Start_LT.replace(' ', 'T')) - new Date(prior_end.replace(' ', 'T'))) / (1000 * 60 * 60)) * 100) / 100;
+                }
+                const min_rest = reg_type === "Part 702" ? 10.0 : (log.Is_Home_Base ? 12.0 : 10.0);
+                const rest_compliance = rest_hrs >= min_rest ? "Compliant" : "Rest Deficit";
+                
+                const sum_28 = getRollingSum(log.Pilot_ID, log.FDP_Start_LT, 28, logs.slice(0, index + 1));
+                const sum_90 = getRollingSum(log.Pilot_ID, log.FDP_Start_LT, 90, logs.slice(0, index + 1));
+                const sum_365 = getRollingSum(log.Pilot_ID, log.FDP_Start_LT, 365, logs.slice(0, index + 1));
+                
+                const lim_28 = Ref_CARs_Limits[reg_type]["28"];
+                const lim_90 = Ref_CARs_Limits[reg_type]["90"];
+                const lim_365 = Ref_CARs_Limits[reg_type]["365"];
+                
+                const cum_compliance = (sum_28 <= lim_28 && sum_90 <= lim_90 && sum_365 <= lim_365) ? "Compliant" : "Overrun";
+
+                const fdpCompClass = fdp_compliance === "Compliant" ? "text-[#2251FF] bg-[#2251FF]/5" : "bg-[#051C2C] text-white font-bold";
+                const restCompClass = rest_compliance === "Compliant" ? "text-[#2251FF] bg-[#2251FF]/5" : "bg-[#051C2C] text-white font-bold";
+                const cumCompClass = cum_compliance === "Compliant" ? "text-[#2251FF] bg-[#2251FF]/5" : "bg-[#051C2C] text-white font-bold";
+
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-slate-200 hover:bg-slate-50/50 transition-colors text-center";
+                tr.innerHTML = `
+                    <td class="p-3 border-r border-slate-200 bg-slate-50 text-slate-500 font-mono font-bold text-center sticky left-0">${rowNum}</td>
+                    <td class="p-3 border-r border-slate-200 text-[#051C2C] font-semibold text-left font-mono">${log.Log_ID}</td>
+                    <td class="p-3 border-r border-slate-200 text-slate-800 font-mono font-bold">${log.Pilot_ID}</td>
+                    <td class="p-3 border-r border-slate-200 text-slate-700 font-semibold text-left">${p_name}</td>
+                    <td class="p-3 border-r border-slate-200 text-slate-500 font-mono font-medium">${log.FDP_Start_LT}</td>
+                    <td class="p-3 border-r border-slate-200 text-slate-500 font-mono font-medium">${log.FDP_End_LT}</td>
+                    <td class="p-3 border-r border-slate-200 text-slate-800 font-mono font-bold">${log.Sectors}</td>
+                    <td class="p-3 border-r border-slate-200 text-right text-slate-800 font-mono font-bold">${log.Block_Time.toFixed(2)}</td>
+                    <td class="p-3 border-r border-slate-200 text-slate-400 font-bold">${log.Is_Home_Base ? 'YES' : 'NO'}</td>
+                    
+                    <!-- Dynamically processed and color-mapped values -->
+                    <td class="p-3 border-r border-slate-200 text-slate-600 bg-[#2251FF]/5 text-center font-bold font-sans text-[10px]">${reg_type}</td>
+                    <td class="p-3 border-r border-slate-200 text-right text-[#051C2C] bg-[#2251FF]/5 font-mono font-bold">${calc_fdp.toFixed(2)}</td>
+                    <td class="p-3 border-r border-slate-200 text-right text-[#051C2C] bg-[#2251FF]/5 font-mono font-bold">${max_fdp.toFixed(1)}</td>
+                    <td class="p-3 border-r border-slate-200 text-center font-bold ${fdpCompClass}">${fdp_compliance}</td>
+                    
+                    <td class="p-3 border-r border-slate-200 text-right text-[#051C2C] bg-[#2251FF]/5 font-mono font-bold">${rest_hrs === 999 ? 'F. R.' : rest_hrs.toFixed(2)}</td>
+                    <td class="p-3 border-r border-slate-200 text-center font-bold ${restCompClass}">${rest_compliance}</td>
+                    
+                    <td class="p-3 border-r border-slate-200 text-right text-[#051C2C] bg-[#2251FF]/5 font-mono font-bold">${sum_28.toFixed(2)}</td>
+                    <td class="p-3 border-r border-slate-200 text-right text-[#051C2C] bg-[#2251FF]/5 font-mono font-bold">${sum_90.toFixed(2)}</td>
+                    <td class="p-3 text-center font-bold ${cumCompClass}">${cum_compliance}</td>
+                `;
+                gridBody.appendChild(tr);
+            });
+
+            // Stream Crew directory directory entries
+            const pilotsBody = document.getElementById('pilots-table-body');
+            pilotsBody.innerHTML = '';
+            pilots.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/50 text-slate-700 transition-colors text-xs";
+                tr.innerHTML = `
+                    <td class="p-3.5 font-mono font-bold text-[#051C2C]">${p.Pilot_ID}</td>
+                    <td class="p-3.5 text-[#051C2C] font-semibold">${p.Full_Name}</td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.Reg_Type === 'Part 705' ? 'bg-[#2251FF]/10 text-[#2251FF]' : 'bg-slate-100 text-slate-600 border border-slate-200'}">${p.Reg_Type}</span></td>
+                    <td class="p-3.5 font-mono text-slate-500 font-semibold">${p.Home_Base_TZ}</td>
+                    <td class="p-3.5 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${p.Status === 'Active' ? 'bg-[#2251FF]/10 text-[#2251FF]' : 'bg-slate-100 text-slate-400'}">${p.Status}</span></td>
+                    <td class="p-3.5 text-right">
+                        <button onclick="deletePilot('${p.Pilot_ID}')" class="text-slate-500 hover:text-[#2251FF] hover:border-[#2251FF] text-[10px] uppercase font-bold tracking-wider px-3 py-1.5 border border-slate-200 rounded-xl transition bg-white shadow-sm">De-register</button>
+                    </td>
+                `;
+                pilotsBody.appendChild(tr);
+            });
+
+            runSandboxCheck();
+        }
+
+        function runSandboxCheck() {
+            const pid = document.getElementById('sandbox-pilot').value;
+            if (!pid) return;
+            
+            const startVal = document.getElementById('sandbox-start').value;
+            if (!startVal) return;
+            const startStr = startVal.replace('T', ' ');
+            
+            const sectors = parseInt(document.getElementById('sandbox-sectors').value || 1);
+            const block = parseFloat(document.getElementById('sandbox-block').value || 0);
+            
+            const regType = getRegType(pid);
+            
+            const lastEndStr = getPriorDutyEnd(pid, startStr, logs);
+            let restHours = 999.0;
+            if (lastEndStr) {
+                restHours = Math.round(((new Date(startStr.replace(' ', 'T')) - new Date(lastEndStr.replace(' ', 'T'))) / (1000 * 60 * 60)) * 100) / 100;
+            }
+            
+            const minRest = regType === "Part 702" ? 10.0 : 12.0; 
+            const restCompliant = restHours >= minRest;
+            
+            document.getElementById('sandbox-rest-provided').textContent = lastEndStr ? `${restHours.toFixed(1)} Hours` : "Baseline Rest (Fully Rested)";
+            
+            const restSpan = document.getElementById('sandbox-rest-compliance');
+            if (restCompliant) {
+                restSpan.textContent = "COMPLIANT";
+                restSpan.className = "font-bold text-[#2251FF] tracking-wider";
+            } else {
+                restSpan.textContent = `DEFICIT (Short ${(minRest-restHours).toFixed(1)}h)`;
+                restSpan.className = "font-bold text-slate-400 tracking-wider";
+            }
+            
+            const maxFDP = getMaxAllowedFDP(regType, startStr, sectors);
+            document.getElementById('sandbox-max-fdp').textContent = `${maxFDP.toFixed(1)} Hours`;
+            
+            const sum28 = getRollingSum(pid, startStr, 28, logs) + block;
+            const lim28 = Ref_CARs_Limits[regType]["28"];
+            const sumSpan = document.getElementById('sandbox-sum-28d');
+            
+            if (sum28 <= lim28) {
+                sumSpan.textContent = `${sum28.toFixed(1)}h / Max ${lim28}h`;
+                sumSpan.className = "font-mono text-[#2251FF] font-bold";
+            } else {
+                sumSpan.textContent = `${sum28.toFixed(1)}h (EXCEEDS ${lim28}h Limit)`;
+                sumSpan.className = "font-mono text-[#051C2C] font-bold";
+            }
+            
+            const decisionSpan = document.getElementById('sandbox-decision');
+            if (restCompliant && sum28 <= lim28) {
+                decisionSpan.textContent = "APPROVED";
+                decisionSpan.className = "px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-[#2251FF]/10 text-[#2251FF] border border-[#2251FF]/20";
+            } else if (!restCompliant) {
+                decisionSpan.textContent = "REJECT: REST DEFICIT";
+                decisionSpan.className = "px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-400 border border-slate-200";
+            } else {
+                decisionSpan.textContent = "REJECT: EXCEEDS LIMITS";
+                decisionSpan.className = "px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-[#051C2C] text-white border border-[#051C2C]";
+            }
+        }
+
+        function writeSandboxToLogs() {
+            const pid = document.getElementById('sandbox-pilot').value;
+            const startVal = document.getElementById('sandbox-start').value;
+            const sectors = parseInt(document.getElementById('sandbox-sectors').value || 1);
+            const block = parseFloat(document.getElementById('sandbox-block').value || 0);
+            
+            if (!startVal) {
+                triggerToast("Complete reporting time coordinate parameters first.", "warning");
+                return;
+            }
+            
+            const startStr = startVal.replace('T', ' ');
+            const startDate = new Date(startVal);
+            const endDate = new Date(startDate.getTime() + (block + 1.5) * 60 * 60 * 1000); 
+            
+            const pad = (n) => n < 10 ? '0' + n : n;
+            const endStr = `${endDate.getFullYear()}-${pad(endDate.getMonth()+1)}-${pad(endDate.getDate())} ${pad(endDate.getHours())}:${pad(endDate.getMinutes())}`;
+            const logId = "DL-2026-" + String(logs.length + 1).padStart(5, '0');
+            
+            logs.push({
+                Log_ID: logId,
+                Pilot_ID: pid,
+                FDP_Start_LT: startStr,
+                FDP_End_LT: endStr,
+                Sectors: sectors,
+                Block_Time: block,
+                Is_Home_Base: true
+            });
+            
+            recalcCoreState();
+            triggerToast(`Dispatched: Assigned event record ${logId} successfully committed.`);
+        }
+
+        // Open/close workflows forms
+        function openAddPilotModal() {
+            document.getElementById('modal-add-pilot').classList.remove('hidden');
+        }
+        function closeAddPilotModal() {
+            document.getElementById('modal-add-pilot').classList.add('hidden');
+        }
+        
+        function savePilot() {
+            const pid = document.getElementById('p-form-id').value.trim();
+            const name = document.getElementById('p-form-name').value.trim();
+            const reg = document.getElementById('p-form-reg').value;
+            const tz = document.getElementById('p-form-tz').value.trim();
+            const status = document.getElementById('p-form-status').value;
+            
+            if (!pid || !name) {
+                triggerToast("Complete all required fields before proceeding.", "warning");
+                return;
+            }
+            if (pilots.some(p => p.Pilot_ID === pid)) {
+                triggerToast("Constraint Conflict: Pilot ID already registered.", "warning");
+                return;
+            }
+            
+            pilots.push({ Pilot_ID: pid, Full_Name: name, Reg_Type: reg, Home_Base_TZ: tz, Status: status });
+            rebuildPilotSelects();
+            recalcCoreState();
+            closeAddPilotModal();
+            triggerToast(`Registered: Crew profile ${pid} successfully enrolled.`);
+        }
+        
+        function deletePilot(id) {
+            pilots = pilots.filter(p => p.Pilot_ID !== id);
+            rebuildPilotSelects();
+            recalcCoreState();
+            triggerToast(`Archived: Fleet profile ${id} successfully removed.`);
+        }
+
+        function openAddLogModal() {
+            document.getElementById('modal-add-log').classList.remove('hidden');
+        }
+        function closeAddLogModal() {
+            document.getElementById('modal-add-log').classList.add('hidden');
+        }
+        
+        function saveLogFromModal() {
+            const pid = document.getElementById('log-form-pilot').value;
+            const startVal = document.getElementById('log-form-start').value;
+            const endVal = document.getElementById('log-form-end').value;
+            const block = parseFloat(document.getElementById('log-form-block').value || 0);
+            const sectors = parseInt(document.getElementById('log-form-sectors').value || 1);
+            const base = document.getElementById('log-form-base').value === "TRUE";
+            
+            if (!startVal || !endVal) {
+                triggerToast("Provide complete duty parameters.", "warning");
+                return;
+            }
+            
+            const startStr = startVal.replace('T', ' ');
+            const endStr = endVal.replace('T', ' ');
+            const logId = "DL-2026-" + String(logs.length + 1).padStart(5, '0');
+            
+            logs.push({
+                Log_ID: logId,
+                Pilot_ID: pid,
+                FDP_Start_LT: startStr,
+                FDP_End_LT: endStr,
+                Sectors: sectors,
+                Block_Time: block,
+                Is_Home_Base: base
+            });
+            
+            recalcCoreState();
+            closeAddLogModal();
+            triggerToast(`Committed: Assigned event record ${logId} posted successfully.`);
+        }
+
+        function clearAllLogs() {
+            logs = [];
+            recalcCoreState();
+            triggerToast("Database Flush: All logs cleared successfully.", "warning");
+        }
+    </script>
+</body>
+</html>
