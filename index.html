@@ -148,6 +148,41 @@ td.num{text-align:right;font-family:var(--f-mono)}
      background:var(--blue-bg);color:#1A3A8F;letter-spacing:.03em;text-transform:uppercase}
 .tag.p702{background:#FFF3CD;color:#664D03}
 .note{font-size:11px;color:var(--muted);font-style:italic;margin-top:6px}
+
+/* ── PURCHASE CTA ──────────────────────────────────────────── */
+.purchase-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#F5A623;color:#1A1A00;
+  font-family:var(--f-sans);font-size:12px;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:8px 16px;border-radius:4px;
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.15);
+  transition:background .15s,transform .1s,box-shadow .15s;
+  box-shadow:0 2px 8px rgba(245,166,35,.35)}
+.purchase-btn:hover{background:#FFB930;transform:translateY(-1px);box-shadow:0 4px 14px rgba(245,166,35,.5)}
+.purchase-btn:active{transform:translateY(0)}
+
+.purchase-callout{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  background:linear-gradient(135deg,var(--navy) 0%,#0D2E48 100%);
+  border:1px solid rgba(245,166,35,.3);border-radius:8px;
+  padding:18px 24px;margin-bottom:24px}
+.callout-text{}
+.callout-label{font-family:var(--f-head);font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.callout-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
+.callout-sub strong{color:rgba(255,255,255,.85);font-weight:500}
+.purchase-callout-btn{
+  display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
+  background:#F5A623;color:#1A1A00;
+  font-family:var(--f-sans);font-size:13px;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:12px 22px;border-radius:5px;text-decoration:none;
+  border:none;cursor:pointer;white-space:nowrap;
+  transition:background .15s,transform .1s,box-shadow .15s;
+  box-shadow:0 3px 12px rgba(245,166,35,.4)}
+.purchase-callout-btn:hover{background:#FFB930;transform:translateY(-1px);box-shadow:0 5px 18px rgba(245,166,35,.55)}
+.purchase-callout-btn svg{width:16px;height:16px;flex-shrink:0}
 .spacer{height:20px}
 .row-flag-bad{background:#FFF0F0!important}
 .row-flag-bad:hover{background:#FFE6E6!important}
@@ -164,6 +199,7 @@ td.num{text-align:right;font-family:var(--f-mono)}
     <button class="tab-btn" data-tab="pilots">tbl_Pilots</button>
     <button class="tab-btn" data-tab="ref">Ref_CARs</button>
   </div>
+  <a href="https://alexhasgreatestuff.gumroad.com/l/dutytracker" target="_blank" rel="noopener" class="purchase-btn">Purchase Complete Excel →</a>
   <div class="sim-badge">SIM: 2026-05-24 12:00</div>
 </nav>
 
@@ -174,6 +210,22 @@ td.num{text-align:right;font-family:var(--f-mono)}
   <div class="sheet-header">
     <div class="sheet-title">Dashboard</div>
     <div class="sheet-sub">Pre-flight sandbox · Fleet status tower</div>
+  </div>
+
+  <div class="purchase-callout">
+    <div class="callout-text">
+      <div class="callout-label">This is an interactive demo — download the full Excel workbook</div>
+      <div class="callout-sub">
+        Complete <strong>CARs Part 702 / 705</strong> compliance tracker · Formula-only, no VBA ·
+        FDP matrix · Rolling 28 / 90 / 365-day limits · Rest legality engine · Pre-flight dispatch sandbox
+      </div>
+    </div>
+    <a href="https://alexhasgreatestuff.gumroad.com/l/dutytracker" target="_blank" rel="noopener" class="purchase-callout-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Purchase Complete Excel
+    </a>
   </div>
 
   <p class="section-label">A — Pre-Flight Dispatch Sandbox</p>
