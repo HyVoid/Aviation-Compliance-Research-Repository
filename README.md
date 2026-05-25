@@ -20,8 +20,7 @@
 
 **A compliance-grade Excel tool for Canadian aviation operators under Transport Canada CARs Part 702 and Part 705.**
 
- [Purchase for complete Excel](https://alexhasgreatestuff.gumroad.com/l/njeyey)
-
+ [Purchase for complete Excel](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
 </div>
 
 ---
