@@ -1,3 +1,197 @@
+**Principe de conception :** Séparation stricte entre stockage des données, logique de calcul et couche d'affichage. La saisie est normalisée ; le calcul est entièrement automatisé ; la couche de présentation est en lecture seule.
+
+---
+
+<a name="modules-fr"></a>
+## Modules principaux
+
+### Module 1 — Tableau de bord *(Couche décisionnelle)*
+
+- **Tableau de statut d'équipage en temps réel** — Tous les pilotes listés avec état de conformité codé par couleur :
+  - 🟢 Disponible
+  - 🟡 Approche de la limite (seuil d'avertissement)
+  - 🔴 Bloqué — fatigue ou heures épuisées
+  - 🔵 En repos réglementaire obligatoire (compte à rebours jusqu'à disponibilité légale)
+- **Vérificateur de conformité pré-vol** — Le répartiteur sélectionne le pilote, saisit l'heure de présentation et les secteurs prévus ; le système retourne immédiatement le PDS maximal autorisé et un verdict conforme / non conforme
+
+### Module 2 — `tbl_Pilotes` *(Couche de configuration)*
+
+| Champ | Description |
+|---|---|
+| `ID Pilote` | Clé primaire unique |
+| `Nom complet` | Nom d'affichage |
+| `Sous-partie principale` | Partie 702 / Partie 705 |
+| `Base d'attache` | Fuseau horaire de base (pour calcul d'acclimatation) |
+| `Option de tableau de service` | Option de planification Partie 705 (Option 1 / Option 2) |
+
+### Module 3 — `tbl_JournauxService` *(Couche de saisie)*
+
+| Champ | Description |
+|---|---|
+| `ID Enregistrement` | Identifiant auto-généré |
+| `ID Pilote` | Clé étrangère vers `tbl_Pilotes` |
+| `Date de service` | Date du service |
+| `Sous-partie opérationnelle` | Réglementation applicable à ce service (702 / 705) |
+| `Début service (heure locale)` | Heure de présentation / enregistrement |
+| `Fin service (heure locale)` | Heure de libération |
+| `Temps de vol (heures bloc)` | Heures bloc réellement effectuées |
+| `Secteurs effectués` | Nombre de secteurs (requis pour la matrice PDS Partie 705) |
+| `Pause service fractionné (h)` | Durée de la pause en cas de service fractionné, le cas échéant |
+| `Repos accordé (h)` | Repos effectivement obtenu avant ce service |
+
+### Module 4 — `Moteur_RAC` *(Moteur de calcul — protégé)*
+
+Feuille masquée/protégée contenant toute la logique réglementaire. Voir [Formules clés](#formules-fr).
+
+### Module 5 — `Rapport_Audit` *(Couche d'export)*
+
+Filtrer par pilote et plage de dates ; exporter un journal de conformité propre et formaté selon les normes TC, directement prêt pour l'exportation PDF. Conçu pour ne nécessiter aucun post-traitement avant soumission à un inspecteur de Transports Canada.
+
+---
+
+<a name="reglementaire-fr"></a>
+## Portée réglementaire
+
+### Limites de temps de vol (toutes sous-parties, fenêtres glissantes)
+
+| Fenêtre | Limite |
+|---|---|
+| 24 heures (pilote unique) | ≤ 8 heures |
+| Tout intervalle de 28 jours consécutifs | ≤ 112 heures |
+| Tout intervalle de 90 jours consécutifs | ≤ 300 heures |
+| Tout intervalle de 365 jours consécutifs | ≤ 1 000 heures |
+
+### Limites de temps de service
+
+| Fenêtre | Limite |
+|---|---|
+| Tout intervalle de 28 jours consécutifs | ≤ 192 heures |
+| Tout intervalle de 365 jours consécutifs | ≤ 2 200 – 2 400 heures (selon le programme) |
+
+### Matrice de PDS maximum — Partie 705
+
+Le PDS maximum est déterminé par une recherche bidimensionnelle :
+- **Axe 1** — Plage horaire de présentation (p. ex. `04:00–06:59`, `07:00–12:59`, `13:00–17:59`, etc.)
+- **Axe 2** — Nombre de secteurs planifiés
+
+La valeur résultante varie de 9 à 13 heures et peut être prolongée en cas d'équipage augmenté ou de service fractionné.
+
+---
+
+<a name="formules-fr"></a>
+## Formules clés
+
+**Partie 705 — PDS maximum (recherche matricielle bidimensionnelle)**
+
+```excel
+=XLOOKUP(
+  HeureDePresentation,
+  ColonnePlagesHoraires_RAC,
+  XLOOKUP(Secteurs, LigneEnTeteSecteurs_RAC, Matrice_PDS)
+)
+```
+
+**Accumulation glissante du temps de vol sur 28 jours**
+
+```excel
+=SOMME.SI.ENS(
+  [Temps de vol],
+  [ID Pilote], [@ID Pilote],
+  [Date de service], ">="&([@Date de service]-27),
+  [Date de service], "<="&[@Date de service]
+)
+```
+
+Remplacer `-27` par `-89` et `-364` pour les fenêtres de 90 et 365 jours respectivement. Comparer la sortie aux seuils de `112`, `300` et `1 000` heures.
+
+---
+
+<a name="resultats-fr"></a>
+## Résultats opérationnels
+
+| Dimension | Avant | Après |
+|---|---|---|
+| Risque d'infraction | Détecté après le vol ; pénalités TC appliquées rétroactivement | Interception pré-vol à 100 % ; les dispatches non conformes sont bloqués |
+| Durée de vérification de planification | 20–30 min par pilote par vérification (manuel) | < 3 secondes |
+| Préparation aux audits | 2–3 jours pour reconstituer les dossiers | Instantanée — filtrer et exporter en < 5 secondes |
+| Utilisation des équipages | Tampon manuel conservateur de 1–2 heures gaspillé | Précision à la minute ; chaque minute légale est utilisée |
+| Intégrité des données | Copie répartiteur vs copie pilote fréquemment divergentes | Source unique de vérité pour tous les calculs et rapports |
+
+---
+
+<br>
+<div align="right"><a href="#français">↑ Haut de page (FR)</a> · <a href="#english">← English</a> · <a href="#简体中文">中文 →</a></div>
+
+---
+---
+
+<a name="简体中文"></a>
+
+# ✈️ CARs 第702/705部 — 飞行与值勤时间合规追踪工具
+
+<div align="center">
+
+![许可证](https://img.shields.io/badge/许可证-MIT-blue)
+![平台](https://img.shields.io/badge/平台-Microsoft%20Excel-217346)
+![法规](https://img.shields.io/badge/法规-CARs%20702%2F705-red)
+![语言](https://img.shields.io/badge/语言-EN%20%7C%20FR%20%7C%20ZH-lightgrey)
+
+**面向同时持有加拿大交通部 CARs 第702部与第705部双重 AOC 权限的航空运营商  
+所设计的合规级 Excel 运营控制台。**
+
+</div>
+
+---
+
+## 目录
+
+- [背景](#background-zh)
+- [问题定义](#problem-zh)
+- [解决方案架构](#architecture-zh)
+- [核心模块](#modules-zh)
+- [法规范围](#regulatory-zh)
+- [核心公式](#formulas-zh)
+- [业务成效](#outcomes-zh)
+
+---
+
+<a name="background-zh"></a>
+## 背景
+
+本工具面向同时持有以下运营资质的混合运营航空公司：
+
+- **第702部**授权 — 空中作业（巡线、测绘、空中消防等）
+- **第705部**授权 — 商业航空运输（定期/不定期客货包机）
+
+在双授权体系下运营的签派员和排班协调员面临叠加的合规负担：他们必须在同一套体系内并行应用两套完全不同的法规标准，且同一飞行员在连续值勤日内可能频繁跨部切换。
+
+加拿大交通部（TC）近年来持续收紧**飞行与值勤时间限制（FTDT）**的执法力度。CARs 第702/705部具有强制法律效力，并非指导性意见。一旦在审计中发现任何违规，可能面临：
+
+- 数万加元的高额罚款
+- 暂停或吊销航空营运人证书（AOC）
+- 飞行员个人执照受罚
+
+---
+
+<a name="problem-zh"></a>
+## 问题定义
+
+### 痛点
+
+| 痛点 | 描述 |
+|---|---|
+| 人工计算负荷高 | 签派员在每次排班前需手动汇总7/28/90天滚动累计值，每人每次耗时20–30分钟 |
+| 合规管理滞后 | 违规往往在飞行完成后的日志录入环节才被发现，法律风险已经发生 |
+| 审计准备成本高 | 从分散的纸质记录或基础表格中重建合规档案，每次 TC 审计需耗费2–3天 |
+
+### 技术难点
+
+- **双部矩阵规则** — 第705部最大飞行值勤期（FDP）遵循9至13小时的阶梯矩阵，以报到时间区间（如`00:00–03:59`、`07:00–12:59`）和扇区数量为双轴索引；第702部采用不同但更简单的标准
+- **滚动窗口累积** — CARs 要求计算*任意*连续28/90/365天内的累计时间，而非按自然月；标准 `SUM` 函数无法处理此逻辑
+- **跨部时间共用** — 第702部执勤消耗第705部的滚动额度，反之亦然；两套法规下的时间没有独立计算空间
+
+---
+
 **设计原则：** 数据存储、计算逻辑与展示层严格分离。录入端规范化，计算端全自动，展示层只读。
 
 ---
