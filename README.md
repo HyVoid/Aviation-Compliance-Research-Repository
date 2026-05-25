@@ -29,7 +29,6 @@ holding dual AOC authority under Transport Canada CARs Part 702 and Part 705.**
 
 - [Background](#background-en)
 - [Problem Statement](#problem-en)
-- [Solution Architecture](#architecture-en)
 - [Core Modules](#modules-en)
 - [Regulatory Scope](#regulatory-en)
 - [Key Formulas](#formulas-en)
