@@ -72,7 +72,7 @@ Best suited for Canadian operators with 3–30 pilots running mixed 702/705 oper
 <a name="preview-en"></a>
 ## Preview
 
-> 🔗 **[View live preview →](#)** *(coming soon)*
+> 🔗 **[View live preview →](https://hyvoid.github.io/pilot-duty-tracker-designed-for-Part-702-and-Part-705-operations/)
 
 ---
 
@@ -160,8 +160,7 @@ Particulièrement adapté aux exploitants canadiens de 3 à 30 pilotes menant de
 <a name="apercu-fr"></a>
 ## Aperçu
 
-> 🔗 **[Voir l'aperçu en direct →](#)** *(bientôt disponible)*
-
+> 🔗 **[Voir l'aperçu en direct →](https://hyvoid.github.io/pilot-duty-tracker-designed-for-Part-702-and-Part-705-operations/)
 ---
 
 ## Achat
