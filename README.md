@@ -1,3 +1,198 @@
+**Design principle:** Strict separation of data storage, calculation logic, and display layer. Entry is standardised; computation is fully automated; the presentation layer is read-only.
+
+---
+
+<a name="modules-en"></a>
+## Core Modules
+
+### Module 1 — Dashboard *(Decision Layer)*
+
+- **Live Crew Status Board** — All pilots listed with colour-coded compliance state:
+  - 🟢 Available
+  - 🟡 Approaching limit (warning threshold)
+  - 🔴 Blocked — fatigue or hours exhausted
+  - 🔵 In mandatory rest (countdown to legal availability)
+- **Pre-Flight Compliance Checker** — Dispatcher selects pilot, inputs report time and planned sectors; system immediately returns maximum permissible FDP and a compliant/non-compliant verdict
+
+### Module 2 — `tbl_Pilots` *(Configuration Layer)*
+
+| Field | Description |
+|---|---|
+| `Pilot ID` | Unique primary key |
+| `Full Name` | Display name |
+| `Primary Subpart` | Part 702 / Part 705 |
+| `Home Base` | Base timezone (for acclimatisation calculation) |
+| `Roster Option` | Part 705 scheduling option (Option 1 / Option 2) |
+
+### Module 3 — `tbl_DutyLogs` *(Data Entry Layer)*
+
+| Field | Description |
+|---|---|
+| `Record ID` | Auto-generated entry ID |
+| `Pilot ID` | Foreign key to `tbl_Pilots` |
+| `Duty Date` | Date of duty |
+| `Operational Subpart` | Applicable regulation for this duty (702 / 705) |
+| `Duty Start Local` | Report / check-in time |
+| `Duty End Local` | Release time |
+| `Flight Time (Block Hours)` | Actual block hours flown |
+| `Sectors Flown` | Sector count (required for Part 705 FDP matrix) |
+| `Split Duty Break (hrs)` | Rest break taken during split duty, if applicable |
+| `Rest Period Provided (hrs)` | Actual rest received before this duty |
+
+### Module 4 — `Engine_CARs` *(Calculation Engine — protected)*
+
+Hidden/protected sheet containing all regulatory logic. See [Key Formulas](#formulas-en).
+
+### Module 5 — `Audit_Reporter` *(Export Layer)*
+
+Filter by pilot and date range; output a clean, TC-formatted compliance log suitable for direct PDF export. Designed to require zero post-processing before submission to a Transport Canada inspector.
+
+---
+
+<a name="regulatory-en"></a>
+## Regulatory Scope
+
+### Flight Time Limits (all subparts, rolling windows)
+
+| Window | Limit |
+|---|---|
+| 24 hours (single-pilot) | ≤ 8 hours |
+| Any 28 consecutive days | ≤ 112 hours |
+| Any 90 consecutive days | ≤ 300 hours |
+| Any 365 consecutive days | ≤ 1,000 hours |
+
+### Duty Time Limits
+
+| Window | Limit |
+|---|---|
+| Any 28 consecutive days | ≤ 192 hours |
+| Any 365 consecutive days | ≤ 2,200 – 2,400 hours (schedule-dependent) |
+
+### Part 705 Maximum FDP Matrix
+
+Maximum FDP is determined by a two-dimensional lookup:
+- **Axis 1** — Report time window (e.g. `04:00–06:59`, `07:00–12:59`, `13:00–17:59`, etc.)
+- **Axis 2** — Number of sectors planned
+
+The resulting value ranges from 9 to 13 hours and may be extended under augmented crew or split-duty provisions.
+
+---
+
+<a name="formulas-en"></a>
+## Key Formulas
+
+**Part 705 — Maximum FDP (two-dimensional matrix lookup)**
+
+```excel
+=XLOOKUP(
+  StartTimeHour,
+  CARs_TimeRange_Column,
+  XLOOKUP(Sectors, CARs_Sectors_Header_Row, FDP_Matrix)
+)
+```
+
+**28-day rolling flight time accumulation**
+
+```excel
+=SUMIFS(
+  [Flight Time],
+  [Pilot ID], [@Pilot ID],
+  [Duty Date], ">="&([@Duty Date]-27),
+  [Duty Date], "<="&[@Duty Date]
+)
+```
+
+Replace `-27` with `-89` and `-364` for 90-day and 365-day windows respectively. Compare output against `112`, `300`, and `1000` hour thresholds.
+
+---
+
+<a name="outcomes-en"></a>
+## Business Outcomes
+
+| Dimension | Before | After |
+|---|---|---|
+| Violation risk | Discovered post-flight; TC penalties applied retroactively | 100% pre-flight interception; non-compliant dispatch is blocked |
+| Scheduling check time | 20–30 min per pilot per check (manual) | < 3 seconds |
+| Audit preparation | 2–3 days to reconstruct records | Instant — filter and export in < 5 seconds |
+| Crew utilisation | Conservative 1–2 hour manual buffer wasted | Minute-level precision; every legal minute utilised |
+| Data integrity | Dispatcher copy vs. pilot copy frequently diverge | Single source of truth across all calculations and reports |
+
+---
+
+<br>
+<div align="right"><a href="#english">↑ Back to top (EN)</a> · <a href="#français">Français →</a> · <a href="#简体中文">中文 →</a></div>
+
+---
+---
+
+<a name="français"></a>
+
+# ✈️ CARs Parties 702/705 — Outil de suivi de conformité temps de vol et de service
+
+<div align="center">
+
+![Licence](https://img.shields.io/badge/licence-MIT-blue)
+![Plateforme](https://img.shields.io/badge/plateforme-Microsoft%20Excel-217346)
+![Réglementation](https://img.shields.io/badge/réglementation-CARs%20702%2F705-red)
+![Langue](https://img.shields.io/badge/langue-EN%20%7C%20FR%20%7C%20ZH-lightgrey)
+
+**Console opérationnelle Excel de niveau conformité pour les exploitants aériens canadiens  
+détenant une autorisation mixte AOC en vertu des Parties 702 et 705 du RAC de Transports Canada.**
+
+</div>
+
+---
+
+## Table des matières
+
+- [Contexte](#contexte-fr)
+- [Définition du problème](#probleme-fr)
+- [Architecture de la solution](#architecture-fr)
+- [Modules principaux](#modules-fr)
+- [Portée réglementaire](#reglementaire-fr)
+- [Formules clés](#formules-fr)
+- [Résultats opérationnels](#resultats-fr)
+
+---
+
+<a name="contexte-fr"></a>
+## Contexte
+
+Cet outil est conçu pour les entreprises d'aviation à opérations mixtes détenant simultanément :
+
+- Une autorisation **Partie 702** — travail aérien (patrouille de pipelines, levés, lutte aérienne contre les incendies)
+- Une autorisation **Partie 705** — transport aérien commercial (vols réguliers ou affrétés, passagers et fret)
+
+Les répartiteurs et coordinateurs d'équipages opérant sous ces deux sous-parties font face à une charge de conformité cumulative : ils doivent appliquer deux référentiels réglementaires distincts en parallèle, souvent pour le même pilote sur des jours de service consécutifs.
+
+Transports Canada a progressivement renforcé son régime d'application des **limites de temps de vol et de service (FTDT)**. Les Parties 702/705 du RAC ont force de loi obligatoire — elles ne constituent pas de simples lignes directrices. Une seule infraction détectée lors d'un audit TC peut entraîner :
+
+- Des amendes de dizaines de milliers de dollars canadiens
+- La suspension ou le retrait du certificat d'exploitation aérienne (CEA)
+- La suspension des licences de pilotes individuels
+
+---
+
+<a name="probleme-fr"></a>
+## Définition du problème
+
+### Points de douleur
+
+| Point de douleur | Description |
+|---|---|
+| Surcharge de calcul manuel | Les répartiteurs calculent manuellement les totaux glissants sur 7/28/90 jours avant chaque assignation — 20 à 30 min par pilote par vérification |
+| Conformité réactive | Les infractions sont souvent détectées après le vol lors de la saisie des journaux, une fois le manquement légal déjà survenu |
+| Coût de préparation aux audits | Reconstituer des dossiers conformes à partir de feuilles de calcul dispersées nécessite 2 à 3 jours par cycle d'audit TC |
+
+### Difficultés techniques
+
+- **Matrice de règles à double sous-partie** — Les limites de PDS de la Partie 705 suivent une matrice étagée de 9 à 13 heures indexée par plage horaire de présentation (p. ex. `00:00–03:59`, `07:00–12:59`) et par nombre de secteurs ; la Partie 702 applique un standard distinct bien que plus simple
+- **Accumulation sur fenêtre glissante** — Le RAC impose des limites dans *tout* intervalle consécutif de 28/90/365 jours, et non par mois civil ; les fonctions `SOMME` standard ne peuvent pas gérer cela
+- **Mutualisation des heures entre sous-parties** — Les heures effectuées sous la Partie 702 consomment les quotas glissants de la Partie 705 et vice versa ; aucune séparation n'existe entre les totaux par sous-partie
+
+---
+
+
 **Principe de conception :** Séparation stricte entre stockage des données, logique de calcul et couche d'affichage. La saisie est normalisée ; le calcul est entièrement automatisé ; la couche de présentation est en lecture seule.
 
 ---
