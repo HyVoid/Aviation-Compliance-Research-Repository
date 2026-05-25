@@ -1,78 +1,123 @@
-<!-- Language Navigation -->
-<div align="center">
-
-[English](#english) · [Français](#français) · [简体中文](#简体中文)
-
-</div>
+**设计原则：** 数据存储、计算逻辑与展示层严格分离。录入端规范化，计算端全自动，展示层只读。
 
 ---
 
-<a name="english"></a>
+<a name="modules-zh"></a>
+## 核心模块
 
-# ✈️ CARs Part 702/705 — Flight & Duty Time Compliance Tracker
+### 模块一 — Dashboard（可视化看板 · 决策层）
 
-<div align="center">
+- **机组状态实时监控** — 全员列表配合色块编码合规状态：
+  - 🟢 正常可用
+  - 🟡 临界预警（接近限额阈值）
+  - 🔴 严禁排班（疲劳 / 时间耗尽）
+  - 🔵 法定休息中（倒计时显示距离合法可用还剩多少小时）
+- **起飞前合规推演器** — 签派员选择飞行员、输入预计报到时间与扇区数，系统即时反馈最大允许 FDP 及合规/不合规判定
 
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
-![Regulation](https://img.shields.io/badge/regulation-CARs%20702%2F705-red)
-![Language](https://img.shields.io/badge/lang-EN%20%7C%20FR%20%7C%20ZH-lightgrey)
+### 模块二 — `tbl_Pilots`（飞行员主数据 · 配置层）
 
-**A compliance-grade Excel operations console for Canadian aviation operators  
-holding dual AOC authority under Transport Canada CARs Part 702 and Part 705.**
-
-</div>
-
----
-
-## Table of Contents
-
-- [Background](#background-en)
-- [Problem Statement](#problem-en)
-- [Solution Architecture](#architecture-en)
-- [Core Modules](#modules-en)
-- [Regulatory Scope](#regulatory-en)
-- [Key Formulas](#formulas-en)
-- [Business Outcomes](#outcomes-en)
-
----
-
-<a name="background-en"></a>
-## Background
-
-This tool is designed for mixed-operation aviation companies simultaneously holding:
-
-- **Part 702** authority — aerial work (pipeline patrol, survey, aerial firefighting)
-- **Part 705** authority — commercial air transport (scheduled/charter passenger and cargo)
-
-Dispatchers and crew schedulers operating under both subparts face a compounding compliance burden: they must apply two distinct regulatory frameworks concurrently, often for the same pilot on consecutive duty days.
-
-Transport Canada has progressively tightened its **Flight Time and Duty Time (FTDT)** enforcement regime. CARs Part 702/705 carry mandatory legal force — not advisory status. A single infraction detected during a TC audit can result in:
-
-- Fines of tens of thousands of Canadian dollars
-- Suspension or revocation of the Air Operator Certificate (AOC)
-- Suspension of individual pilot licences
-
----
-
-<a name="problem-en"></a>
-## Problem Statement
-
-### Pain Points
-
-| Pain Point | Description |
+| 字段 | 描述 |
 |---|---|
-| Manual calculation overhead | Dispatchers manually tally 7/28/90-day rolling totals before every assignment — 20–30 min per pilot per check |
-| Reactive compliance | Violations are often discovered post-flight during log entry, after the legal breach has already occurred |
-| Audit preparation cost | Reconstructing compliant records from scattered spreadsheets takes 2–3 days per TC audit cycle |
+| `Pilot ID` | 唯一主键 |
+| `Full Name` | 显示名称 |
+| `Primary Subpart` | 主运营法规：第702部 / 第705部 |
+| `Home Base` | 基地时区（用于时区适应性计算） |
+| `Roster Option` | 第705部排班方案（选项1 / 选项2） |
 
-### Technical Difficulties
+### 模块三 — `tbl_DutyLogs`（值勤日志 · 录入层）
 
-- **Dual-subpart rule matrix** — Part 705 FDP limits follow a 9–13 hour tiered matrix indexed by report time window (e.g. `00:00–03:59`, `07:00–12:59`) and sector count; Part 702 applies a flatter but distinct standard
-- **Rolling-window accumulation** — CARs mandates limits within *any* consecutive 28/90/365-day window, not calendar months; standard `SUM` functions cannot handle this
-- **Cross-subpart hour pooling** — Hours flown under Part 702 consume Part 705 rolling quotas and vice versa; there is no separation between subpart totals
+| 字段 | 描述 |
+|---|---|
+| `Record ID` | 自动生成的记录ID |
+| `Pilot ID` | 关联 `tbl_Pilots` 的外键 |
+| `Duty Date` | 值勤日期 |
+| `Operational Subpart` | 本次值勤适用法规（702 / 705） |
+| `Duty Start Local` | 报到/开始值勤时间（本地时间） |
+| `Duty End Local` | 释放/结束值勤时间（本地时间） |
+| `Flight Time (Block Hours)` | 实际执行的轮挡飞行小时数 |
+| `Sectors Flown` | 扇区数（第705部 FDP 矩阵必要输入） |
+| `Split Duty Break (hrs)` | 拆分值勤中的休息时长（如适用） |
+| `Rest Period Provided (hrs)` | 本次值勤前实际获得的休息时间 |
+
+### 模块四 — `Engine_CARs`（计算引擎 · 保护页）
+
+隐藏/保护工作表，承载所有法规计算逻辑。详见[核心公式](#formulas-zh)。
+
+### 模块五 — `Audit_Reporter`（审计报告 · 导出层）
+
+按飞行员与时间段筛选，输出排版规范、符合 TC 格式要求的合规日志，支持直接 PDF 导出，提交审计前无需任何二次处理。
 
 ---
 
-<a name="architecture-en"></a>
-## Solution Architecture
+<a name="regulatory-zh"></a>
+## 法规范围
+
+### 飞行时间限制（全部子法规 · 滚动窗口）
+
+| 滚动窗口 | 限制 |
+|---|---|
+| 任意24小时（单飞行员） | ≤ 8小时 |
+| 任意连续28天 | ≤ 112小时 |
+| 任意连续90天 | ≤ 300小时 |
+| 任意连续365天 | ≤ 1,000小时 |
+
+### 值勤时间限制
+
+| 滚动窗口 | 限制 |
+|---|---|
+| 任意连续28天 | ≤ 192小时 |
+| 任意连续365天 | ≤ 2,200 – 2,400小时（取决于调休方案） |
+
+### 第705部最大飞行值勤期矩阵
+
+最大 FDP 通过二维查找确定：
+- **轴一** — 报到时间区间（如`04:00–06:59`、`07:00–12:59`、`13:00–17:59` 等）
+- **轴二** — 计划扇区数量
+
+结果值介于9至13小时之间，扩编机组或拆分值勤情况下可依规延长。
+
+---
+
+<a name="formulas-zh"></a>
+## 核心公式
+
+**第705部 — 最大 FDP（二维矩阵检索）**
+
+```excel
+=XLOOKUP(
+  报到时间小时值,
+  CARs时间区间列,
+  XLOOKUP(扇区数, CARs扇区表头行, FDP矩阵)
+)
+```
+
+**28天滚动飞行时间累积**
+
+```excel
+=SUMIFS(
+  [Flight Time],
+  [Pilot ID], [@Pilot ID],
+  [Duty Date], ">="&([@Duty Date]-27),
+  [Duty Date], "<="&[@Duty Date]
+)
+```
+
+90天与365天窗口分别将 `-27` 替换为 `-89` 和 `-364`，并与 `112`、`300`、`1000` 小时限额进行比对。
+
+---
+
+<a name="outcomes-zh"></a>
+## 业务成效
+
+| 评估维度 | 采用前 | 采用后 |
+|---|---|---|
+| 违规风险控制 | 飞行后发现；TC 罚款追溯施加 | 起飞前100%拦截；不合规签派被系统阻断 |
+| 排班校验效率 | 人工计算20–30分钟/人/次 | 3秒内完成 |
+| 审计准备时间 | 重建记录需2–3天 | 即时导出，全程<5秒 |
+| 机组运力挖掘 | 人工保守预留1–2小时缓冲造成运力浪费 | 分钟级精度；合法可用时间全部利用 |
+| 数据一致性 | 签派记录与飞行员记录频繁对不上 | 单一数据源，计算与报表全部基于同一表格 |
+
+---
+
+<br>
+<div align="right"><a href="#简体中文">↑ 返回顶部</a> · <a href="#english">← English</a> · <a href="#français">← Français</a></div>
