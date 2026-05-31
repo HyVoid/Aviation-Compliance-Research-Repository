@@ -30,9 +30,8 @@ Track rolling flight time limits, detect compliance risks in seconds, and mainta
 
 ## Quick Preview
 
-<!--
 <img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
--->
+
 
 
 > View the interactive workbook preview: [pilot duty tracker demo](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
@@ -69,21 +68,32 @@ The commercial problem is not only regulation. It is operational visibility. Dis
 
 ## Three Compliance Traps That Catch Operators
 
-### 1. Rolling windows are not calendar months
+### Trap 1 — Rolling windows misread as calendar periods
 
-A 28-day, 90-day, or 365-day limit does not reset neatly when the month changes. Every proposed assignment creates a new lookback period.
+The 28-, 90-, and 365-day limits slide forward every day, not every month.
+A pilot who flew 95 hours between May 1–28 and then flew 8 hours on May 29
+has **not** reset when June begins. The June 1 window still reaches back to May 4.
 
-If the proposed flight is on May 31, the relevant 28-day window may start on May 4. On June 1, the same check moves forward by one day. A manual month-end total can therefore look clean while the rolling window is already over the limit.
+Schedulers who mentally reset limits at month boundaries routinely undercount exposure.
+This is the most structurally invisible trap: the mental model feels correct; the calculation is wrong.
 
-### 2. Mixed 702/705 operations hide cumulative exposure
+### Trap 2 — Hours not pooled across 702 and 705
 
-Small and mid-size operators may use the same pilot across aerial work, charter, airline-style operations, positioning, reserve, or reassigned duty.
+When the same pilot performs aerial survey under Part 702 on Monday and a passenger charter
+under Part 705 on Wednesday, both sets of hours count toward the same rolling accumulation limits.
 
-The compliance risk is not always inside one operation type. It often appears when records from multiple workflows are combined.
+Operators who maintain separate tracking sheets for each subpart — a natural workflow division —
+systematically undercount. The regulation does not recognise that operational boundary.
 
-### 3. Manual checks fail at the relationship level
+### Trap 3 — Violations discovered after the flight
 
-The error is rarely obvious in a single row.
+Manual verification typically happens after a duty assignment is issued, or after the flight
+has departed. By the time a violation is identified, the breach has already occurred.
+Transport Canada enforcement applies retroactively.
+
+Pre-flight interception requires that compliance status be visible *before* a pilot is assigned —
+which requires all historical data to be current and all calculations to run automatically at
+the moment of dispatch.
 
 It is usually hidden in the relationship between:
 
@@ -109,64 +119,59 @@ That is why manual spreadsheet review often catches the issue late, or misses it
 | Safety managers | Maintain structured records for internal review and audit preparation |
 | Small AOC operators | Replace scattered manual tracking with one lightweight Excel workflow |
 
-Best suited for Canadian operators with small to mid-size pilot groups, especially where full enterprise crew management software is too expensive or too heavy for daily operations.
+Best suited for Canadian operators with 3–30 pilots running mixed 702/705 operations,
+where dedicated crew management software is cost-prohibitive but manual approaches no longer scale.
 
 ---
 
 ## What The Workbook Does
 
-### Duty Time Tracking
-
-Record pilot duty, flight time, rest, operation type, report time, sectors, and assignment notes in a structured format.
+### Duty Time Logging
+A single data entry point for all pilot duty records. Dispatchers log basic flight and duty
+information once; calculations run automatically in the background.
 
 ### Rolling Window Monitoring
+Automatic calculation of Part 705 accumulation limits across all three regulatory windows simultaneously:
+- 100 hours in any 28 consecutive days
+- 300 hours in any 90 consecutive days
+- 1,000 hours in any 365 consecutive days
 
-Monitor cumulative limits across rolling periods such as:
+### Pre-Dispatch Compliance Status
+Each pilot's compliance status is visible before assignment is issued.
+No manual cross-referencing. No post-flight discovery.
 
-- 28 days
-- 90 days
-- 365 days
+### FDP Matrix Validation
+Part 705's Flight Duty Period limits — a two-variable matrix of report time × sector count —
+are pre-encoded. Legal FDP maximum updates automatically based on when the pilot reports
+and how many sectors are scheduled.
 
-The workbook checks the relevant pilot history each time a new assignment is entered.
+### Audit-Ready Reporting
+Every entry is structured and traceable from day one. Historical compliance records can be
+filtered by pilot, date range, or status and exported without post-processing.
 
-### Pre-dispatch Validation
-
-Flag potential compliance risks before a pilot is assigned, instead of discovering the issue after the flight.
-
-### Audit Reporting
-
-Maintain a filterable record history that can support internal reviews, management reporting, and audit preparation.
-
-### Single Source Of Truth
-
-Keep dispatcher, scheduler, safety, and management views aligned around the same workbook data.
-
+---
 ---
 
 ## Example Scenario
 
-This is a simplified example, not a legal determination.
+**Operator profile:** 12 pilots. Mixed Part 702 and Part 705 operations. Single dispatch office.
 
-| Operator Profile | Situation |
-|---|---|
-| 12 pilots | Mixed Part 702 and Part 705 activity |
-| Daily scheduling changes | Charter, aerial work, reassignment, and reserve coverage |
-| Manual process | Dispatcher checks multiple spreadsheets and pilot records |
-| Business risk | A rolling limit can be missed before morning dispatch |
+**The problem:** Every morning, the dispatcher spends 90 minutes manually verifying rolling
+duty limits before assigning the day's flying. Flight hours are tracked in two separate
+spreadsheets — one for 702 operations, one for 705. When a pilot flies under both subparts
+in the same week, pooled totals are consolidated by hand.
 
-### Before
+Over three months of operations, two limit exceedances were caught — both after the flight
+had already departed.
 
-- Manual checks every morning
-- Separate dispatcher and pilot records
-- Calendar-period summaries mistaken for rolling-window compliance
-- Compliance conflicts discovered late
+| | Before | After |
+|---|---|---|
+| Record structure | Two separate sheets, one per subpart | Single unified workbook |
+| Morning check time | ~90 min across all pilots | Under 3 seconds per pilot |
+| 702/705 hour pooling | Manual consolidation | Automatic across both subparts |
+| Violation discovery | Post-flight; retroactive TC exposure | Pre-dispatch; blocked before assignment |
 
-### After
-
-- One workbook for pilot duty records
-- Automatic rolling-window calculations
-- Pre-dispatch warning status
-- Filterable historical records for review
+---
 
 The value is not that Excel replaces compliance judgment. The value is that routine calculations stop depending on memory, copy-paste checks, and fragmented files.
 
@@ -195,33 +200,36 @@ Useful official references:
 
 ---
 
-## How Rolling Window Calculation Works
+## How The Rolling Windows Work
 
-For a proposed assignment date `D` and a window length of `N` days:
+The 28-day accumulation limit requires that total flight time in any consecutive 28-day window
+not exceed 100 hours. The window slides forward every day — it is not a calendar month.
 
-```text
-Window start = D - (N - 1)
-Window end   = D
+| Date | Window covers | Net effect |
+|---|---|---|
+| June 15 | May 19 – June 15 | 92 h in window |
+| June 16 | May 20 – June 16 | − hours flown May 19 + hours flown June 16 |
+| June 17 | May 21 – June 17 | continues sliding |
 
-Included records =
-all applicable records for the same pilot
-between Window start and Window end
+**The trap in numbers:**  
+Pilot has 92 hours in window. Scheduled for 10 hours on June 16.
 
-Remaining capacity =
-regulatory limit
-- prior included records
-- proposed assignment
-```
+- If they flew 4 hours on May 19: 92 − 4 + 10 = **98 h** — legal.  
+- If they flew 0 hours on May 19: 92 − 0 + 10 = **102 h** — violation.
 
-Example:
+A monthly-reset mental model approves both. The rolling window does not.
 
-```text
-Proposed assignment date: May 31
-Rolling period: 28 days
-Included window: May 4 through May 31
-```
+Every pilot carries three of these calculations simultaneously: 28-day, 90-day, and 365-day.
+For 15 pilots, that is 45 live rolling calculations per dispatch cycle, each requiring up to
+365 days of historical lookup. The math requires no judgment. Automation eliminates the error class entirely.
 
-On June 1, the window becomes May 5 through June 1. The check moves every day. It does not reset because a new calendar month has started.
+**Why report time also governs FDP:** Part 705's FDP limits depend on when duty starts.
+A duty beginning at 09:00 may legally run up to 13 hours; the same duty beginning at 01:00
+is capped near 11 hours — because it extends into the 02:00–05:59 circadian window where
+fatigue-driven error rates sharply increase. A 30-minute difference in report time can change
+the legal maximum by up to 2 hours. Sector count adds a second dimension: each additional
+approach and landing accumulates measurable cognitive load, and the matrix reduces permitted
+FDP accordingly.
 
 ---
 
@@ -251,20 +259,13 @@ Use the complete Excel workbook here:
 
 ## Limitations
 
-This workbook is not legal advice and is not an official Transport Canada system.
-
-Operators should verify the workbook configuration against:
-
-- the current Canadian Aviation Regulations
-- the operator's Air Operator Certificate
-- company operations manual procedures
-- approved FRMS, exemptions, or operations specifications
-- Transport Canada guidance or inspector direction
-- operator-specific treatment of reserve, standby, positioning, unforeseen operational circumstances, augmented crew, medevac, and other special cases
-
-The workbook cannot correct inaccurate or missing source data. If flight time, duty time, rest periods, outside flying, or reassignment records are incomplete, the output may appear compliant while the real operation is not.
-
-Regulatory references should be reviewed periodically because CARs provisions, advisory circulars, and Transport Canada guidance may change.
+- **Data integrity dependency** — calculations are only as accurate as the entries; late, missing, or incorrect records produce incorrect compliance status without warning
+- **Not a legal opinion** — this workbook reflects the author's interpretation of the regulations; Transport Canada's official position governs, and edge-case applications should be validated with legal counsel or your TC Principal Operations Inspector
+- **Regulatory amendment lag** — CARs amendments are not automatically reflected; operators are responsible for monitoring TC regulatory changes and updating the workbook accordingly
+- **Scope: Part 702 and 705 only** — operators under Part 703 (air taxi) or Part 704 (commuter) work under different specific limits not encoded in this version
+- **Scale ceiling** — designed for 3–30 pilots; beyond approximately 30, calculation depth may degrade Excel performance
+- **Excel version sensitivity** — requires Excel 2016 or later on Windows; behaviour in Excel for Mac or Office 365 web may differ
+- **Edge cases not fully automated** — augmented crew provisions, split duty rules, and certain rest extensions involve regulatory conditions that require dispatcher judgment and are not fully encoded in this version
 
 ---
 
@@ -318,10 +319,9 @@ Suivre les limites glissantes de temps de vol, détecter les risques de conformi
 
 ## Aperçu rapide
 
-<!--
+
 <img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/5b0a5f06-fea7-4a93-a64f-af0130e39ff1" />
 
--->
 
 
 > Voir l'aperçu interactif du classeur : [démonstration du suivi de service pilote](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
