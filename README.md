@@ -16,7 +16,6 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
 ![Regulation](https://img.shields.io/badge/regulation-CARs%20702%2F705-red)
-![Language](https://img.shields.io/badge/lang-EN%20%7C%20FR-lightgrey)
 
 **Designed for Canadian Part 702 and Part 705 operators who need to track flight time, duty time, fatigue exposure, and rolling compliance limits before a pilot is assigned.**
 
