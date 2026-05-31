@@ -149,7 +149,7 @@ Every entry is structured and traceable from day one. Historical compliance reco
 filtered by pilot, date range, or status and exported without post-processing.
 
 ---
----
+
 
 ## Example Scenario
 
@@ -288,10 +288,5 @@ that currently live in someone's head or a disconnected spreadsheet,
 
 Distributed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
----
-
-
-
----
 ---
 
