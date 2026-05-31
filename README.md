@@ -120,7 +120,7 @@ filtered by pilot, date range, or status and exported without post-processing.
 
 ## Workbook Preview
 
-> 🔗 **[View live preview →](https://hyvoid.github.io/pilot-duty-tracker-designed-for-Part-702-and-Part-705-operations/)**
+> 🔗 **[View live preview →](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)**
 
 | Dimension | Before | After |
 |---|---|---|
@@ -348,7 +348,7 @@ historiques peuvent être filtrés par pilote, période ou statut et exportés s
 <a name="apercu-fr"></a>
 ## Aperçu du classeur
 
-> 🔗 **[Voir l'aperçu en direct →](https://hyvoid.github.io/pilot-duty-tracker-designed-for-Part-702-and-Part-705-operations/)**
+> 🔗 **[Voir l'aperçu en direct →](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)**
 
 | Dimension | Avant | Après |
 |---|---|---|
