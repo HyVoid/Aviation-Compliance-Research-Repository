@@ -1,7 +1,7 @@
 <!-- Language Navigation -->
 <div align="center">
 
-[English](#english) · [Français](#français)
+[English](#english) | [Français](#francais)
 
 </div>
 
@@ -9,7 +9,7 @@
 
 <a name="english"></a>
 
-# ✈️ CARs Part 702/705 — Flight & Duty Time Compliance Tracker
+# Prevent Flight Duty Time Violations Before Dispatch
 
 <div align="center">
 
@@ -18,185 +18,253 @@
 ![Regulation](https://img.shields.io/badge/regulation-CARs%20702%2F705-red)
 ![Language](https://img.shields.io/badge/lang-EN%20%7C%20FR-lightgrey)
 
-### Prevent flight duty time violations before dispatch.
+**Designed for Canadian Part 702 and Part 705 operators who need to track flight time, duty time, fatigue exposure, and rolling compliance limits before a pilot is assigned.**
 
-Track rolling flight time limits, detect compliance risks in real time,  
-and maintain a single auditable source of truth — all inside Microsoft Excel.
-
-**Built for Canadian Part 702 and Part 705 operators.**
-
-[Purchase for complete Excel](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
+[Live Preview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Purchase Complete Excel](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
 
 </div>
+
+Track rolling flight time limits, detect compliance risks in seconds, and maintain a single auditable source of truth for pilot duty records.
+
+---
+
+## Quick Preview
+
+<!--
+<img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
+-->
+
+
+> View the interactive workbook preview: [pilot duty tracker demo](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
 
 ---
 
 ## Why This Exists
 
-Most duty time violations are not caused by bad intentions.
+Most flight and duty time violations are not caused by bad intentions.
 
-They happen because the regulations require tracking three simultaneous rolling windows —
-28, 90, and 365 consecutive days — across pilots who may fly under both Part 702 and Part 705,
-in real time, before every dispatch decision.
+They usually happen because rolling windows, mixed 702/705 activity, cumulative fatigue rules, reassigned duty, and fragmented records are difficult to monitor manually.
 
-Manual tracking cannot reliably do this. The math is deterministic. The window slides daily.
-The error is structural, not human.
+The risk is simple:
+
+```text
+Pilot assigned
+-> Manual check
+-> Prior records missed
+-> Violation discovered after the flight
+```
+
+This workbook is designed to change the workflow:
+
+```text
+Pilot considered for assignment
+-> Duty record entered once
+-> Rolling limits checked automatically
+-> Compliance risk flagged before dispatch
+```
+
+The commercial problem is not only regulation. It is operational visibility. Dispatchers and schedulers need to know whether a pilot can legally and safely take the next assignment before the flight is released.
+
 ---
 
 ## Three Compliance Traps That Catch Operators
 
-### Trap 1 — Rolling windows misread as calendar periods
+### 1. Rolling windows are not calendar months
 
-The 28-, 90-, and 365-day limits slide forward every day, not every month.
-A pilot who flew 95 hours between May 1–28 and then flew 8 hours on May 29
-has **not** reset when June begins. The June 1 window still reaches back to May 4.
+A 28-day, 90-day, or 365-day limit does not reset neatly when the month changes. Every proposed assignment creates a new lookback period.
 
-Schedulers who mentally reset limits at month boundaries routinely undercount exposure.
-This is the most structurally invisible trap: the mental model feels correct; the calculation is wrong.
+If the proposed flight is on May 31, the relevant 28-day window may start on May 4. On June 1, the same check moves forward by one day. A manual month-end total can therefore look clean while the rolling window is already over the limit.
 
-### Trap 2 — Hours not pooled across 702 and 705
+### 2. Mixed 702/705 operations hide cumulative exposure
 
-When the same pilot performs aerial survey under Part 702 on Monday and a passenger charter
-under Part 705 on Wednesday, both sets of hours count toward the same rolling accumulation limits.
+Small and mid-size operators may use the same pilot across aerial work, charter, airline-style operations, positioning, reserve, or reassigned duty.
 
-Operators who maintain separate tracking sheets for each subpart — a natural workflow division —
-systematically undercount. The regulation does not recognise that operational boundary.
+The compliance risk is not always inside one operation type. It often appears when records from multiple workflows are combined.
 
-### Trap 3 — Violations discovered after the flight
+### 3. Manual checks fail at the relationship level
 
-Manual verification typically happens after a duty assignment is issued, or after the flight
-has departed. By the time a violation is identified, the breach has already occurred.
-Transport Canada enforcement applies retroactively.
+The error is rarely obvious in a single row.
 
-Pre-flight interception requires that compliance status be visible *before* a pilot is assigned —
-which requires all historical data to be current and all calculations to run automatically at
-the moment of dispatch.
+It is usually hidden in the relationship between:
+
+- today's planned duty
+- the pilot's previous duty history
+- report time
+- sector count
+- flight time accumulation
+- required rest
+- operator-specific procedures
+
+That is why manual spreadsheet review often catches the issue late, or misses it entirely.
 
 ---
 
 ## Who This Tool Is For
 
-✓ **Flight dispatchers** — verify pilot availability in seconds before issuing a dispatch release
+| User | Practical Use Case |
+|---|---|
+| Flight dispatchers | Check pilot availability before issuing a dispatch release |
+| Crew schedulers | Build rosters with visibility into remaining legal capacity |
+| Chief pilots | Review pilot workload and cumulative exposure before approving assignments |
+| Safety managers | Maintain structured records for internal review and audit preparation |
+| Small AOC operators | Replace scattered manual tracking with one lightweight Excel workflow |
 
-✓ **Crew schedulers** — build rosters 7–14 days out with real-time visibility of each pilot's remaining legal hours
-
-✓ **Chief pilots** — maintain fleet-wide oversight of duty exposure without waiting for safety reports
-
-✓ **Safety managers** — hold a single auditable source of truth for all duty records
-
-✓ **Small AOC operators** — an affordable alternative to enterprise crew management systems costing hundreds of thousands of dollars
-
-Best suited for Canadian operators with 3–30 pilots running mixed 702/705 operations,
-where dedicated crew management software is cost-prohibitive but manual approaches no longer scale.
+Best suited for Canadian operators with small to mid-size pilot groups, especially where full enterprise crew management software is too expensive or too heavy for daily operations.
 
 ---
 
 ## What The Workbook Does
 
-### Duty Time Logging
-A single data entry point for all pilot duty records. Dispatchers log basic flight and duty
-information once; calculations run automatically in the background.
+### Duty Time Tracking
+
+Record pilot duty, flight time, rest, operation type, report time, sectors, and assignment notes in a structured format.
 
 ### Rolling Window Monitoring
-Automatic calculation of Part 705 accumulation limits across all three regulatory windows simultaneously:
-- 100 hours in any 28 consecutive days
-- 300 hours in any 90 consecutive days
-- 1,000 hours in any 365 consecutive days
 
-### Pre-Dispatch Compliance Status
-Each pilot's compliance status is visible before assignment is issued.
-No manual cross-referencing. No post-flight discovery.
+Monitor cumulative limits across rolling periods such as:
 
-### FDP Matrix Validation
-Part 705's Flight Duty Period limits — a two-variable matrix of report time × sector count —
-are pre-encoded. Legal FDP maximum updates automatically based on when the pilot reports
-and how many sectors are scheduled.
+- 28 days
+- 90 days
+- 365 days
 
-### Audit-Ready Reporting
-Every entry is structured and traceable from day one. Historical compliance records can be
-filtered by pilot, date range, or status and exported without post-processing.
+The workbook checks the relevant pilot history each time a new assignment is entered.
 
----
+### Pre-dispatch Validation
 
-## Workbook Preview
+Flag potential compliance risks before a pilot is assigned, instead of discovering the issue after the flight.
 
-> 🔗 **[View live preview →](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)**
+### Audit Reporting
 
-| Dimension | Before | After |
-|---|---|---|
-| Violation risk | Discovered post-flight; TC penalties applied retroactively | Blocked before dispatch; 100% pre-flight interception |
-| Scheduling check time | 20–30 min per pilot, per check | Under 3 seconds |
-| Audit preparation | 2–3 days to reconstruct records | Filter and export in under 5 seconds |
-| Crew utilisation | 1–2 hour manual buffer routinely wasted | Minute-level precision; every legal minute accounted for |
-| Data consistency | Dispatcher and pilot copies frequently diverge | Single source of truth across all records and reports |
+Maintain a filterable record history that can support internal reviews, management reporting, and audit preparation.
 
-> 🛒 **[Get it on Gumroad →](https://alexhasgreatestuff.gumroad.com/l/njeyey)**
+### Single Source Of Truth
+
+Keep dispatcher, scheduler, safety, and management views aligned around the same workbook data.
 
 ---
 
 ## Example Scenario
 
-**Operator profile:** 12 pilots. Mixed Part 702 and Part 705 operations. Single dispatch office.
+This is a simplified example, not a legal determination.
 
-**The problem:** Every morning, the dispatcher spends 90 minutes manually verifying rolling
-duty limits before assigning the day's flying. Flight hours are tracked in two separate
-spreadsheets — one for 702 operations, one for 705. When a pilot flies under both subparts
-in the same week, pooled totals are consolidated by hand.
+| Operator Profile | Situation |
+|---|---|
+| 12 pilots | Mixed Part 702 and Part 705 activity |
+| Daily scheduling changes | Charter, aerial work, reassignment, and reserve coverage |
+| Manual process | Dispatcher checks multiple spreadsheets and pilot records |
+| Business risk | A rolling limit can be missed before morning dispatch |
 
-Over three months of operations, two limit exceedances were caught — both after the flight
-had already departed.
+### Before
 
-| | Before | After |
-|---|---|---|
-| Record structure | Two separate sheets, one per subpart | Single unified workbook |
-| Morning check time | ~90 min across all pilots | Under 3 seconds per pilot |
-| 702/705 hour pooling | Manual consolidation | Automatic across both subparts |
-| Violation discovery | Post-flight; retroactive TC exposure | Pre-dispatch; blocked before assignment |
+- Manual checks every morning
+- Separate dispatcher and pilot records
+- Calendar-period summaries mistaken for rolling-window compliance
+- Compliance conflicts discovered late
+
+### After
+
+- One workbook for pilot duty records
+- Automatic rolling-window calculations
+- Pre-dispatch warning status
+- Filterable historical records for review
+
+The value is not that Excel replaces compliance judgment. The value is that routine calculations stop depending on memory, copy-paste checks, and fragmented files.
 
 ---
 
-## How The Rolling Windows Work
+## Why The Regulation Works This Way
 
-The 28-day accumulation limit requires that total flight time in any consecutive 28-day window
-not exceed 100 hours. The window slides forward every day — it is not a calendar month.
+Transport Canada regulates flight crew fatigue because fatigue is a safety hazard, not only an administrative issue. The rules are designed to control cumulative workload, duty timing, rest opportunity, and alertness risk.
 
-| Date | Window covers | Net effect |
-|---|---|---|
-| June 15 | May 19 – June 15 | 92 h in window |
-| June 16 | May 20 – June 16 | − hours flown May 19 + hours flown June 16 |
-| June 17 | May 21 – June 17 | continues sliding |
+That is why the regulations consider factors such as:
 
-**The trap in numbers:**  
-Pilot has 92 hours in window. Scheduled for 10 hours on June 16.
+- total flight time across consecutive-day windows
+- flight duty period limits
+- report time and circadian timing
+- number of flights or sectors
+- rest periods and time free from duty
+- operator monitoring and records
 
-- If they flew 4 hours on May 19: 92 − 4 + 10 = **98 h** — legal.  
-- If they flew 0 hours on May 19: 92 − 0 + 10 = **102 h** — violation.
+The operational logic is direct: two schedules can have the same number of duty hours but create different fatigue risk depending on timing, frequency, sector count, and prior accumulation.
 
-A monthly-reset mental model approves both. The rolling window does not.
+Useful official references:
 
-Every pilot carries three of these calculations simultaneously: 28-day, 90-day, and 365-day.
-For 15 pilots, that is 45 live rolling calculations per dispatch cycle, each requiring up to
-365 days of historical lookup. The math requires no judgment. Automation eliminates the error class entirely.
+- [Transport Canada: Flight and duty time regulations](https://tc.canada.ca/en/aviation/commercial-air-services/fatigue-management-aviation/flight-duty-time-regulations-prescriptive-vs-performance-based-options)
+- [Transport Canada Advisory Circular AC 700-047](https://tc.canada.ca/en/aviation/reference-centre/advisory-circulars/advisory-circular-ac-no-700-047)
+- [Canadian Aviation Regulations SOR/96-433](https://tc.canada.ca/en/corporate-services/acts-regulations/list-regulations/canadian-aviation-regulations-sor-96-433)
 
-**Why report time also governs FDP:** Part 705's FDP limits depend on when duty starts.
-A duty beginning at 09:00 may legally run up to 13 hours; the same duty beginning at 01:00
-is capped near 11 hours — because it extends into the 02:00–05:59 circadian window where
-fatigue-driven error rates sharply increase. A 30-minute difference in report time can change
-the legal maximum by up to 2 hours. Sector count adds a second dimension: each additional
-approach and landing accumulates measurable cognitive load, and the matrix reduces permitted
-FDP accordingly.
+---
+
+## How Rolling Window Calculation Works
+
+For a proposed assignment date `D` and a window length of `N` days:
+
+```text
+Window start = D - (N - 1)
+Window end   = D
+
+Included records =
+all applicable records for the same pilot
+between Window start and Window end
+
+Remaining capacity =
+regulatory limit
+- prior included records
+- proposed assignment
+```
+
+Example:
+
+```text
+Proposed assignment date: May 31
+Rolling period: 28 days
+Included window: May 4 through May 31
+```
+
+On June 1, the window becomes May 5 through June 1. The check moves every day. It does not reset because a new calendar month has started.
+
+---
+
+## Workbook Logic
+
+The workbook is organized around a practical dispatch workflow:
+
+1. Enter pilot and planned assignment data.
+2. Identify the operation context.
+3. Pull the relevant duty and flight history for that pilot.
+4. Calculate rolling-window totals.
+5. Compare planned assignment against configured limits.
+6. Flag clear, warning, or risk status.
+7. Preserve records for review and export.
+
+The workbook is intended to be a decision-support and analysis tool. It does not replace the operator's legal responsibility to interpret and apply the current CARs, company operations manual, approved exemptions, or FRMS procedures.
+
+---
+
+## Purchase
+
+Use the complete Excel workbook here:
+
+[Purchase the complete Excel tracker](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
 
 ---
 
 ## Limitations
 
-- **Data integrity dependency** — calculations are only as accurate as the entries; late, missing, or incorrect records produce incorrect compliance status without warning
-- **Not a legal opinion** — this workbook reflects the author's interpretation of the regulations; Transport Canada's official position governs, and edge-case applications should be validated with legal counsel or your TC Principal Operations Inspector
-- **Regulatory amendment lag** — CARs amendments are not automatically reflected; operators are responsible for monitoring TC regulatory changes and updating the workbook accordingly
-- **Scope: Part 702 and 705 only** — operators under Part 703 (air taxi) or Part 704 (commuter) work under different specific limits not encoded in this version
-- **Scale ceiling** — designed for 3–30 pilots; beyond approximately 30, calculation depth may degrade Excel performance
-- **Excel version sensitivity** — requires Excel 2016 or later on Windows; behaviour in Excel for Mac or Office 365 web may differ
-- **Edge cases not fully automated** — augmented crew provisions, split duty rules, and certain rest extensions involve regulatory conditions that require dispatcher judgment and are not fully encoded in this version
+This workbook is not legal advice and is not an official Transport Canada system.
+
+Operators should verify the workbook configuration against:
+
+- the current Canadian Aviation Regulations
+- the operator's Air Operator Certificate
+- company operations manual procedures
+- approved FRMS, exemptions, or operations specifications
+- Transport Canada guidance or inspector direction
+- operator-specific treatment of reserve, standby, positioning, unforeseen operational circumstances, augmented crew, medevac, and other special cases
+
+The workbook cannot correct inaccurate or missing source data. If flight time, duty time, rest periods, outside flying, or reassignment records are incomplete, the output may appear compliant while the real operation is not.
+
+Regulatory references should be reviewed periodically because CARs provisions, advisory circulars, and Transport Canada guidance may change.
 
 ---
 
@@ -212,7 +280,7 @@ delivered in software your team already has.
 
 If your operation involves compliance, scheduling, or resource allocation problems
 that currently live in someone's head or a disconnected spreadsheet,
-[see what else is available →](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
+[see what else is available →](https://alexhasgreatestuff.gumroad.com)
 
 ---
 
@@ -222,15 +290,14 @@ Distributed under the [Apache License 2.0](https://www.apache.org/licenses/LICEN
 
 ---
 
-<br>
-<div align="right"><a href="#english">↑ Top (EN)</a> · <a href="#français">Français →</a></div>
+<div align="right"><a href="#english">Top (EN)</a> | <a href="#francais">Français</a></div>
 
 ---
 ---
 
-<a name="français"></a>
+<a name="francais"></a>
 
-# ✈️ RAC Parties 702/705 — Outil de suivi de conformité temps de vol et de service
+# Prévenir les infractions de temps de service de vol avant la répartition
 
 <div align="center">
 
@@ -239,195 +306,254 @@ Distributed under the [Apache License 2.0](https://www.apache.org/licenses/LICEN
 ![Réglementation](https://img.shields.io/badge/réglementation-RAC%20702%2F705-red)
 ![Langue](https://img.shields.io/badge/langue-EN%20%7C%20FR-lightgrey)
 
-### Prévenir les infractions au temps de service avant la répartition.
+**Conçu pour les exploitants canadiens des Parties 702 et 705 qui doivent suivre le temps de vol, le temps de service, l'exposition à la fatigue et les limites de conformité glissantes avant d'assigner un pilote.**
 
-Suivez les limites glissantes de temps de vol, détectez les risques de non-conformité en temps réel,  
-et maintenez une source unique de vérité auditable — entièrement dans Microsoft Excel.
-
-**Conçu pour les exploitants canadiens des Parties 702 et 705.**
-
-[Aperçu](#apercu-fr) · [Acheter](https://alexhasgreatestuff.gumroad.com/l/njeyey)
+[Aperçu en direct](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Acheter le classeur Excel complet](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
 
 </div>
+
+Suivre les limites glissantes de temps de vol, détecter les risques de conformité en quelques secondes et maintenir une source unique de vérité auditable pour les dossiers de service des pilotes.
+
+---
+
+## Aperçu rapide
+
+<!--
+<img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/5b0a5f06-fea7-4a93-a64f-af0130e39ff1" />
+
+-->
+
+
+> Voir l'aperçu interactif du classeur : [démonstration du suivi de service pilote](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
 
 ---
 
 ## Pourquoi cet outil existe
 
-La plupart des infractions au temps de service ne sont pas causées par de mauvaises intentions.
+La plupart des infractions de temps de vol et de service ne viennent pas d'une mauvaise intention.
 
-Elles surviennent parce que les réglementations exigent le suivi de trois fenêtres glissantes
-simultanées — 28, 90 et 365 jours consécutifs — pour des pilotes pouvant voler sous la Partie 702
-et la Partie 705, en temps réel, avant chaque décision de répartition.
+Elles surviennent souvent parce que les fenêtres glissantes, les activités mixtes 702/705, les calculs cumulatifs de fatigue, les réaffectations et les dossiers fragmentés sont difficiles à surveiller manuellement.
 
-Le suivi manuel ne peut pas faire cela de manière fiable. Le calcul est déterministe.
-La fenêtre glisse quotidiennement. L'erreur est structurelle, pas humaine.
+Le risque est simple :
+
+```text
+Pilote assigné
+-> Vérification manuelle
+-> Dossiers antérieurs oubliés
+-> Infraction découverte après le vol
+```
+
+Ce classeur vise a modifier le flux de travail :
+
+```text
+Pilote envisagé pour une affectation
+-> Données de service saisies une fois
+-> Limites glissantes vérifiées automatiquement
+-> Risque de conformité signalé avant la répartition
+```
+
+Le problème commercial n'est pas seulement la réglementation. C'est la visibilité opérationnelle. Les répartiteurs et planificateurs doivent savoir si un pilote peut légalement et raisonnablement accepter la prochaine affectation avant la libération du vol.
+
 ---
 
-## Trois pièges de conformité qui piègent les exploitants
+## Trois pièges de conformité qui touchent les exploitants
 
-### Piège 1 — Fenêtres glissantes confondues avec des périodes calendaires
+### 1. Les fenêtres glissantes ne sont pas des mois civils
 
-Les limites de 28, 90 et 365 jours glissent quotidiennement, pas mensuellement.
-Un pilote ayant volé 95 heures entre le 1er et le 28 mai, puis 8 heures le 29 mai,
-ne repart **pas** à zéro le 1er juin. La fenêtre du 1er juin remonte toujours au 4 mai.
+Une limite de 28, 90 ou 365 jours ne se réinitialise pas proprement lorsque le mois change. Chaque affectation proposée crée une nouvelle période de recul.
 
-Les planificateurs qui réinitialisent mentalement les limites en début de mois sous-estiment
-systématiquement l'exposition. C'est le piège le plus invisible structurellement :
-le modèle mental paraît correct ; le calcul est faux.
+Si le vol proposé est le 31 mai, la fenêtre pertinente de 28 jours peut commencer le 4 mai. Le 1er juin, la même vérification avance d'un jour. Un total de fin de mois peut donc paraître conforme alors que la fenêtre glissante dépasse déjà une limite.
 
-### Piège 2 — Heures non cumulées entre les Parties 702 et 705
+### 2. Les opérations mixtes 702/705 cachent l'exposition cumulative
 
-Lorsqu'un même pilote effectue un relevé aérien sous la Partie 702 le lundi et un vol charter
-passagers sous la Partie 705 le mercredi, les deux ensembles d'heures comptent vers les mêmes
-limites d'accumulation glissantes.
+Les petits et moyens exploitants peuvent utiliser le même pilote pour du travail aérien, de l'affrètement, des opérations de type compagnie aérienne, de la mise en place, de la réserve ou des réaffectations.
 
-Les exploitants qui maintiennent des feuilles de suivi séparées pour chaque sous-partie —
-séparation opérationnelle naturelle — sous-comptent systématiquement.
-La réglementation ne reconnaît pas cette frontière opérationnelle.
+Le risque de conformité n'est pas toujours visible dans un seul type d'exploitation. Il apparaît souvent lorsque les dossiers de plusieurs flux de travail sont combinés.
 
-### Piège 3 — Infractions découvertes après le vol
+### 3. Les contrôles manuels échouent au niveau des relations entre données
 
-La vérification manuelle a généralement lieu après qu'une affectation est émise,
-voire après le départ du vol. Au moment où l'infraction est identifiée, le manquement
-a déjà eu lieu. Transports Canada peut appliquer des sanctions rétroactivement.
+L'erreur est rarement évidente dans une seule ligne.
 
-L'interception pré-vol exige que le statut de conformité soit visible *avant* l'affectation
-d'un pilote — ce qui implique que toutes les données historiques soient à jour et que tous
-les calculs s'exécutent automatiquement au moment de la répartition.
+Elle se cache souvent dans la relation entre :
+
+- l'affectation prévue aujourd'hui
+- l'historique de service du pilote
+- l'heure de présentation
+- le nombre de secteurs
+- l'accumulation du temps de vol
+- le repos requis
+- les procédures propres à l'exploitant
+
+C'est pourquoi la vérification manuelle par feuille de calcul détecte souvent le problème trop tard, ou ne le détecte pas.
 
 ---
 
 ## À qui s'adresse cet outil
 
-✓ **Répartiteurs** — vérifier la disponibilité d'un pilote en quelques secondes avant d'émettre une autorisation de départ
+| Utilisateur | Cas d'utilisation pratique |
+|---|---|
+| Répartiteurs | Vérifier la disponibilité d'un pilote avant l'autorisation de départ |
+| Planificateurs d'équipage | Construire les horaires avec visibilité sur la capacité légale restante |
+| Chefs pilotes | Examiner la charge et l'exposition cumulative avant d'approuver une affectation |
+| Responsables sécurité | Maintenir des dossiers structurés pour revue interne et préparation d'audit |
+| Petits exploitants AOC | Remplacer le suivi manuel dispersé par un flux Excel léger |
 
-✓ **Coordinateurs d'équipage** — construire des tableaux de service 7 à 14 jours à l'avance avec visibilité en temps réel des heures légales restantes
-
-✓ **Pilotes en chef** — maintenir une visibilité complète de l'exposition au temps de service à l'échelle de la flotte sans attendre les rapports sécurité
-
-✓ **Responsables sécurité** — détenir une source unique de vérité auditable pour tous les dossiers de service
-
-✓ **Petits exploitants AOC** — une alternative abordable aux systèmes de gestion d'équipage d'entreprise coûtant des centaines de milliers de dollars
-
-Particulièrement adapté aux exploitants canadiens de 3 à 30 pilotes menant des opérations
-mixtes 702/705, pour lesquels les logiciels dédiés sont trop coûteux mais les approches
-manuelles ne sont plus viables.
+Particulièrement adapté aux exploitants canadiens avec des groupes de pilotes petits à moyens, surtout lorsque les logiciels de gestion d'équipage d'entreprise sont trop coûteux ou trop lourds pour les opérations quotidiennes.
 
 ---
 
 ## Ce que fait le classeur
 
-### Enregistrement du temps de service
-Un seul point de saisie pour tous les dossiers de service des pilotes. Les répartiteurs
-enregistrent une fois les informations de base ; les calculs s'exécutent automatiquement
-en arrière-plan.
+### Suivi du temps de service
 
-### Suivi des fenêtres glissantes
-Calcul automatique des limites d'accumulation de la Partie 705 sur les trois fenêtres
-réglementaires simultanément :
-- 100 heures sur 28 jours consécutifs
-- 300 heures sur 90 jours consécutifs
-- 1 000 heures sur 365 jours consécutifs
+Consigner le service pilote, le temps de vol, le repos, le type d'exploitation, l'heure de présentation, les secteurs et les notes d'affectation dans un format structuré.
 
-### Statut de conformité avant répartition
-Le statut de conformité de chaque pilote est visible avant l'émission de l'affectation.
-Aucune consultation manuelle. Aucune découverte post-vol.
+### Surveillance des fenêtres glissantes
 
-### Validation de la matrice PDS
-Les limites de Période de Service en vol (PDS) de la Partie 705 — une matrice à deux variables
-heure de présentation × nombre de secteurs — sont pré-encodées. La PDS maximale légale
-se met à jour automatiquement selon l'heure de présentation du pilote et le nombre de secteurs prévus.
+Suivre les limites cumulatives sur des périodes glissantes telles que :
 
-### Rapports prêts pour l'audit
-Chaque saisie est structurée et traçable dès le premier jour. Les dossiers de conformité
-historiques peuvent être filtrés par pilote, période ou statut et exportés sans post-traitement.
+- 28 jours
+- 90 jours
+- 365 jours
 
----
+Le classeur vérifie l'historique pertinent du pilote chaque fois qu'une nouvelle affectation est saisie.
 
-<a name="apercu-fr"></a>
-## Aperçu du classeur
+### Validation avant répartition
 
-> 🔗 **[Voir l'aperçu en direct →](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)**
+Signaler les risques potentiels de conformité avant l'assignation du pilote, plutôt que découvrir le problème après le vol.
 
-| Dimension | Avant | Après |
-|---|---|---|
-| Risque d'infraction | Détecté après le vol ; pénalités TC appliquées rétroactivement | Bloqué avant la répartition ; interception pré-vol à 100 % |
-| Durée de vérification | 20–30 min par pilote, par vérification | Moins de 3 secondes |
-| Préparation aux audits | 2–3 jours pour reconstituer les dossiers | Filtrer et exporter en moins de 5 secondes |
-| Utilisation des équipages | Tampon manuel de 1–2 heures régulièrement gaspillé | Précision à la minute ; chaque minute légale comptabilisée |
-| Cohérence des données | Copie répartiteur et copie pilote fréquemment divergentes | Source unique de vérité pour tous les dossiers et rapports |
+### Rapports d'audit
 
-> 🛒 **[Disponible sur Gumroad →](https://alexhasgreatestuff.gumroad.com/l/njeyey)**
+Conserver un historique filtrable pouvant soutenir les revues internes, les rapports de gestion et la préparation d'audit.
+
+### Source unique de vérité
+
+Aligner les vues répartition, planification, sécurité et direction autour des mêmes données de classeur.
 
 ---
 
-## Exemple concret
+## Scénario d'exemple
 
-**Profil de l'exploitant :** 12 pilotes. Opérations mixtes Parties 702 et 705. Bureau de répartition unique.
+Il s'agit d'un exemple simplifié, et non d'une détermination juridique.
 
-**Le problème :** Chaque matin, le répartiteur passe 90 minutes à vérifier manuellement les
-limites de temps de service glissantes avant d'affecter les vols de la journée. Les heures de vol
-sont consignées dans deux tableurs séparés — un pour les opérations 702, un pour les opérations 705.
-Lorsqu'un pilote vole sous les deux sous-parties la même semaine, le cumul est consolidé manuellement.
+| Profil de l'exploitant | Situation |
+|---|---|
+| 12 pilotes | Activités mixtes Partie 702 et Partie 705 |
+| Changements quotidiens | Affrètement, travail aérien, réaffectation et couverture de réserve |
+| Processus manuel | Le répartiteur vérifie plusieurs feuilles de calcul et dossiers pilote |
+| Risque commercial | Une limite glissante peut être oubliée avant la répartition du matin |
 
-Sur trois mois d'opérations, deux dépassements de limite ont été identifiés — les deux après
-le départ du vol.
+### Avant
 
-| | Avant | Après |
-|---|---|---|
-| Structure des dossiers | Deux tableurs séparés, un par sous-partie | Classeur unique unifié |
-| Durée de vérification matinale | ~90 min pour tous les pilotes | Moins de 3 secondes par pilote |
-| Cumul des heures 702/705 | Consolidation manuelle | Automatique sur les deux sous-parties |
-| Découverte des infractions | Post-vol ; exposition TC rétroactive | Pré-répartition ; bloqué avant affectation |
+- Vérifications manuelles chaque matin
+- Dossiers répartiteur et pilote séparés
+- Totaux par période civile confondus avec la conformité par fenêtre glissante
+- Conflits de conformité découverts tardivement
 
----
+### Après
 
-## Comment fonctionnent les fenêtres glissantes
+- Un classeur unique pour les dossiers de service pilote
+- Calculs automatiques de fenêtres glissantes
+- Statut d'avertissement avant répartition
+- Dossiers historiques filtrables pour revue
 
-La limite d'accumulation sur 28 jours exige que le temps de vol total dans toute fenêtre
-de 28 jours consécutifs n'excède pas 100 heures. La fenêtre avance chaque jour —
-ce n'est pas un mois calendaire.
-
-| Date | Fenêtre couverte | Effet net |
-|---|---|---|
-| 15 juin | 19 mai – 15 juin | 92 h dans la fenêtre |
-| 16 juin | 20 mai – 16 juin | − heures du 19 mai + heures du 16 juin |
-| 17 juin | 21 mai – 17 juin | continue de glisser |
-
-**Le piège en chiffres :**  
-Le pilote a 92 heures dans la fenêtre. Prévu pour 10 heures le 16 juin.
-
-- S'il a volé 4 heures le 19 mai : 92 − 4 + 10 = **98 h** — légal.  
-- S'il a volé 0 heure le 19 mai : 92 − 0 + 10 = **102 h** — infraction.
-
-Un modèle mental de réinitialisation mensuelle approuve les deux. La fenêtre glissante, non.
-
-Chaque pilote porte trois de ces calculs simultanément : 28, 90 et 365 jours.
-Pour 15 pilotes, cela représente 45 calculs glissants actifs par cycle de répartition,
-chacun nécessitant jusqu'à 365 jours d'historique. Le calcul ne requiert aucun jugement.
-L'automatisation élimine entièrement cette classe d'erreur.
-
-**Pourquoi l'heure de présentation détermine aussi la PDS :** Les limites de PDS de la Partie 705
-dépendent de l'heure de début du service. Un service débutant à 09h00 peut légalement durer
-jusqu'à 13 heures ; le même service débutant à 01h00 est limité à environ 11 heures — car il
-s'étend dans la fenêtre circadienne 02h00–05h59 où les taux d'erreur liés à la fatigue augmentent
-fortement. Une différence de 30 minutes dans l'heure de présentation peut modifier le maximum
-légal jusqu'à 2 heures. Le nombre de secteurs ajoute une deuxième dimension : chaque approche
-et atterrissage supplémentaire accumule une charge cognitive mesurable, et la matrice réduit
-la PDS autorisée en conséquence.
+La valeur n'est pas qu'Excel remplace le jugement de conformité. La valeur est que les calculs répétitifs ne dépendent plus de la mémoire, des contrôles par copier-coller et des fichiers fragmentés.
 
 ---
 
-## Limitations
+## Pourquoi la réglementation fonctionne ainsi
 
-- **Dépendance à l'intégrité des données** — les calculs ne sont exacts qu'à condition que les saisies le soient ; les entrées manquantes, tardives ou incorrectes produisent un statut de conformité erroné sans avertissement
-- **Pas un avis juridique** — ce classeur reflète l'interprétation de l'auteur ; l'interprétation officielle de Transports Canada prévaut, et les cas limites doivent être validés avec un conseil juridique ou l'Inspecteur principal des opérations TC
-- **Délai de mise à jour réglementaire** — les modifications du RAC ne sont pas automatiquement reflétées ; les exploitants sont responsables du suivi des changements réglementaires et de la mise à jour du classeur
-- **Périmètre : Parties 702 et 705 uniquement** — les exploitants sous la Partie 703 (taxi aérien) ou la Partie 704 (navettes) sont soumis à des limites spécifiques différentes non encodées dans cette version
-- **Plafond d'échelle** — conçu pour 3 à 30 pilotes ; au-delà d'environ 30, la profondeur des calculs peut dégrader les performances Excel
-- **Sensibilité à la version Excel** — nécessite Excel 2016 ou une version ultérieure sur Windows ; le comportement dans Excel pour Mac ou Office 365 en ligne peut différer
-- **Cas limites non entièrement automatisés** — les dispositions relatives aux équipages renforcés, les règles de service fractionné et certaines extensions de repos nécessitent le jugement du répartiteur et ne sont pas entièrement encodées dans cette version
+Transports Canada encadre la fatigue des équipages de conduite parce que la fatigue est un risque de sécurité, pas seulement une question administrative. Les règles visent à contrôler la charge cumulative, le moment du service, l'occasion de repos et le risque de perte de vigilance.
+
+C'est pourquoi la réglementation tient compte de facteurs tels que :
+
+- le temps de vol total sur des périodes de jours consécutifs
+- les limites de période de service de vol
+- l'heure de présentation et le rythme circadien
+- le nombre de vols ou secteurs
+- les périodes de repos et le temps libre de service
+- le suivi et les dossiers de l'exploitant
+
+La logique opérationnelle est directe : deux horaires peuvent avoir le même nombre d'heures de service mais créer des risques de fatigue différents selon le moment, la fréquence, le nombre de secteurs et l'accumulation antérieure.
+
+Références officielles utiles :
+
+- [Transports Canada : réglementation sur le temps de vol et de service](https://tc.canada.ca/en/aviation/commercial-air-services/fatigue-management-aviation/flight-duty-time-regulations-prescriptive-vs-performance-based-options)
+- [Circulaire d'information AC 700-047 de Transports Canada](https://tc.canada.ca/en/aviation/reference-centre/advisory-circulars/advisory-circular-ac-no-700-047)
+- [Règlement de l'aviation canadien SOR/96-433](https://tc.canada.ca/en/corporate-services/acts-regulations/list-regulations/canadian-aviation-regulations-sor-96-433)
+
+---
+
+## Fonctionnement du calcul par fenêtre glissante
+
+Pour une date d'affectation proposée `D` et une fenêtre de `N` jours :
+
+```text
+Début de fenêtre = D - (N - 1)
+Fin de fenêtre   = D
+
+Dossiers inclus =
+tous les dossiers applicables du même pilote
+entre le début et la fin de fenêtre
+
+Capacité restante =
+limite réglementaire
+- dossiers antérieurs inclus
+- affectation proposée
+```
+
+Exemple :
+
+```text
+Date d'affectation proposée : 31 mai
+Période glissante : 28 jours
+Fenêtre incluse : 4 mai au 31 mai
+```
+
+Le 1er juin, la fenêtre devient le 5 mai au 1er juin. La vérification avance chaque jour. Elle ne se réinitialise pas parce qu'un nouveau mois civil a commencé.
+
+---
+
+## Logique du classeur
+
+Le classeur est organisé autour d'un flux pratique de répartition :
+
+1. Saisir les données pilote et l'affectation prévue.
+2. Identifier le contexte d'exploitation.
+3. Extraire l'historique de vol et de service pertinent pour ce pilote.
+4. Calculer les totaux par fenêtre glissante.
+5. Comparer l'affectation prévue aux limites configurées.
+6. Signaler un statut clair, avertissement ou risque.
+7. Conserver les dossiers pour revue et export.
+
+Le classeur est conçu comme un outil d'aide à la décision et d'analyse. Il ne remplace pas la responsabilité juridique de l'exploitant d'interpréter et d'appliquer le RAC en vigueur, le manuel d'exploitation de la compagnie, les exemptions approuvées ou les procédures SGRF.
+
+---
+
+## Achat
+
+Utiliser le classeur Excel complet ici :
+
+[Acheter le suivi Excel complet](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
+
+---
+
+## Limites
+
+Ce classeur n'est pas un avis juridique et n'est pas un systeme officiel de Transports Canada.
+
+Les exploitants doivent vérifier la configuration du classeur avec :
+
+- le Règlement de l'aviation canadien en vigueur
+- le certificat d'exploitation aérienne de l'exploitant
+- les procédures du manuel d'exploitation de la compagnie
+- les SGRF, exemptions ou spécifications d'exploitation approuvés
+- les lignes directrices ou instructions de Transports Canada
+- le traitement propre à l'exploitant concernant réserve, attente, mise en place, circonstances opérationnelles imprévues, équipage renforcé, évacuation médicale et autres cas particuliers
+
+Le classeur ne peut pas corriger des données sources inexactes ou manquantes. Si les temps de vol, temps de service, périodes de repos, vols externes ou réaffectations sont incomplets, le résultat peut paraître conforme alors que l'exploitation réelle ne l'est pas.
+
+Les références réglementaires doivent être revues périodiquement, car les dispositions du RAC, les circulaires d'information et les lignes directrices de Transports Canada peuvent changer.
 
 ---
 
@@ -444,7 +570,7 @@ reproductible — dans les outils que votre équipe utilise déjà.
 
 Si vos opérations comportent des problèmes de conformité, de planification ou d'allocation
 de ressources qui résident actuellement dans la tête de quelqu'un ou dans un tableur déconnecté,
-[voir ce qui est disponible →](https://alexhasgreatestuff.gumroad.com/l/njeyey)
+[voir ce qui est disponible →](https://alexhasgreatestuff.gumroad.com/)
 
 ---
 
@@ -454,5 +580,4 @@ Distribué sous la [licence Apache 2.0](https://www.apache.org/licenses/LICENSE-
 
 ---
 
-<br>
-<div align="right"><a href="#français">↑ Haut de page (FR)</a> · <a href="#english">← English</a></div>
+<div align="right"><a href="#francais">Haut de page (FR)</a> | <a href="#english">English</a></div>
