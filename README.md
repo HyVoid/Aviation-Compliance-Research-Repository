@@ -1,17 +1,5 @@
-<!-- Language Navigation -->
-<div align="center">
-
-[English](#english)
-
-</div>
-
----
-
-<a name="english"></a>
-
 # Prevent Flight Duty Time Violations Before Dispatch
 
-<div align="center">
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
@@ -21,7 +9,7 @@
 
 [Live Preview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Purchase Complete Excel](https://alexhasgreatestuff.gumroad.com/l/dutytracker)
 
-</div>
+
 
 Track rolling flight time limits, detect compliance risks in seconds, and maintain a single auditable source of truth for pilot duty records.
 
