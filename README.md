@@ -7,7 +7,7 @@
 
 **Designed for Canadian Part 702 and Part 705 operators who need to track flight time, duty time, fatigue exposure, and rolling compliance limits before a pilot is assigned.**
 
-[Live Preview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Purchase Complete Excel](https://alexhasgreatestuff.gumroad.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
+[Live Preview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Purchase Complete Excel](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
 
 
@@ -240,7 +240,7 @@ The workbook is intended to be a decision-support and analysis tool. It does not
 
 Use the complete Excel workbook here:
 
-[Purchase the complete Excel tracker](https://alexhasgreatestuff.gumroad.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
+[Purchase the complete Excel tracker](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
 ---
 
@@ -268,7 +268,7 @@ delivered in software your team already has.
 
 If your operation involves compliance, scheduling, or resource allocation problems
 that currently live in someone's head or a disconnected spreadsheet,
-[see what else is available →](https://alexhasgreatestuff.gumroad.com)
+[see what else is available →](https://www.theseusworkshop.com)
 
 ---
 
