@@ -7,7 +7,9 @@
 
 An automated **Canadian Aviation Regulations (CARs) Part 702 and Part 705 Flight and Duty Time Tracking Excel Spreadsheet** designed for commercial air operators. This **pilot duty time calculator** and **Fatigue Risk Management (FRMS) scheduling tool** helps flight dispatchers, crew schedulers, and Chief Pilots track **rolling flight time limits (28/90/365-day windows)**, calculate **Flight Duty Period (FDP) maximums**, monitor **mandatory rest periods**, and prevent **Transport Canada compliance violations** before flight dispatch.
 
-[**Launch the Interactive CARs 702/705 Flight Duty Tracker Web Demo (Single-Use Trial)**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [**Download the Multi-Pilot CARs Flight & Duty Time Compliance Excel Workbook**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
+> [**Launch the Interactive CARs 702/705 Flight Duty Tracker Web Demo (Single-Use Trial)**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
+>
+> > [**Download the Multi-Pilot CARs Flight & Duty Time Compliance Excel Workbook**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
 Eliminate manual spreadsheet errors, automate **CARs Subpart 702 aerial work and 705 airline flight time pooling**, detect **crew fatigue compliance risks** in seconds, and maintain a single, **Transport Canada audit-ready** source of truth for pilot duty records.
 
