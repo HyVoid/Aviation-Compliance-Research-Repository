@@ -1,174 +1,160 @@
-[ 🌐 عربي ](README.ar.md) | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇫🇷 Français ](README.fr.md) | [ 🇳🇱 Nederlands ](README.nl.md) | 🇪🇸 [ Español ](README.sp.md) | [ 🇬🇧 English ](README.md)
-
-# Prevenga las infracciones de tiempos de vuelo y servicio antes del despacho
+[ 🌐 عربي ](README.ar.md) | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇫🇷 Français ](README.fr.md) | [ 🇳🇱 Nederlands ](README.nl.md) | [ 🇪🇸 Español ](README.sp.md) | [ 🇬🇧 English ](README.md)
+# Rastreador de Tiempos de Vuelo y Servicio CARs 702 y 705 de Canadá (Plantilla de Excel) — Prevenga la Fatiga de Pilotos y las Infracciones de Despacho
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
 ![Regulation](https://img.shields.io/badge/regulation-CARs%20702%2F705-red)
 
-**Diseñado para operadores canadienses de las partes 702 y 705 que necesitan rastrear el tiempo de vuelo, el tiempo de servicio, la exposición a la fatiga y los límites de cumplimiento rodantes antes de asignar a un piloto.**
+Una **hoja de cálculo de Excel automatizada de seguimiento de tiempos de vuelo y servicio conforme a las Canadian Aviation Regulations (CARs) Partes 702 y 705** diseñada para operadores aéreos comerciales. Esta **calculadora de tiempo de servicio de pilotos** y **herramienta de programación de Gestión del Riesgo de Fatiga (FRMS)** ayuda a los despachadores de vuelo, planificadores de tripulación y Pilotos Jefes a rastrear los **límites rodantes de tiempo de vuelo (ventanas de 28/90/365 días)**, calcular los **máximos del Período de Servicio de Vuelo (FDP)**, monitorear los **períodos de descanso obligatorios** y prevenir las **infracciones de cumplimiento de Transport Canada** antes del despacho del vuelo.
 
-[Vista previa en vivo](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Comprar Excel completo](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
+> [**Lance la demostración web interactiva del Rastreador de Tiempos de Vuelo y Servicio CARs 702/705 (Prueba de un Solo Uso)**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
+>
+> > [**Descargue el Libro de Excel de Cumplimiento de Tiempos de Vuelo y Servicio CARs Multi-Piloto**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
-Rastree los límites rodantes de tiempo de vuelo, detecte riesgos de incumplimiento en segundos y mantenga una única fuente de verdad auditable para los registros de servicio de los pilotos.
-
----
-
-## Vista previa rápida
-
-<img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
-
-> Vea la vista previa interactiva del libro de trabajo: [demostración del rastreador de servicio de pilotos](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
+Elimine los errores manuales de las hojas de cálculo, automatice la **agrupación de tiempos de vuelo del trabajo aéreo de la subparte 702 y de las aerolíneas de la 705 de las CARs**, detecte **riesgos de incumplimiento por fatiga de la tripulación** en segundos y mantenga una única fuente de verdad **lista para auditorías de Transport Canada** para los registros de servicio de los pilotos.
 
 ---
 
-## Por qué existe esto
+## Vista previa interactiva: Calculadora de Servicio de Pilotos CARs 702/705
 
-La mayoría de las infracciones de tiempos de vuelo y servicio no son causadas por malas intenciones.
+<img width="1672" height="941" alt="Canadian CARs 702 and 705 Flight Duty Time Tracker Excel Template Dashboard for Pilot Scheduling and Transport Canada Compliance" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
 
-Suelen ocurrir porque las ventanas rodantes, la actividad mixta 702/705, las reglas acumulativas de fatiga, los servicios reasignados y los registros fragmentados son difíciles de monitorear manualmente.
+> **Pruebe la lógica antes de comprar:** [Pruebe la vista previa web interactiva de la calculadora canadiense de tiempos de vuelo y servicio de pilotos](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
 
-El riesgo es simple:
+---
+
+## Por qué la programación manual de tripulaciones falla en las auditorías de cumplimiento de Transport Canada
+
+La mayoría de las **infracciones de tiempos de vuelo y servicio de las CARs** no son causadas por malas intenciones. Ocurren porque las **ventanas rodantes de tiempo de vuelo**, las **operaciones de vuelo mixtas de las subpartes 702/705**, las **reglas acumulativas de fatiga de la tripulación**, las extensiones por servicio dividido y los libros de registro de pilotos fragmentados son casi imposibles de cruzar manualmente durante un despacho matutino ajetreado.
+
+El riesgo tradicional de la programación manual se ve así:
 
 ```text
-Pilot assigned
--> Manual check
--> Prior records missed
--> Violation discovered after the flight
+Pilot assigned to flight
+-> Manual check across separate 702 and 705 spreadsheets
+-> Rolling 28-day / 90-day boundary miscalculated
+-> Violation discovered retroactively during a Transport Canada PVI / Audit
 ```
 
-Este libro de trabajo está diseñado para cambiar el flujo de trabajo:
+Este **libro de Excel de cumplimiento de aviación automatizado** rediseña el flujo de trabajo previo al despacho:
 
 ```text
-Pilot considered for assignment
--> Duty record entered once
--> Rolling limits checked automatically
--> Compliance risk flagged before dispatch
+Pilot considered for flight assignment
+-> Duty & sector details logged once in a unified tracker
+-> Rolling CARs 702/705 limits & FDP matrix validated automatically
+-> Non-compliant dispatch blocked BEFORE flight release
 ```
 
-El problema comercial no es solo la regulación. Es la visibilidad operativa. Los despachadores y planificadores necesitan saber si un piloto puede tomar legal y seguramente la siguiente asignación antes de que se libere el vuelo.
+El problema comercial no es solo la alineación regulatoria—es la **visibilidad operativa previa al vuelo**. Los despachadores de vuelo y los planificadores de tripulación necesitan certeza inmediata sobre si un tripulante puede aceptar legal y seguramente el siguiente sector antes de que se libere el plan de vuelo operativo (OFP).
 
 ---
 
-## Tres trampas de cumplimiento que atrapan a los operadores
+## Tres trampas de cumplimiento de las CARs 702 y 705 en las hojas de cálculo manuales
 
-### Trampa 1 — Las ventanas rodantes se leen mal como períodos calendáricos
+### Trampa 1 — Las ventanas rodantes de tiempo de vuelo se leen mal como meses calendáricos
+Bajo las **CARs de Transport Canada**, los **límites de tiempo de vuelo de 28, 90 y 365 días consecutivos** se deslizan hacia adelante cada 24 horas, no al final de cada mes calendario. Un piloto comercial que registra 95 horas de vuelo entre el 1 y el 28 de mayo y vuela 8 horas el 29 de mayo **no** se reinicia el 1 de junio. La ventana rodante del 1 de junio aún mira hacia atrás hasta el 4 de mayo. Los planificadores de tripulación que reinician mentalmente las horas de los pilotos en los límites del mes subcuentan rutinariamente la exposición acumulada.
 
-Los límites de 28, 90 y 365 días se deslizan hacia adelante cada día, no cada mes.
-Un piloto que voló 95 horas entre el 1 y el 28 de mayo y luego voló 8 horas el 29 de mayo
-**no** se ha reiniciado cuando comienza junio. La ventana del 1 de junio aún alcanza hasta el 4 de mayo.
+### Trampa 2 — Las horas de vuelo no se agrupan entre las subpartes 702 y 705 de las CARs
+Cuando el mismo tripulante vuela una **misión de trabajo aéreo / levantamiento bajo la parte 702 de las CARs** el lunes y un **charter de pasajeros conmutado o de aerolínea bajo la parte 705 de las CARs** el miércoles, ambos tiempos de vuelo deben agruparse hacia los mismos **límites acumulativos rodantes de servicio**. Los operadores aéreos que mantienen hojas de seguimiento de Excel separadas para cada subparte del AOC subcuentan sistemáticamente la exposición total a la fatiga del piloto.
 
-Los planificadores que reinician mentalmente los límites en los límites de mes subcuentan rutinariamente la exposición.
-Esta es la trampa estructuralmente más invisible: el modelo mental se siente correcto; el cálculo está mal.
+### Trampa 3 — Infracciones de FDP y descanso descubiertas después del vuelo
+La verificación manual del libro de registro a menudo ocurre después de que se emite la liberación de un vuelo o cuando se totalizan las horas de nómina mensuales. Para cuando se señala una excedencia del **Período de Servicio de Vuelo (FDP) máximo** o del **tiempo libre de servicio (período de descanso)**, la infracción regulatoria ya ha ocurrido—exponiendo al titular del Certificado de Operador Aéreo (AOC) a las **sanciones monetarias administrativas (AMPs) de Transport Canada**.
 
-### Trampa 2 — Las horas no se agrupan entre 702 y 705
-
-Cuando el mismo piloto realiza un levantamiento aéreo bajo la parte 702 el lunes y un charter de pasajeros
-bajo la parte 705 el miércoles, ambos conjuntos de horas cuentan para los mismos límites de acumulación rodantes.
-
-Los operadores que mantienen hojas de seguimiento separadas para cada subparte — una división natural del flujo de trabajo —
-subcuentan sistemáticamente. La regulación no reconoce ese límite operativo.
-
-### Trampa 3 — Las infracciones se descubren después del vuelo
-
-La verificación manual normalmente ocurre después de que se emite una asignación de servicio, o después de que el vuelo
-ha partido. Para cuando se identifica una infracción, el incumplimiento ya ha ocurrido.
-La aplicación de Transport Canada se aplica de forma retroactiva.
-
-La interceptación previa al vuelo requiere que el estado de cumplimiento sea visible *antes* de que se asigne un piloto —
-lo que requiere que todos los datos históricos estén actualizados y que todos los cálculos se ejecuten automáticamente en
-el momento del despacho.
-
-Normalmente está oculto en la relación entre:
-
-- el servicio planificado de hoy
-- el historial de servicio previo del piloto
-- la hora de presentación
-- el número de sectores
-- la acumulación de tiempo de vuelo
-- el descanso requerido
-- los procedimientos específicos del operador
-
-Por eso la revisión manual con hojas de cálculo a menudo detecta el problema tarde, o lo omite por completo.
+La verdadera **intercepción previa al despacho** requiere una verificación cruzada automatizada de:
+- El **Período de Servicio de Vuelo (FDP)** planificado de hoy y la **hora de presentación local (aclimatado vs. no aclimatado)**
+- La **acumulación de tiempo de vuelo** histórica del piloto de 28/90/365 días
+- El **número de sectores** programado y la duración promedio de los sectores
+- Los **intervalos de descanso obligatorios previos y posteriores al vuelo** y el **tiempo libre de servicio de 36 horas / 7 días**
 
 ---
 
-## Para quién es esta herramienta
+## Para quién es esta plantilla de Excel de cumplimiento de aviación (Roles y escenarios de uso)
 
-| Usuario | Caso de uso práctico |
-|---|---|
-| Despachadores de vuelo | Verificar la disponibilidad del piloto antes de emitir una autorización de despacho |
-| Planificadores de tripulación | Construir listas de turnos con visibilidad de la capacidad legal restante |
-| Pilotes jefes | Revisar la carga de trabajo de los pilotos y la exposición acumulada antes de aprobar asignaciones |
-| Gerentes de seguridad | Mantener registros estructurados para revisión interna y preparación de auditorías |
-| Pequeños operadores AOC | Reemplazar el seguimiento manual disperso con un flujo de trabajo de Excel ligero y único |
+Si busca una alternativa asequible al software empresarial de gestión de tripulaciones sin sacrificar la precisión regulatoria, esta herramienta está creada para sus escenarios operativos diarios:
 
-Más adecuado para operadores canadienses con 3–30 pilotos que realizan operaciones mixtas 702/705,
-donde el software de gestión de tripulación dedicado es prohibitivo en costo pero los enfoques manuales ya no escalan.
-
----
-
-## Lo que hace el libro de trabajo
-
-### Registro de tiempo de servicio
-Un único punto de entrada de datos para todos los registros de servicio de los pilotos. Los despachadores registran la información básica de vuelo y servicio
-una sola vez; los cálculos se ejecutan automáticamente en segundo plano.
-
-### Monitoreo de ventanas rodantes
-Cálculo automático de los límites de acumulación de la parte 705 en las tres ventanas regulatorias simultáneamente:
-- 100 horas en cualquier período de 28 días consecutivos
-- 300 horas en cualquier período de 90 días consecutivos
-- 1.000 horas en cualquier período de 365 días consecutivos
-
-### Estado de cumplimiento previo al despacho
-El estado de cumplimiento de cada piloto es visible antes de que se emita la asignación.
-Sin referencia cruzada manual. Sin descubrimiento posterior al vuelo.
-
-### Validación de la matriz FDP
-Los límites del período de servicio de vuelo (FDP) de la parte 705 — una matriz de dos variables de hora de presentación × número de sectores —
-están pre-codificados. El máximo FDP legal se actualiza automáticamente según cuándo se presenta el piloto
-y cuántos sectores están programados.
-
-### Informes listos para auditoría
-Cada entrada está estructurada y es rastreable desde el primer día. Los registros históricos de cumplimiento pueden
-filtrarse por piloto, rango de fechas o estado y exportarse sin posprocesamiento.
-
----
-
-## Escenario de ejemplo
-
-**Perfil del operador:** 12 pilotos. Operaciones mixtas de las partes 702 y 705. Una única oficina de despacho.
-
-**El problema:** Cada mañana, el despachador pasa 90 minutos verificando manualmente los límites
-de servicio rodantes antes de asignar los vuelos del día. Las horas de vuelo se rastrean en dos
-hojas de cálculo separadas — una para operaciones 702, otra para 705. Cuando un piloto vuela bajo ambas subpartes
-en la misma semana, los totales agrupados se consolidan a mano.
-
-A lo largo de tres meses de operaciones, se detectaron dos excedencias de límites — ambas después de que el vuelo
-ya había partido.
-
-| | Antes | Después |
+| Rol de Aviación | Escenario de Búsqueda y Flujo de Trabajo Operativo | Beneficio Principal de Cumplimiento |
 |---|---|---|
-| Estructura de registros | Dos hojas separadas, una por subparte | Un libro de trabajo unificado único |
-| Tiempo de verificación matutina | ~90 min en todos los pilotos | Menos de 3 segundos por piloto |
-| Agrupación de horas 702/705 | Consolidación manual | Automática en ambas subpartes |
-| Descubrimiento de infracciones | Posterior al vuelo; exposición retroactiva ante TC | Previo al despacho; bloqueado antes de la asignación |
+| **Despachadores de Vuelo** | Necesitan una **calculadora de legalidad de pilotos previa al despacho** para verificar la disponibilidad de la tripulación durante las liberaciones matutinas de vuelos o solicitudes de charter de último momento. | Banderas instantáneas de **cumplimiento Go / No-Go** antes de firmar el plan de vuelo operativo. |
+| **Planificadores de Tripulación** | Buscan una **hoja de cálculo de roster y seguimiento de fatiga de la tripulación** para construir horarios mensuales sin exceder los topes rodantes de 28/90/365 días. | Visibilidad en tiempo real de la **capacidad legal de vuelo restante** por piloto en toda la flota. |
+| **Pilotos Jefes y DFO** | Requieren una **plantilla de monitoreo de tiempo de vuelo del Piloto Jefe** para supervisar la carga de trabajo de la tripulación, aprobar extensiones de servicio y prevenir la fatiga sistémica. | Panel centralizado que muestra la **agrupación de horas mixtas CARs 702/705** y alertas de alta utilización. |
+| **Gerentes de SMS y Seguridad de Aviación** | Buscan un **registro de cumplimiento de Transport Canada listo para auditoría** para prepararse para las Inspecciones de Validación de Programas (PVI) y las auditorías SMS. | Registros históricos estandarizados y a prueba de manipulación sin posprocesamiento requerido. |
+| **Operadores AOC Pequeños y Medianos** | Operadores regionales canadienses, de evacuación médica, bush y charter (3–30 pilotos) que necesitan **software de bajo costo de seguimiento de servicio de vuelo en Excel**. | Reemplaza los registros de papel dispersos y las hojas frágiles hechas a mano con un **motor de cumplimiento de Microsoft Excel** determinista. |
 
 ---
 
-El valor no es que Excel reemplace el juicio de cumplimiento. El valor es que los cálculos rutinarios dejan de depender de la memoria, las verificaciones de copiar y pegar y los archivos fragmentados.
+## Lo que le ayuda a rastrear: Mapeo de punto de dolor a solución
+
+En lugar de actuar como un libro de registro digital pasivo, este libro funciona como un **motor de reglas regulatorias CARs 702/705** activo:
+
+| Punto de Dolor Operativo (Lo que falla manualmente) | Métrica de Cumplimiento de Alta Frecuencia Rastreada | Solución Automatizada del Libro (Cómo lo resuelve) |
+|---|---|---|
+| **Cálculo manual de ventanas rodantes:** Contar hacia atrás 28, 90 y 365 días en un calendario de pared para más de 15 pilotos cada mañana. | **Límites Rodantes Acumulativos de Tiempo de Vuelo** (`100h / 28d`, `300h / 90d`, `1,000h / 365d`) | Las fórmulas de matriz dinámica deslizan automáticamente las ventanas retrospectivas de 28, 90 y 365 días hacia adelante cada día y calculan las horas legales restantes exactas. |
+| **Búsquedas complejas en la tabla FDP:** Cruzar las horas de presentación de los pilotos con los aterrizajes programados en el manual de las CARs bajo presión de tiempo. | **Matriz del Período de Servicio de Vuelo (FDP) de la parte 705 de las CARs** (Hora de Presentación × Número de Sectores) | Las tablas de búsqueda regulatorias pre-codificadas ajustan automáticamente el **FDP Legal Máximo** del piloto en el momento en que ingresa la hora de presentación y el número de sectores. |
+| **Vuelo multi-subparte en silos:** Olvidar sumar las horas de patrulla contra incendios de la parte 702 del martes a los límites del charter de pasajeros de la parte 705 del viernes. | **Agrupación de Horas entre Subpartes (CARs 702 / 703 / 704 / 705)** | Un esquema de datos unificado etiqueta cada vuelo por subparte pero agrega todas las horas de vuelo y servicio en un único perfil maestro de cumplimiento por piloto. |
+| **Reasignaciones de último momento:** Un cliente añade dos tramos adicionales a mitad del día, y el despacho no sabe si la tripulación excederá los límites de servicio. | **Estado de Legalidad Go/No-Go Previo al Despacho** | El formato condicional en tiempo real activa alertas visuales de **Advertencia (Cerca del Límite)** y **Infracción (Bloqueado)** *antes* de que se despache el vuelo. |
+| **Preparación de auditoría caótica:** Pasar días limpiando fórmulas rotas y fechas faltantes antes de una inspección de Transport Canada. | **Registros Históricos Listos para Auditoría de Transport Canada** | Un libro mayor estructurado y filtrable le permite exportar historiales de cumplimiento limpios por piloto, matrícula de aeronave, rango de fechas o estado regulatorio con un solo clic. |
 
 ---
 
-## Por qué la regulación funciona así
+## La Lógica Comercial y la Metodología
 
-Transport Canada regula la fatiga de la tripulación de vuelo porque la fatiga es un peligro para la seguridad, no solo un problema administrativo. Las reglas están diseñadas para controlar la carga de trabajo acumulada, la programación del servicio, la oportunidad de descanso y el riesgo de pérdida de alerta.
+### El Problema Comercial Central: Cumplimiento de Alto Impacto vs. Economía del Software
+Los operadores aéreos canadienses pequeños y medianos (con 3 a 30 pilotos) enfrentan una presión estructural. Por un lado, **las regulaciones de riesgo de fatiga y tiempo de servicio de Transport Canada** conllevan exactamente la misma responsabilidad estricta para una operación charter de 10 pilotos que para una gran aerolínea. Por otro lado, las plataformas SaaS empresariales de programación de tripulaciones (como Navblue, Jeppesen o los módulos empresariales de FL3XX) requieren elevadas tarifas anuales de licencia, onboarding prolongado y administración dedicada de TI. Forzados a elegir, los AOC más pequeños recurren a hojas de cálculo caseras—introduciendo **decaimiento silencioso de fórmulas, errores de copiar y pegar, y riesgo de aplicación retroactiva**.
+
+### La Metodología: Intercepción Determinista Previa al Despacho
+Para resolver esto sin los costos empresariales, este libro aplica una **Metodología de Intercepción Determinista Previa al Despacho** construida de forma nativa dentro del motor de cálculo de Microsoft Excel:
+
+1. **Normalización Relacional de Datos de Entrada Única:** En lugar de organizar las hojas por mes o por subparte de las CARs (lo que rompe el seguimiento longitudinal), todas las entradas operativas se capturan en un único libro mayor de transacciones normalizado (`Flight & Duty Log`). Cada entrada está indexada por `Pilot_ID`, `UTC/Local_Date`, `Subpart_Tag`, `Report_Time` y `Sector_Count`.
+2. **Modelado de Matrices Temporales de Ventana Deslizante:** En lugar de usar rangos estáticos de suma mensual (`SUM(B2:B31)`), el motor usa una evaluación de matriz dinámica acotada por fechas (`[Current_Assignment_Date - N_Days, Current_Assignment_Date]`). Cada fila evalúa su propio contexto histórico en los horizontes de 28, 90 y 365 días simultáneamente, garantizando que las infracciones históricas y las proyecciones futuras de horarios se calculen con 100% de consistencia matemática.
+3. **Codificación de Matriz Regulatoria Bidimensional:** La **Tabla FDP de la parte 705 de las CARs** (que gobierna las horas máximas de servicio según los ritmos circadianos de la hora del día y los sectores de trabajo) está codificada de forma inmutable en una matriz de referencia. Mediante la coincidencia multi-criterio (`INDEX/MATCH` a través de umbrales de bandas horarias y rangos de sectores), el libro elimina el error humano de búsqueda durante las ventanas de despacho de alta presión.
+4. **Control de Cumplimiento Shift-Left:** Tomado del principio de pruebas "Shift-Left" de la ingeniería de software, la validación de cumplimiento se mueve de la **auditoría posterior al vuelo** a la **fase de simulación previa a la asignación**. Al calcular `Projected_Accumulation = Historical_Rolling_Total + Planned_Duty_Input`, el modelo actúa como un disyuntor preventivo—señalando asignaciones ilegales mientras aún son hipotéticas.
+
+---
+
+## Comparación del Flujo de Trabajo Operativo: Hojas Manuales vs. Rastreador CARs Automatizado
+
+**Perfil de Referencia del Operador:** 12 pilotos comerciales | AOC mixto de **parte 702 (Trabajo Aéreo)** y **parte 705 (Aerolínea/Charter)** de las CARs | Una única mesa central de despacho.
+
+**El Cuello de Botella Operativo:** Cada mañana, el despachador de vuelo dedica 90 minutos a verificar manualmente los límites rodantes de servicio de los pilotos antes de liberar el horario de vuelos del día. Las horas de vuelo están divididas en dos archivos de Excel desconectados—uno para operaciones 702 y otro para 705. Cuando un capitán vuela bajo ambas subpartes en la misma semana, los totales acumulados agrupados deben calcularse a mano. Durante un pico estacional de 90 días, dos excedencias de límites rodantes se pasaron por alto—ambas descubiertas *después* de la salida de la aeronave, creando una exposición inmediata al **cumplimiento de Transport Canada**.
+
+| Dimensión Operativa y de Cumplimiento | Antes: Hojas de Cálculo Manuales Desconectadas | Después: Libro Unificado de Cumplimiento CARs 702/705 |
+|---|---|---|
+| **Arquitectura de Registros de Vuelo y Servicio** | Fragmentada en archivos separados de las CARs 702 y 705; las pestañas mensuales rompen las retrospectivas rodantes | **Base de datos única unificada en Excel** con seguimiento longitudinal continuo de varios años |
+| **Verificación de Legalidad Matutina Previo al Despacho** | ~90 minutos de conteo manual de fechas y verificaciones con calculadora para 12 pilotos | **Menos de 3 segundos por piloto** mediante banderas automatizadas del panel previo al despacho |
+| **Agrupación de Horas Multi-Subparte (702/705)** | Copiar y pegar manual propenso a errores entre hojas al final de la semana | **Agrupación 100% automatizada en tiempo real** entre todas las subpartes de las CARs al ingresar los datos |
+| **Validación de Tabla FDP y Límites de Sectores** | Búsqueda manual en manuales regulatorios en PDF; alto riesgo de malinterpretar las bandas horarias circadianas | **Cálculo dinámico instantáneo del FDP** basado en la hora de presentación del piloto y los sectores programados |
+| **Detección de Infracciones y Riesgo de Auditoría de TC** | **Descubrimiento posterior al vuelo**; aplicación retroactiva de Transport Canada y exposición a AMPs | **Intercepción previa al despacho**; asignaciones de tripulación no conformes bloqueadas antes de la liberación del vuelo |
+
+---
+
+## Flujo de Trabajo de Inicio Rápido: Cómo Validar la Legalidad de un Piloto en 4 Pasos
+
+¿Quiere ver qué tan rápido puede verificar la disponibilidad legal de un piloto? Siga este flujo de trabajo de 4 pasos para probar un despacho de vuelo único ahora mismo, y luego pase al seguimiento de flota completo:
+
+1. **Lance el Sandbox Web Interactivo (Paso 1 — Prueba Gratuita de un Solo Piloto):**
+   Abra la [**Vista Previa Web en Vivo de la Calculadora de Tiempos de Vuelo y Servicio CARs 702/705**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) en su navegador. No se requiere instalación para probar un escenario único de asignación de tripulación.
+2. **Ingrese la Hora de Presentación y el Número de Sectores Planificados (Paso 2 — Verificación de la Matriz FDP):**
+   Ingrese la **hora de presentación local** programada de su piloto, las **horas de vuelo planificadas** y el **número de sectores de vuelo**, luego seleccione la regla de operación (**parte 702 o parte 705 de las CARs**). Observe cómo la calculadora determina instantáneamente el **Período de Servicio de Vuelo (FDP) Legal Máximo**.
+3. **Verifique los Límites Acumulativos Rodantes de 28 / 90 / 365 Días (Paso 3 — Compuerta Previo al Despacho):**
+   Revise el **Indicador de Estado de Cumplimiento Previo al Despacho** automatizado. El motor señala de inmediato si el vuelo propuesto empuja al piloto por encima de los topes regulatorios de Transport Canada de **100 horas (28 días)**, **300 horas (90 días)** o **1.000 horas (365 días)**.
+4. **Actualice al Libro de Excel Multi-Piloto Completo (Paso 4 — Operaciones Continuas de Flota):**
+   La vista previa web es ideal para una verificación de legalidad única, pero se reinicia al cerrar su navegador. Para guardar registros históricos de pilotos, agrupar horas entre **más de 30 pilotos** y mantener **registros de auditoría permanentes de Transport Canada**, [**Descargue Aquí la Plantilla de Excel Completa y Reutilizable de Tiempos de Vuelo y Servicio CARs 702/705**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker).
+
+---
+
+*El valor operativo no es que Microsoft Excel reemplace el juicio de cumplimiento de un Piloto Jefe. El valor es que los **cálculos regulatorios rutinarios de las CARs 702/705** dejan de depender de la memoria humana, el conteo manual de calendarios y las hojas de cálculo fragmentadas.*
+
+---
+
+## Por Qué la Regulación Funciona Así
+
+Transport Canada regula la fatiga de las tripulaciones de vuelo porque la fatiga es un peligro para la seguridad, no solo un problema administrativo. Las reglas están diseñadas para controlar la carga de trabajo acumulada, la programación del servicio, la oportunidad de descanso y el riesgo de pérdida de alerta.
 
 Por eso las regulaciones consideran factores como:
 
 - el tiempo total de vuelo en ventanas de días consecutivos
 - los límites del período de servicio de vuelo
-- la hora de presentación y el ritmo circadiano
+- la hora de presentación y la programación circadiana
 - el número de vuelos o sectores
 - los períodos de descanso y el tiempo libre de servicio
 - la supervisión y los registros del operador
@@ -183,7 +169,7 @@ Referencias oficiales útiles:
 
 ---
 
-## Cómo funcionan las ventanas rodantes
+## Cómo Funcionan las Ventanas Rodantes
 
 El límite de acumulación de 28 días requiere que el tiempo total de vuelo en cualquier ventana consecutiva de 28 días
 no exceda las 100 horas. La ventana se desliza hacia adelante cada día — no es un mes calendario.
@@ -216,7 +202,7 @@ permitido en consecuencia.
 
 ---
 
-## Lógica del libro de trabajo
+## Lógica del Libro de Trabajo
 
 El libro de trabajo está organizado en torno a un flujo de trabajo de despacho práctico:
 
@@ -252,7 +238,7 @@ Use el libro de trabajo de Excel completo aquí:
 
 ---
 
-## Acerca de este proyecto
+## Acerca de Este Proyecto
 
 Este libro de trabajo es parte de un esfuerzo más amplio por traducir requisitos operativos y regulatorios complejos
 en herramientas ligeras que las organizaciones pequeñas y medianas realmente puedan usar.
@@ -273,3 +259,4 @@ que actualmente viven en la cabeza de alguien o en una hoja de cálculo desconec
 Distribuido bajo la [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 ---
+
