@@ -1,5 +1,7 @@
 [ 🌐 عربي ](README.ar.md) | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇫🇷 Français ](README.fr.md) | [ 🇳🇱 Nederlands ](README.nl.md) | [ 🇪🇸 Español ](README.sp.md) | [ 🇬🇧 English ](README.md)
 # Canadian CARs 702 & 705 Flight Duty Time Tracker (Excel Template) — Prevent Pilot Fatigue & Dispatch Violations
+<img width="1929" height="1228" alt="image" src="https://github.com/user-attachments/assets/25d05ab4-4c7e-4523-868a-1194b4f4d307" />
+
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
