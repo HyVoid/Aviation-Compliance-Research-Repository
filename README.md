@@ -1,167 +1,146 @@
 [ 🌐 عربي ](README.ar.md) | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇫🇷 Français ](README.fr.md) | [ 🇳🇱 Nederlands ](README.nl.md) | [ 🇪🇸 Español ](README.sp.md) | [ 🇬🇧 English ](README.md)
-# Prevent Flight Duty Time Violations Before Dispatch
-
+# Canadian CARs 702 & 705 Flight Duty Time Tracker (Excel Template) — Prevent Pilot Fatigue & Dispatch Violations
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
 ![Regulation](https://img.shields.io/badge/regulation-CARs%20702%2F705-red)
 
-**Designed for Canadian Part 702 and Part 705 operators who need to track flight time, duty time, fatigue exposure, and rolling compliance limits before a pilot is assigned.**
+An automated **Canadian Aviation Regulations (CARs) Part 702 and Part 705 Flight and Duty Time Tracking Excel Spreadsheet** designed for commercial air operators. This **pilot duty time calculator** and **Fatigue Risk Management (FRMS) scheduling tool** helps flight dispatchers, crew schedulers, and Chief Pilots track **rolling flight time limits (28/90/365-day windows)**, calculate **Flight Duty Period (FDP) maximums**, monitor **mandatory rest periods**, and prevent **Transport Canada compliance violations** before flight dispatch.
 
-[Live Preview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Purchase Complete Excel](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
+[**Launch the Interactive CARs 702/705 Flight Duty Tracker Web Demo (Single-Use Trial)**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [**Download the Multi-Pilot CARs Flight & Duty Time Compliance Excel Workbook**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
-
-
-Track rolling flight time limits, detect compliance risks in seconds, and maintain a single auditable source of truth for pilot duty records.
+Eliminate manual spreadsheet errors, automate **CARs Subpart 702 aerial work and 705 airline flight time pooling**, detect **crew fatigue compliance risks** in seconds, and maintain a single, **Transport Canada audit-ready** source of truth for pilot duty records.
 
 ---
 
-## Quick Preview
+## Interactive Preview: CARs 702/705 Pilot Duty Calculator
 
-<img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
+<img width="1672" height="941" alt="Canadian CARs 702 and 705 Flight Duty Time Tracker Excel Template Dashboard for Pilot Scheduling and Transport Canada Compliance" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
 
-
-
-> View the interactive workbook preview: [pilot duty tracker demo](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
+> **Test Drive the Logic Before You Buy:** [Try the Interactive Canadian Pilot Flight & Duty Time Calculator Web Preview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
 
 ---
 
-## Why This Exists
+## Why Manual Crew Scheduling Fails Transport Canada Compliance Audits
 
-Most flight and duty time violations are not caused by bad intentions.
+Most **CARs flight and duty time violations** are not caused by bad intentions. They happen because **rolling flight time windows**, mixed **Subpart 702/705 flight operations**, cumulative **crew fatigue rules**, split-duty extensions, and fragmented pilot logbooks are nearly impossible to cross-reference manually during a busy morning dispatch.
 
-They usually happen because rolling windows, mixed 702/705 activity, cumulative fatigue rules, reassigned duty, and fragmented records are difficult to monitor manually.
-
-The risk is simple:
+The traditional manual scheduling risk looks like this:
 
 ```text
-Pilot assigned
--> Manual check
--> Prior records missed
--> Violation discovered after the flight
+Pilot assigned to flight
+-> Manual check across separate 702 and 705 spreadsheets
+-> Rolling 28-day / 90-day boundary miscalculated
+-> Violation discovered retroactively during a Transport Canada PVI / Audit
 ```
 
-This workbook is designed to change the workflow:
+This **automated aviation compliance Excel workbook** re-engineers the pre-dispatch workflow:
 
 ```text
-Pilot considered for assignment
--> Duty record entered once
--> Rolling limits checked automatically
--> Compliance risk flagged before dispatch
+Pilot considered for flight assignment
+-> Duty & sector details logged once in a unified tracker
+-> Rolling CARs 702/705 limits & FDP matrix validated automatically
+-> Non-compliant dispatch blocked BEFORE flight release
 ```
 
-The commercial problem is not only regulation. It is operational visibility. Dispatchers and schedulers need to know whether a pilot can legally and safely take the next assignment before the flight is released.
+The commercial problem is not just regulatory alignment—it is **pre-flight operational visibility**. Flight dispatchers and crew schedulers need immediate certainty on whether a flight crew member can legally and safely accept the next sector before the operational flight plan (OFP) is released.
 
 ---
 
-## Three Compliance Traps That Catch Operators
+## Three CARs 702 & 705 Compliance Traps in Manual Spreadsheets
 
-### Trap 1 — Rolling windows misread as calendar periods
+### Trap 1 — Rolling Flight Time Windows Misread as Calendar Months
+Under **Transport Canada CARs**, the **28-, 90-, and 365-consecutive-day flight time limits** slide forward every 24 hours, not at the end of each calendar month. A commercial pilot who logs 95 flight hours between May 1–28 and flies 8 hours on May 29 does **not** reset on June 1. The June 1 rolling window still looks back to May 4. Crew schedulers who mentally reset pilot hours at month boundaries routinely undercount cumulative exposure.
 
-The 28-, 90-, and 365-day limits slide forward every day, not every month.
-A pilot who flew 95 hours between May 1–28 and then flew 8 hours on May 29
-has **not** reset when June begins. The June 1 window still reaches back to May 4.
+### Trap 2 — Flight Hours Not Pooled Across CARs Subpart 702 and 705
+When the same flight crew member flies an **aerial work / survey mission under CARs Part 702** on Monday and a **commuter or airline passenger charter under CARs Part 705** on Wednesday, both flight times must be pooled toward the same **rolling cumulative duty limits**. Air operators maintaining separate Excel tracking sheets for each AOC subpart systematically undercount total pilot fatigue exposure.
 
-Schedulers who mentally reset limits at month boundaries routinely undercount exposure.
-This is the most structurally invisible trap: the mental model feels correct; the calculation is wrong.
+### Trap 3 — FDP & Rest Violations Discovered Post-Flight
+Manual logbook verification often happens after a flight release is issued or when monthly payroll hours are tallied. By the time an exceedance of the **Maximum Flight Duty Period (FDP)** or **time-free-from-duty (rest period)** is flagged, the regulatory breach has already occurred—exposing the Air Operator Certificate (AOC) holder to **Transport Canada administrative monetary penalties (AMPs)**.
 
-### Trap 2 — Hours not pooled across 702 and 705
-
-When the same pilot performs aerial survey under Part 702 on Monday and a passenger charter
-under Part 705 on Wednesday, both sets of hours count toward the same rolling accumulation limits.
-
-Operators who maintain separate tracking sheets for each subpart — a natural workflow division —
-systematically undercount. The regulation does not recognise that operational boundary.
-
-### Trap 3 — Violations discovered after the flight
-
-Manual verification typically happens after a duty assignment is issued, or after the flight
-has departed. By the time a violation is identified, the breach has already occurred.
-Transport Canada enforcement applies retroactively.
-
-Pre-flight interception requires that compliance status be visible *before* a pilot is assigned —
-which requires all historical data to be current and all calculations to run automatically at
-the moment of dispatch.
-
-It is usually hidden in the relationship between:
-
-- today's planned duty
-- the pilot's previous duty history
-- report time
-- sector count
-- flight time accumulation
-- required rest
-- operator-specific procedures
-
-That is why manual spreadsheet review often catches the issue late, or misses it entirely.
+True **pre-dispatch interception** requires automated cross-checking of:
+- Today's planned **Flight Duty Period (FDP)** and local **report time (acclimatized vs. unacclimatized)**
+- The pilot's historical 28/90/365-day **flight time accumulation**
+- Scheduled **sector count** and average sector length
+- Mandatory **pre-flight and post-flight rest intervals** and **36-hour / 7-day time free from duty**
 
 ---
 
-## Who This Tool Is For
+## Who This Aviation Compliance Excel Template Is For (Role & Use-Case Scenarios)
 
-| User | Practical Use Case |
-|---|---|
-| Flight dispatchers | Check pilot availability before issuing a dispatch release |
-| Crew schedulers | Build rosters with visibility into remaining legal capacity |
-| Chief pilots | Review pilot workload and cumulative exposure before approving assignments |
-| Safety managers | Maintain structured records for internal review and audit preparation |
-| Small AOC operators | Replace scattered manual tracking with one lightweight Excel workflow |
+If you are searching for an affordable alternative to enterprise crew management software without sacrificing regulatory accuracy, this tool is built for your daily operational scenarios:
 
-Best suited for Canadian operators with 3–30 pilots running mixed 702/705 operations,
-where dedicated crew management software is cost-prohibitive but manual approaches no longer scale.
-
----
-
-## What The Workbook Does
-
-### Duty Time Logging
-A single data entry point for all pilot duty records. Dispatchers log basic flight and duty
-information once; calculations run automatically in the background.
-
-### Rolling Window Monitoring
-Automatic calculation of Part 705 accumulation limits across all three regulatory windows simultaneously:
-- 100 hours in any 28 consecutive days
-- 300 hours in any 90 consecutive days
-- 1,000 hours in any 365 consecutive days
-
-### Pre-Dispatch Compliance Status
-Each pilot's compliance status is visible before assignment is issued.
-No manual cross-referencing. No post-flight discovery.
-
-### FDP Matrix Validation
-Part 705's Flight Duty Period limits — a two-variable matrix of report time × sector count —
-are pre-encoded. Legal FDP maximum updates automatically based on when the pilot reports
-and how many sectors are scheduled.
-
-### Audit-Ready Reporting
-Every entry is structured and traceable from day one. Historical compliance records can be
-filtered by pilot, date range, or status and exported without post-processing.
-
----
-
-
-## Example Scenario
-
-**Operator profile:** 12 pilots. Mixed Part 702 and Part 705 operations. Single dispatch office.
-
-**The problem:** Every morning, the dispatcher spends 90 minutes manually verifying rolling
-duty limits before assigning the day's flying. Flight hours are tracked in two separate
-spreadsheets — one for 702 operations, one for 705. When a pilot flies under both subparts
-in the same week, pooled totals are consolidated by hand.
-
-Over three months of operations, two limit exceedances were caught — both after the flight
-had already departed.
-
-| | Before | After |
+| Aviation Role | Target Search Scenario & Operational Workflow | Primary Compliance Benefit |
 |---|---|---|
-| Record structure | Two separate sheets, one per subpart | Single unified workbook |
-| Morning check time | ~90 min across all pilots | Under 3 seconds per pilot |
-| 702/705 hour pooling | Manual consolidation | Automatic across both subparts |
-| Violation discovery | Post-flight; retroactive TC exposure | Pre-dispatch; blocked before assignment |
+| **Flight Dispatchers** | Need a **pre-dispatch pilot legality calculator** to verify crew availability during morning flight releases or last-minute charter requests. | Instant **Go / No-Go compliance flags** before signing the operational flight plan. |
+| **Crew Schedulers & Planners** | Looking for a **crew rostering and fatigue tracking spreadsheet** to build monthly schedules without exceeding rolling 28/90/365-day caps. | Real-time visibility into **remaining legal flight capacity** per pilot across the fleet. |
+| **Chief Pilots & DFOs** | Require a **Chief Pilot flight time monitoring template** to oversee crew workload, approve duty extensions, and prevent systemic fatigue. | Centralized dashboard showing **mixed CARs 702/705 hour pooling** and high-utilization alerts. |
+| **Aviation SMS & Safety Managers** | Searching for an **audit-ready Transport Canada compliance log** to prepare for Program Validation Inspections (PVIs) and SMS audits. | Standardized, tamper-evident historical records with zero post-processing required. |
+| **Small-to-Midsize AOC Operators** | Canadian regional, medevac, bush, and charter operators (3–30 pilots) needing **low-cost flight duty tracking software in Excel**. | Replaces scattered paper logs and fragile DIY sheets with one deterministic **Microsoft Excel compliance engine**. |
 
 ---
 
-The value is not that Excel replaces compliance judgment. The value is that routine calculations stop depending on memory, copy-paste checks, and fragmented files.
+## What It Helps You Track: Pain-Point to Solution Mapping
+
+Instead of acting as a passive digital logbook, this workbook functions as an active **CARs 702/705 regulatory rule engine**:
+
+| Operational Pain Point (What Breaks Manually) | High-Frequency Compliance Metric Tracked | Automated Workbook Solution (How It Solves It) |
+|---|---|---|
+| **Manual Rolling Window Math:** Counting back 28, 90, and 365 days on a wall calendar for 15+ pilots every morning. | **Rolling Cumulative Flight Time Limits** (`100h / 28d`, `300h / 90d`, `1,000h / 365d`) | Dynamic array formulas automatically slide the 28-, 90-, and 365-day lookback windows forward every day and calculate exact remaining legal hours. |
+| **Complex FDP Table Lookups:** Cross-referencing pilot report times against scheduled landings in the CARs manual under time pressure. | **CARs Part 705 Flight Duty Period (FDP) Matrix** (Report Time × Sector Count) | Pre-encoded regulatory lookup tables automatically adjust the pilot's **Maximum Legal FDP** the moment you input the report time and number of sectors. |
+| **Siloed Multi-Subpart Flying:** Forgetting to add Tuesday's Part 702 fire-patrol hours to Friday's Part 705 passenger charter limits. | **Cross-Subpart (CARs 702 / 703 / 704 / 705) Hour Pooling** | Unified data schema tags each flight by subpart but aggregates all flight and duty hours into a single master compliance profile per pilot. |
+| **Last-Minute Reassignments:** A client adds two extra legs mid-day, and dispatch doesn't know if the crew will bust duty limits. | **Pre-Dispatch Go/No-Go Legality Status** | Real-time conditional formatting triggers visual **Warning (Near Limit)** and **Violation (Blocked)** alerts *before* the flight is dispatched. |
+| **Scrambled Audit Preparation:** Spending days cleaning up broken formulas and missing dates before a Transport Canada inspection. | **Transport Canada Audit-Ready Historical Logs** | Structured, filterable ledger lets you export clean compliance histories by pilot, aircraft registration, date range, or regulatory status in one click. |
+
+---
+
+## The Business Logic & Methodology
+
+### The Core Commercial Problem: High-Consequence Compliance vs. Software Economics
+Small and mid-sized Canadian air operators (running 3 to 30 pilots) face a structural squeeze. On one side, **Transport Canada's fatigue risk and flight duty regulations** carry the exact same strict liability for a 10-pilot charter outfit as they do for a major airline. On the other side, enterprise SaaS crew scheduling platforms (such as Navblue, Jeppesen, or FL3XX enterprise modules) require steep annual licensing fees, lengthy onboarding, and dedicated IT administration. Forced to choose, smaller AOCs fall back on homemade spreadsheets—introducing **silent formula decay, copy-paste errors, and retroactive enforcement risk**.
+
+### The Methodology: Deterministic Pre-Dispatch Interception
+To solve this without enterprise overhead, this workbook applies a **Deterministic Pre-Dispatch Interception Methodology** built natively inside Microsoft Excel's calculation engine:
+
+1. **Single-Entry Relational Data Normalization:** Instead of organizing sheets by month or by CARs subpart (which breaks longitudinal tracking), all operational inputs are captured in a single normalized transaction ledger (`Flight & Duty Log`). Every entry is indexed by `Pilot_ID`, `UTC/Local_Date`, `Subpart_Tag`, `Report_Time`, and `Sector_Count`.
+2. **Sliding-Window Temporal Array Modeling:** Rather than using static monthly sum ranges (`SUM(B2:B31)`), the engine uses dynamic date-bounded array evaluation (`[Current_Assignment_Date - N_Days, Current_Assignment_Date]`). Every row evaluates its own historical context across 28-, 90-, and 365-day horizons simultaneously, ensuring historical violations and future schedule projections are calculated with 100% mathematical consistency.
+3. **Two-Dimensional Regulatory Matrix Encoding:** The **CARs Part 705 FDP Table** (which governs maximum duty hours based on time-of-day circadian rhythms and workload sectors) is hardcoded into an immutable reference matrix. Using multi-criteria index-matching (`INDEX/MATCH` across time-band thresholds and sector brackets), the workbook eliminates human lookup error during high-stress dispatch windows.
+4. **Shift-Left Compliance Gatekeeping:** Borrowed from software engineering's "Shift-Left" testing principle, compliance validation is moved from **post-flight auditing** to the **pre-assignment simulation phase**. By calculating `Projected_Accumulation = Historical_Rolling_Total + Planned_Duty_Input`, the model acts as a preventative circuit breaker—flagging illegal assignments while they are still hypothetical.
+
+---
+
+## Operational Workflow Comparison: Manual Spreadsheets vs. Automated CARs Tracker
+
+**Operator Benchmark Profile:** 12 commercial pilots | Mixed **CARs Part 702 (Aerial Work)** and **Part 705 (Airline/Charter)** AOC | Single central dispatch desk.
+
+**The Operational Bottleneck:** Every morning, the flight dispatcher spends 90 minutes manually cross-checking rolling pilot duty limits before releasing the day's flight schedule. Flight hours are split across two disconnected Excel files—one for 702 operations, one for 705. When a captain flies under both subparts in the same week, pooled cumulative totals must be calculated by hand. Over a 90-day seasonal peak, two rolling limit exceedances slipped through—both discovered *after* aircraft departure, creating immediate **Transport Canada compliance exposure**.
+
+| Operational & Compliance Dimension | Before: Disconnected Manual Spreadsheets | After: Unified CARs 702/705 Compliance Workbook |
+|---|---|---|
+| **Flight & Duty Record Architecture** | Fragmented across separate CARs 702 and 705 files; monthly tabs break rolling lookbacks | **Single unified Excel database** with continuous multi-year longitudinal tracking |
+| **Morning Pre-Dispatch Legality Check** | ~90 minutes of manual date-counting and calculator checks across 12 pilots | **Under 3 seconds per pilot** via automated pre-dispatch dashboard flags |
+| **Multi-Subpart (702/705) Hour Pooling** | Error-prone manual copy-pasting between spreadsheets at week's end | **100% automated real-time pooling** across all CARs subparts upon data entry |
+| **FDP Table & Sector Limit Validation** | Manual lookup in PDF regulatory manuals; high risk of misreading circadian time bands | **Instant dynamic FDP calculation** based on pilot report time and scheduled sectors |
+| **Violation Detection & TC Audit Risk** | **Post-flight discovery**; retroactive Transport Canada enforcement and AMP exposure | **Pre-dispatch interception**; non-compliant crew assignments blocked before flight release |
+
+---
+
+## Quick Start Workflow: How to Validate Pilot Legality in 4 Steps
+
+Want to see how fast you can verify a pilot's legal availability? Follow this 4-step workflow to test a single flight dispatch right now, then transition to full fleet tracking:
+
+1. **Launch the Interactive Web Sandbox (Step 1 — Free Single-Pilot Test):**
+   Open the [**Live CARs 702/705 Flight Duty Calculator Web Preview**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) in your browser. No installation is required to test a single crew assignment scenario.
+2. **Input Planned Report Time & Sector Count (Step 2 — FDP Matrix Check):**
+   Enter your pilot's scheduled **local report time**, **planned flight hours**, and **number of flight sectors**, then select the operating rule (**CARs Part 702 or Part 705**). Watch the calculator instantly determine the **Maximum Legal Flight Duty Period (FDP)**.
+3. **Verify Rolling 28 / 90 / 365-Day Cumulative Limits (Step 3 — Pre-Dispatch Gate):**
+   Review the automated **Pre-Dispatch Compliance Status Indicator**. The engine immediately flags whether the proposed flight pushes the pilot over the **100-hour (28-day)**, **300-hour (90-day)**, or **1,000-hour (365-day)** Transport Canada regulatory caps.
+4. **Upgrade to the Full Multi-Pilot Excel Workbook (Step 4 — Continuous Fleet Operations):**
+   The web preview is great for a one-off legality check, but it resets when you close your browser. To save historical pilot records, pool hours across **up to 30+ pilots**, and maintain permanent **Transport Canada audit logs**, [**Download the Complete Reusable CARs 702/705 Flight & Duty Time Excel Template Here**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker).
+
+---
+
+*The operational value is not that Microsoft Excel replaces a Chief Pilot's compliance judgment. The value is that routine **CARs 702/705 regulatory math** stops depending on human memory, manual calendar counting, and fragmented spreadsheets.*
 
 ---
 
