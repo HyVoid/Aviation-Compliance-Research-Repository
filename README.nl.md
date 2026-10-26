@@ -1,179 +1,165 @@
-[ 🌐 عربي ](README.ar.md) | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇫🇷 Français ](README.fr.md) | [ 🇳🇱 Nederlands ](README.nl.md) | 🇪🇸 [ Español ](README.sp.md) | [ 🇬🇧 English ](README.md)
-
-# Voorkom schendingen van vlucht- en diensttijden vóór de indienststelling
+[ 🌐 عربي ](README.ar.md) | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇫🇷 Français ](README.fr.md) | [ 🇳🇱 Nederlands ](README.nl.md) | [ 🇪🇸 Español ](README.sp.md) | [ 🇬🇧 English ](README.md)
+# Canadese CARs 702 & 705 Vlucht- en Diensttijden Tracker (Excel-sjabloon) — Voorkom Pilootvermoeidheid & Indienststellingschendingen
 
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Microsoft%20Excel-217346)
 ![Regulation](https://img.shields.io/badge/regulation-CARs%20702%2F705-red)
 
-**Ontworpen voor Canadese exploitanten onder Part 702 en Part 705 die vluchttijd, diensttijd, vermoeidheidsblootstelling en rollende nalevingslimieten moeten volgen voordat een piloot wordt toegewezen.**
+Een geautomatiseerde **Canadian Aviation Regulations (CARs) Part 702 en Part 705 Vlucht- en Diensttijdenregistratie Excel-spreadsheet** ontworpen voor commerciële luchtvaartexploitanten. Deze **piloot-diensttijdcalculator** en **Fatigue Risk Management (FRMS)-planningstool** helpt verkeersleiders, bemanningsplanners en hoofdpiloten bij het volgen van **rollende vluchttijdlimieten (vensters van 28/90/365 dagen)**, het berekenen van **maximale Flight Duty Periods (FDP)**, het monitoren van **verplichte rustperiodes** en het voorkomen van **Transport Canada nalevingsschendingen** vóór de vluchtindienststelling.
 
-[Live voorbeeld](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) | [Koop volledige Excel](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
+> [**Open de interactieve CARs 702/705 Vluchtdiensttijd Tracker webdemo (eenmalige proef)**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
+>
+> > [**Download de multi-piloot CARs Vlucht- & Diensttijden naleving Excel-werkmap**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
-Volg rollende vluchttijdlimieten, detecteer nalevingsrisico's binnen enkele seconden en behoud één auditeerbare bron van waarheid voor piloot-dienstregistraties.
-
----
-
-## Snelle voorbeeld
-
-<img width="1672" height="941" alt="ChatGPT Image May 25, 2026, 11_47_04 AM" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
-
-> Bekijk het interactieve werkmappenvoorbeeld: [piloot-diensttracker-demo](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
+Elimineer handmatige spreadsheetfouten, automatiseer **urenpooling voor CARs Subpart 702 luchtwerk en 705 luchtvaartmaatschappijvluchten**, detecteer **nalevingsrisico's door bemanningsvermoeidheid** binnen enkele seconden en onderhoud één **Transport Canada auditklare** bron van waarheid voor piloot-dienstregistraties.
 
 ---
 
-## Waarom dit bestaat
+## Interactieve preview: CARs 702/705 piloot-dienstcalculator
 
-De meeste schendingen van vlucht- en diensttijden worden niet veroorzaakt door slechte intenties.
+<img width="1672" height="941" alt="Canadian CARs 702 and 705 Flight Duty Time Tracker Excel Template Dashboard for Pilot Scheduling and Transport Canada Compliance" src="https://github.com/user-attachments/assets/cc792931-2477-40d4-9bd7-e92418817c77" />
 
-Ze gebeuren meestal omdat rollende vensters, gemengde 702/705-activiteiten, cumulatieve vermoeidheidsregels, hertoegewezen diensten en gefragmenteerde registraties moeilijk handmatig te volgen zijn.
+> **Test de logica voordat u koopt:** [Probeer de interactieve Canadese piloot Vlucht- & Diensttijdcalculator webpreview](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/)
 
-Het risico is simpel:
+---
+
+## Waarom handmatige bemanningsplanning faalt bij Transport Canada-nalevingsaudits
+
+De meeste **CARs schendingen van vlucht- en diensttijden** worden niet veroorzaakt door slechte intenties. Ze gebeuren omdat **rollende vluchttijdvensters**, gemengde **Subpart 702/705 vluchtactiviteiten**, cumulatieve **bemanningsvermoeidheidsregels**, split-duty-verlengingen en gefragmenteerde pilootlogboeken vrijwel onmogelijk handmatig te kruisverwijzen zijn tijdens een drukke ochtendindienststelling.
+
+Het risico van traditionele handmatige planning ziet er zo uit:
 
 ```text
-Pilot assigned
--> Manual check
--> Prior records missed
--> Violation discovered after the flight
+Pilot assigned to flight
+-> Manual check across separate 702 and 705 spreadsheets
+-> Rolling 28-day / 90-day boundary miscalculated
+-> Violation discovered retroactively during a Transport Canada PVI / Audit
 ```
 
-Deze werkmappen is ontworpen om de workflow te veranderen:
+Deze **geautomatiseerde luchtvaartnaleving Excel-werkmap** ontwerpt de workflow vóór de indienststelling opnieuw:
 
 ```text
-Pilot considered for assignment
--> Duty record entered once
--> Rolling limits checked automatically
--> Compliance risk flagged before dispatch
+Pilot considered for flight assignment
+-> Duty & sector details logged once in a unified tracker
+-> Rolling CARs 702/705 limits & FDP matrix validated automatically
+-> Non-compliant dispatch blocked BEFORE flight release
 ```
 
-Het commerciële probleem is niet alleen regelgeving. Het is operationeel zicht. Verkeersleiders en planners moeten weten of een piloot de volgende taak legaal en veilig kan aanvoeren voordat de vlucht wordt vrijgegeven.
+Het commerciële probleem is niet alleen regelgevingsafstemming—het is **operationele zichtbaarheid vóór de vlucht**. Verkeersleiders en bemanningsplanners hebben onmiddellijke zekerheid nodig over de vraag of een vluchtcrewlid de volgende sector legaal en veilig kan accepteren voordat het operationele vluchtplan (OFP) wordt vrijgegeven.
 
 ---
 
-## Drie nalevingsvalkuilen die exploitanten vangen
+## Drie CARs 702 & 705 nalevingsvalkuilen in handmatige spreadsheets
 
-### Valkuil 1 — Rollende vensters verkeerd gelezen als kalenderperioden
+### Valkuil 1 — Rollende vluchttijdvensters verkeerd gelezen als kalendermaanden
+Onder **Transport Canada CARs** schuiven de **vluchttijdlimieten van 28, 90 en 365 opeenvolgende dagen** elke 24 uur vooruit, niet aan het einde van elke kalendermaand. Een commercieel piloot die tussen 1–28 mei 95 vluchturen logt en op 29 mei 8 uur vliegt, reset op 1 juni **niet**. Het rollende venster van 1 juni reikt nog terug tot 4 mei. Planners die pilooturen mentaal resetten bij maandgrenzen onderschatten routinematig de cumulatieve blootstelling.
 
-De limieten van 28, 90 en 365 dagen schuiven elke dag vooruit, niet elke maand.
-Een piloot die tussen 1 en 28 mei 95 uur vloog en toen op 29 mei 8 uur vloog,
-is bij het begin van juni **niet** gereset. Het venster van 1 juni reikt nog terug tot 4 mei.
+### Valkuil 2 — Vluchturen niet gepoold over CARs Subpart 702 en 705
+Wanneer hetzelfde vluchtcrewlid maandag een **luchtwerk-/survey-missie onder CARs Part 702** vliegt en woensdag een **commuter- of luchtvaartmaatschappij passagierscharter onder CARs Part 705**, moeten beide vluchttijden worden gepoold naar dezelfde **rollende cumulatieve dienstlimieten**. Luchtvaartexploitanten die aparte Excel-trackingbladen bijhouden voor elk AOC-subdeel onderschatten systematisch de totale vermoeidheidsblootstelling van piloten.
 
-Planners die limieten mentaal resetten bij maandgrenzen onderschatten routinematig de blootstelling.
-Dit is de structureel onzichtbaarste valkuil: het mentale model voelt correct; de berekening is verkeerd.
+### Valkuil 3 — FDP- en rustschendingen ontdekt na de vlucht
+Handmatige logboekverificatie gebeurt vaak pas nadat een vluchtvrijgave is uitgegeven of wanneer de maandelijkse salarisuren worden opgeteld. Tegen de tijd dat een overschrijding van de **maximale Flight Duty Period (FDP)** of **dienstvrije tijd (rustperiode)** wordt gemarkeerd, heeft de regelgevende overtreding al plaatsgevonden—waardoor de houder van het Air Operator Certificate (AOC) wordt blootgesteld aan **Transport Canada administratieve geldboetes (AMPs)**.
 
-### Valkuil 2 — Uren niet gepoold over 702 en 705
-
-Wanneer dezelfde piloot maandag een luchtopname uitvoert onder Part 702 en woensdag een passagierscharter
-onder Part 705, tellen beide sets uren mee voor dezelfde rollende accumulatielimieten.
-
-Exploitanten die separate trackingbladen bijhouden voor elk subdeel — een natuurlijke workflowverdeling —
-onderschatten systematisch. De regeling erkent die operationele grens niet.
-
-### Valkuil 3 — Schendingen ontdekt na de vlucht
-
-Handmatige verificatie gebeurt meestal nadat een diensttoewijzing is uitgegeven, of nadat de vlucht
-is vertrokken. Tegen de tijd dat een schending wordt geïdentificeerd, is de overtreding al plaatsgevonden.
-Handhaving door Transport Canada geldt terugwerkend.
-
-Onderschepping vóór de vlucht vereist dat de nalevingsstatus zichtbaar is *voordat* een piloot wordt toegewezen —
-wat vereist dat alle historische gegevens actueel zijn en alle berekeningen automatisch draaien op
-het moment van indienststelling.
-
-Het zit meestal verborgen in de relatie tussen:
-
-- de voor vandaag geplande dienst
-- de eerdere dienstgeschiedenis van de piloot
-- de meldtijd
-- het aantal sectoren
-- de accumulatie van vluchttijd
-- de vereiste rust
-- exploitantspecifieke procedures
-
-Daarom vindt handmatig spreadsheetonderzoek het probleem vaak laat, of mist het volledig.
+Echte **onderschepping vóór de indienststelling** vereist geautomatiseerde kruiscontrole van:
+- de voor vandaag geplande **Flight Duty Period (FDP)** en lokale **meldtijd (geacclimatiseerd vs. niet-geacclimatiseerd)**
+- de historische 28/90/365-daagse **vluchttijdaccumulatie** van de piloot
+- gepland **aantal sectoren** en gemiddelde sectorlengte
+- verplichte **rustintervallen vóór en na de vlucht** en **36 uur / 7 dagen dienstvrije tijd**
 
 ---
 
-## Voor wie deze tool is
+## Voor wie deze luchtvaartnaleving Excel-sjabloon is (rol- en use-casescenario's)
 
-| Gebruiker | Praktische use case |
-|---|---|
-| Verkeersleiders | Controleer pilootbeschikbaarheid voordat een indienststellingsvergunning wordt uitgegeven |
-| Bemanningplanners | Bouw roosters met zicht op resterende legale capaciteit |
-| Hoofdpiloten | Beoordeel pilootwerklast en cumulatieve blootstelling voordat toewijzingen worden goedgekeurd |
-| Veiligheidsmanagers | Behoud gestructureerde registraties voor interne review en auditvoorbereiding |
-| Kleine AOC-exploitanten | Vervang verspreide handmatige tracking door één lichte Excel-workflow |
+Als u op zoek bent naar een betaalbaar alternatief voor enterprise bemanningsbeheersoftware zonder regelgevingsnauwkeurigheid prijs te geven, dan is deze tool gebouwd voor uw dagelijkse operationele scenario's:
 
-Het meest geschikt voor Canadese exploitanten met 3–30 piloten die gemengde 702/705-operaties uitvoeren,
-waar speciale bemanningsoftware te kostbaar is maar handmatige benaderingen niet meer schalen.
-
----
-
-## Wat de werkmappen doet
-
-### Registratie van diensttijd
-Één gegevensinvoerpunt voor alle piloot-dienstregistraties. Verkeersleiders loggen basisvlucht- en dienstinformatie
-eenmaal; berekeningen draaien automatisch op de achtergrond.
-
-### Monitoring van rollende vensters
-Automatische berekening van Part 705-accumulatielimieten over alle drie de regelgevingsvensters tegelijk:
-- 100 uur in elke 28 opeenvolgende dagen
-- 300 uur in elke 90 opeenvolgende dagen
-- 1.000 uur in elke 365 opeenvolgende dagen
-
-### Nalevingsstatus vóór indienststelling
-De nalevingsstatus van elke piloot is zichtbaar voordat de toewijzing wordt uitgegeven.
-Geen handmatige kruisverwijzing. Geen ontdekking na de vlucht.
-
-### FDP-matrixvalidatie
-De Flight Duty Period-limieten van Part 705 — een tweevariabele matrix van meldtijd × aantal sectoren —
-zijn vooraf gecodeerd. Het legale FDP-maximum werkt automatisch bij op basis van wanneer de piloot zich meldt
-en hoeveel sectoren zijn gepland.
-
-### Auditklare rapportage
-Elke invoer is vanaf dag één gestructureerd en traceerbaar. Historische nalevingsregistraties kunnen worden
-gefilterd op piloot, datumbereik of status en geëxporteerd zonder nabewerking.
-
----
-
-## Voorbeeldscenario
-
-**Exploitantprofiel:** 12 piloten. Gemengde operaties onder Part 702 en Part 705. Één verkeersleiderskantoor.
-
-**Het probleem:** Elke ochtend besteedt de verkeersleider 90 minuten aan het handmatig verifiëren van rollende
-dienstlimieten voordat de vluchten van de dag worden toegewezen. Vluchturen worden bijgehouden in twee
-gescheiden spreadsheets — één voor 702-operaties, één voor 705. Wanneer een piloot onder beide subdelen
-in dezelfde week vliegt, worden gepoold totalen met de hand geconsolideerd.
-
-Gedurende drie maanden operaties werden twee limietoverschrijdingen ontdekt — beide nadat de vlucht
-al was vertrokken.
-
-| | Voor | Na |
+| Luchtvaartrol | Doelzoekschema & operationele workflow | Primaire nalevingsvoordeel |
 |---|---|---|
-| Registratestructuur | Twee gescheiden bladen, één per subdeel | Één uniforme werkmappen |
-| Ochtendcontroletijd | ~90 min over alle piloten | Onder 3 seconden per piloot |
-| 702/705-urenpooling | Handmatige consolidatie | Automatisch over beide subdelen |
-| Ontdekking van schendingen | Na de vlucht; terugwerkende TC-blootstelling | Vóór indienststelling; geblokkeerd vóór toewijzing |
+| **Verkeersleiders** | Hebben een **piloot-legalitycalculator vóór de indienststelling** nodig om bemanningsbeschikbaarheid te verifiëren tijdens ochtendvluchtvrijgaven of last-minute charterverzoeken. | Directe **Go / No-Go nalevingsmarkeringen** voordat het operationele vluchtplan wordt ondertekend. |
+| **Bemanningsplanners & planners** | Zoeken naar een **bemanningsrooster- en vermoeidheidstrackingspreadsheet** om maandschema's te bouwen zonder de rollende limieten van 28/90/365 dagen te overschrijden. | Realtime zicht op de **resterende legale vluchtcapaciteit** per piloot binnen de vloot. |
+| **Hoofdpiloten & DFO's** | Vereisen een **hoofdpiloot vluchttijdmonitoringssjabloon** om crewwerklast te overzien, dienstverlengingen goed te keuren en systemische vermoeidheid te voorkomen. | Gecentraliseerd dashboard met **gepoolde uren over CARs 702/705** en waarschuwingen bij hoge benutting. |
+| **Luchtvaart SMS & veiligheidsmanagers** | Zoeken naar een **auditklare Transport Canada nalevingslog** om zich voor te bereiden op Program Validation Inspections (PVIs) en SMS-audits. | Gestandaardiseerde, manipulatiebestendige historische registraties zonder enige nabewerking. |
+| **Kleine tot middelgrote AOC-exploitanten** | Canadese regionale, medevac-, bush- en charterexploitanten (3–30 piloten) die **goedkope vluchtdiensttijdtrackingsoftware in Excel** nodig hebben. | Vervangt verspreide papieren logboeken en kwetsbare DIY-sheets door één deterministische **Microsoft Excel nalevingsengine**. |
 
 ---
 
-De waarde is niet dat Excel nalevingsoordeel vervangt. De waarde is dat routinematige berekeningen niet langer afhangen van geheugen, kopieer-plakcontroles en gefragmenteerde bestanden.
+## Wat het u helpt bij te houden: pijnpunt-naar-oplossing mapping
+
+In plaats van te fungeren als een passief digitaal logboek, functioneert deze werkmap als een actieve **CARs 702/705 nalevingsregel-engine**:
+
+| Operationeel pijnpunt (wat handmatig breekt) | Veelgevolgde nalevingsmetriek in de gaten gehouden | Geautomatiseerde werkmapoplossing (hoe het het oplost) |
+|---|---|---|
+| **Handmatige rollende vensterberekening:** Elke ochtend 28, 90 en 365 dagen terugtellen op een wandkalender voor 15+ piloten. | **Rollende cumulatieve vluchttijdlimieten** (`100h / 28d`, `300h / 90d`, `1,000h / 365d`) | Dynamische matrixformules schuiven de 28-, 90- en 365-daagse terugblikvensters elke dag automatisch vooruit en berekenen de exacte resterende legale uren. |
+| **Complexe FDP-tabellen opzoeken:** Onder tijdsdruk meldtijden kruisverwijzen naar geplande landingen in de CARs-handleiding. | **CARs Part 705 Flight Duty Period (FDP)-matrix** (meldtijd × aantal sectoren) | Vooraf gecodeerde regelgevingsopzoektabellen passen het **maximale legale FDP** automatisch aan zodra u de meldtijd en het aantal sectoren invoert. |
+| **Gescheiden multi-subdeel vluchten:** Vergeten om dinsdag's Part 702 brandpatrouilleuren op te tellen bij de limieten van vrijdag's Part 705 passagierscharter. | **Cross-subdeel (CARs 702 / 703 / 704 / 705) urenpooling** | Een uniforme dataschema tagt elke vlucht per subdeel maar aggregeert alle vlucht- en diensturen in één master nalevingsprofiel per piloot. |
+| **Last-minute herindelingen:** Een klant voegt midden op de dag twee extra legs toe, en de verkeersleider weet niet of de crew de dienstlimieten overschrijdt. | **Go/No-Go legalitystatus vóór de indienststelling** | Realtime voorwaardelijke opmaak activeert visuele **Waarschuwing (dichtbij limiet)** en **Schending (geblokkeerd)** meldingen *voordat* de vlucht wordt ingezet. |
+| **Door elkaar gegoede auditvoorbereiding:** Dagen besteden aan het opruimen van kapotte formules en ontbrekende datums vóór een Transport Canada-inspectie. | **Transport Canada auditklare historische logboeken** | Gestructureerd, filterbaar grootboek laat u schone nalevingshistorieën exporteren per piloot, vliegtuigregistratie, datumbereik of regelgevingsstatus in één klik. |
+
+---
+
+## De bedrijfslogica & methodologie
+
+### Het kerncommerciële probleem: hoge-consequentie naleving vs. software-economie
+Kleine en middelgrote Canadese luchtvaartexploitanten (met 3 tot 30 piloten) zitten in een structurele squeeze. Enerzijds dragen **Transport Canada's vermoeidheidsrisico- en vluchtdiensttijdregels** exact dezelfde strenge aansprakelijkheid voor een charteruitbater met 10 piloten als voor een grote luchtvaartmaatschappij. Anderzijds vereisen enterprise SaaS bemanningsplanningplatforms (zoals Navblue, Jeppesen of FL3XX enterprise modules) steile jaarlijkse licentiekosten, langdurige onboarding en dedicated IT-beheer. Gedwongen te kiezen, vallen kleinere AOC's terug op zelfgemaakte spreadsheets—met **stille formuleverval, kopieer-plakfouten en terugwerkend handhavingsrisico** tot gevolg.
+
+### De methodologie: deterministische onderschepping vóór de indienststelling
+Om dit op te lossen zonder enterprise-overhead, past deze werkmap een **Deterministische Pre-Dispatch Interceptiemethodologie** toe, native gebouwd binnen de rekenengine van Microsoft Excel:
+
+1. **Single-entry relationele datanormalisatie:** In plaats van sheets te organiseren per maand of per CARs-subdeel (wat longitudinale tracking breekt), worden alle operationele invoeren vastgelegd in één genormaliseerd transactiegrootboek (`Flight & Duty Log`). Elke invoer is geïndexeerd op `Pilot_ID`, `UTC/Local_Date`, `Subpart_Tag`, `Report_Time` en `Sector_Count`.
+2. **Schuivend tijdvenster temporele arraymodellering:** In plaats van statische maandelijkse sombereiken (`SUM(B2:B31)`) gebruikt de engine dynamische datumgebonden array-evaluatie (`[Current_Assignment_Date - N_Days, Current_Assignment_Date]`). Elke rij evalueert zijn eigen historische context over 28-, 90- en 365-daagse horizonnen tegelijk, waardoor historische schendingen en toekomstige schema-projecties worden berekend met 100% wiskundige consistentie.
+3. **Tweedimensionale regelgevingsmatrixcodering:** De **CARs Part 705 FDP-tabel** (die maximale diensturen reguleert op basis van circadiane ritmes van het tijdstip en workloadsectoren) is hardgecodeerd in een onveranderlijke referentiematrix. Met multi-criteria index-matching (`INDEX/MATCH` over tijdbanddrempels en sectorbrackets) elimineert de werkmap menselijke opzoekfouten tijdens hoogstressvolle indienststellingsvensters.
+4. **Shift-Left nalevingsbewaking:** Geleend van het "Shift-Left" testprincipe in softwareontwikkeling, wordt nalevingsvalidatie verplaatst van **post-flight auditing** naar de **pre-assignatiesimulatiefase**. Door `Projected_Accumulation = Historical_Rolling_Total + Planned_Duty_Input` te berekenen, fungeert het model als een preventieve stroomonderbreker—het markeert illegale toewijzingen terwijl ze nog hypothetisch zijn.
+
+---
+
+## Operationele workflowvergelijking: handmatige spreadsheets vs. geautomatiseerde CARs tracker
+
+**Exploitantbenchmarkprofiel:** 12 commerciële piloten | Gemengde **CARs Part 702 (Luchtwerk)** en **Part 705 (Luchtvaartmaatschappij/Charter)** AOC | Eén centrale verkeersleiderspost.
+
+**De operationele bottleneck:** Elke ochtend besteedt de verkeersleider 90 minuten aan het handmatig kruiscontroleren van rollende pilootdienstlimieten voordat het vluchtschema van de dag wordt vrijgegeven. Vluchturen zijn verdeeld over twee losgekoppelde Excel-bestanden—één voor 702-activiteiten, één voor 705. Wanneer een kapitein in dezelfde week onder beide subdelen vliegt, moeten gepoolde cumulatieve totalen met de hand worden berekend. Over een seizoenspiek van 90 dagen glippen twee rollende limietoverschrijdingen erdoorheen—beide ontdekt *nadat* het vliegtuig was vertrokken, wat onmiddellijke **Transport Canada nalevingsblootstelling** creëerde.
+
+| Operationele & nalevingsdimensie | Voor: losgekoppelde handmatige spreadsheets | Na: uniforme CARs 702/705 nalevingswerkmap |
+|---|---|---|
+| **Vlucht- & dienstregistratiearchitectuur** | Gefragmenteerd over aparte CARs 702- en 705-bestanden; maandtabbladen breken rollende terugblikken | **Één uniforme Excel-database** met continue meerjarige longitudinale tracking |
+| **Ochtend legalitycontrole vóór de indienststelling** | ~90 minuten handmatige datumtelling en rekenmachinecontroles over 12 piloten | **Onder 3 seconden per piloot** via geautomatiseerde pre-dispatch dashboardmarkeringen |
+| **Multi-subdeel (702/705) urenpooling** | Foutgevoelig handmatig kopiëren en plakken tussen spreadsheets aan het einde van de week | **100% geautomatiseerde realtime pooling** over alle CARs-subdelen bij data-invoer |
+| **FDP-tabel & sectorlimietvalidatie** | Handmatig opzoeken in PDF-regelgevingshandleidingen; hoog risico op verkeerd lezen van circadiane tijdbanden | **Directe dynamische FDP-berekening** op basis van pilootmeldtijd en geplande sectoren |
+| **Schendingsdetectie & TC-auditriskico** | **Ontdekking na de vlucht**; terugwerkende Transport Canada-handhaving en AMP-blootstelling | **Onderschepping vóór de indienststelling**; niet-conforme crewtoewijzingen geblokkeerd vóór vluchtvrijgave |
+
+---
+
+## Quick start workflow: hoe u pilootlegality verifieert in 4 stappen
+
+Wilt u zien hoe snel u de legale beschikbaarheid van een piloot kunt verifiëren? Volg deze 4-stappen workflow om nu een enkele vluchtindienststelling te testen en ga daarna over naar volledige vloottracking:
+
+1. **Open de interactieve websandbox (stap 1 — gratis test voor één piloot):**
+   Open de [**Live CARs 702/705 Vluchtdiensttijdcalculator webpreview**](https://hyvoid.github.io/Aviation-Compliance-Research-Repository/) in uw browser. Geen installatie nodig om één crewtoewijzingsscenario te testen.
+2. **Voer geplande meldtijd & aantal sectoren in (stap 2 — FDP-matrixcontrole):**
+   Voer de geplande **lokale meldtijd**, **geplande vluchturen** en **aantal vluchtsectoren** van uw piloot in en selecteer de toepasselijke regel (**CARs Part 702 of Part 705**). Zie hoe de calculator onmiddellijk de **maximale legale Flight Duty Period (FDP)** bepaalt.
+3. **Verifieer de rollende cumulatieve limieten van 28 / 90 / 365 dagen (stap 3 — pre-dispatch poort):**
+   Bekijk de geautomatiseerde **Pre-Dispatch Compliance Status Indicator**. De engine markeert onmiddellijk of de voorgestelde vlucht de piloot over de **100-uur (28-daagse)**, **300-uur (90-daagse)** of **1.000-uur (365-daagse)** Transport Canada regelgevingsplafonds duwt.
+4. **Upgrade naar de volledige multi-piloot Excel-werkmap (stap 4 — continue vlootactiviteiten):**
+   De webpreview is prima voor een eenmalige legalitycontrole, maar reset wanneer u uw browser sluit. Om historische pilootregistraties op te slaan, uren te poolen over **tot 30+ piloten** en permanente **Transport Canada auditlogs** bij te houden, [**download hier de complete herbruikbare CARs 702/705 Vlucht- & Diensttijden Excel-sjabloon**](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker).
+
+---
+
+*De operationele waarde is niet dat Microsoft Excel het nalevingsoordeel van een hoofdpiloot vervangt. De waarde is dat routinematige **CARs 702/705 regelgevingsberekeningen** niet langer afhangen van menselijk geheugen, handmatige kalendertelling en gefragmenteerde spreadsheets.*
 
 ---
 
 ## Waarom de regeling zo werkt
 
-Transport Canada reguleert vermoeidheid van vliegtuigbemanningen omdat vermoeidheid een veiligheidsgevaar is, niet alleen een administratief probleem. De regels zijn ontworpen om cumulatieve werklast, dienstplanning, rustmogelijkheid en alertheidrisico te controleren.
+Transport Canada reguleert vermoeidheid van vluchtcrews omdat vermoeidheid een veiligheidsgevaar is, niet alleen een administratief probleem. De regels zijn ontworpen om cumulatieve werklast, diensttiming, rustmogelijkheid en alertheidsrisico te beheersen.
 
-Daarom houden de regelingen rekening met factoren zoals:
+Daarom houden de regels rekening met factoren zoals:
 
 - totale vluchttijd over vensters van opeenvolgende dagen
-- limieten van vluchtdienstperioden
-- meldtijd en circadian ritme
+- limieten van vluchtdienstperiodes
+- meldtijd en circadiane timing
 - aantal vluchten of sectoren
-- rustperioden en dienstvrije tijd
-- exploitantenmonitoring en registraties
+- rustperiodes en dienstvrije tijd
+- exploitantmonitoring en registraties
 
-De operationele logica is direct: twee dienstroosters kunnen hetzelfde aantal diensturen hebben maar verschillende vermoeidheidsrisico's creëren afhankelijk van timing, frequentie, aantal sectoren en eerdere accumulatie.
+De operationele logica is direct: twee dienstroosters kunnen hetzelfde aantal diensturen hebben maar verschillende vermoeidheidsrisico's creëren, afhankelijk van timing, frequentie, aantal sectoren en eerdere accumulatie.
 
 Nuttige officiële referenties:
 
@@ -185,7 +171,7 @@ Nuttige officiële referenties:
 
 ## Hoe de rollende vensters werken
 
-De 28-daags accumulatielimiet vereist dat de totale vluchttijd in elk opeenvolgend venster van 28 dagen
+De 28-daagse accumulatielimiet vereist dat de totale vluchttijd in elk opeenvolgend venster van 28 dagen
 100 uur niet overschrijdt. Het venster schuift elke dag vooruit — het is geen kalendermaand.
 
 | Datum | Venster dekt | Netto effect |
@@ -208,7 +194,7 @@ Voor 15 piloten zijn dat 45 live rollende berekeningen per indienststellingscycl
 
 **Waarom meldtijd ook FDP bepaalt:** De FDP-limieten van Part 705 hangen af van wanneer de dienst begint.
 Een dienst die om 09:00 begint, mag legaal tot 13 uur duren; dezelfde dienst die om 01:00
-begint, is beperkt tot ongeveer 11 uur — omdat deze uitloopt in het circadian venster 02:00–05:59 waar
+begint, is beperkt tot ongeveer 11 uur — omdat deze uitloopt in het circadiane venster 02:00–05:59 waar
 door vermoeidheid veroorzaakte foutpercentages sterk toenemen. Een verschil van 30 minuten in meldtijd kan
 het legale maximum met tot 2 uur veranderen. Het aantal sectoren voegt een tweede dimensie toe: elke extra
 nadering en landing accumuleert meetbare cognitieve belasting, en de matrix vermindert de toegestane
@@ -216,9 +202,9 @@ FDP dienovereenkomstig.
 
 ---
 
-## Werkmappenlogica
+## Werkmaplogica
 
-De werkmappen is georganiseerd rond een praktische indienststellingsworkflow:
+De werkmap is georganiseerd rond een praktische indienststellingsworkflow:
 
 1. Voer piloot- en geplande taakgegevens in.
 2. Identificeer de operationele context.
@@ -228,13 +214,13 @@ De werkmappen is georganiseerd rond een praktische indienststellingsworkflow:
 6. Markeer duidelijke, waarschuwings- of risicostatus.
 7. Bewaar registraties voor review en export.
 
-De werkmappen is bedoeld als een tool voor besluitondersteuning en analyse. Het vervangt niet de wettelijke verantwoordelijkheid van de exploitant om de huidige CARs, het bedrijfsoperationshandboek, goedgekeurde vrijstellingen of FRMS-procedures te interpreteren en toe te passen.
+De werkmap is bedoeld als een tool voor besluitondersteuning en analyse. Het vervangt niet de wettelijke verantwoordelijkheid van de exploitant om de huidige CARs, het bedrijfsoperationshandboek, goedgekeurde vrijstellingen of FRMS-procedures te interpreteren en toe te passen.
 
 ---
 
 ## Aankoop
 
-Gebruik hier de volledige Excel-werkmappen:
+Gebruik hier de volledige Excel-werkmap:
 
 [Koop de volledige Excel-tracker](https://www.theseusworkshop.com/l/dutytracker?utm_source=github&utm_medium=GitHub%20README&utm_campaign=readme%20new%20launch&utm_content=cars-flight-duty-tracker)
 
@@ -243,8 +229,8 @@ Gebruik hier de volledige Excel-werkmappen:
 ## Beperkingen
 
 - **Afhankelijkheid van gegevensintegriteit** — berekeningen zijn slechts zo nauwkeurig als de invoeren; late, ontbrekende of onjuiste registraties produceren een onjuiste nalevingsstatus zonder waarschuwing
-- **Geen juridisch advies** — deze werkmappen weerspiegelt de interpretatie van de auteur van de regelingen; de officiële positie van Transport Canada prevaleert, en toepassingen van randgevallen moeten worden gevalideerd met juridisch adviseurs of uw TC Principal Operations Inspector
-- **Vertraging bij regelgevingwijzigingen** — CARs-wijzigingen worden niet automatisch weerspiegeld; exploitanten zijn verantwoordelijk voor het volgen van veranderingen in de TC-regelgeving en het dienovereenkomstig bijwerken van de werkmappen
+- **Geen juridisch advies** — deze werkmap weerspiegelt de interpretatie van de auteur van de regelingen; de officiële positie van Transport Canada prevaleert, en toepassingen van randgevallen moeten worden gevalideerd met juridisch adviseurs of uw TC Principal Operations Inspector
+- **Vertraging bij regelgevingwijzigingen** — CARs-wijzigingen worden niet automatisch weerspiegeld; exploitanten zijn verantwoordelijk voor het volgen van veranderingen in de TC-regelgeving en het dienovereenkomstig bijwerken van de werkmap
 - **Bereik: alleen Part 702 en 705** — exploitanten onder Part 703 (air taxi) of Part 704 (commuter) werken onder andere specifieke limieten die in deze versie niet zijn gecodeerd
 - **Schaalplafond** — ontworpen voor 3–30 piloten; boven ongeveer 30 kan de berekeningsdiepte de Excel-prestaties verslechteren
 - **Gevoeligheid voor Excel-versie** — vereist Excel 2016 of later op Windows; gedrag in Excel voor Mac of Office 365 web kan afwijken
@@ -254,7 +240,7 @@ Gebruik hier de volledige Excel-werkmappen:
 
 ## Over dit project
 
-Deze werkmappen is deel van een bredere inspanning om complexe operationele en regelgevende
+Deze werkmap is deel van een bredere inspanning om complexe operationele en regelgevende
 vereisten te vertalen naar lichte tools die kleine en middelgrote organisaties echt kunnen gebruiken.
 
 Geen ERP. Geen aangepast softwareproject. Geen extra accounts.
@@ -273,3 +259,4 @@ die momenteel in het hoofd van iemand leven of in een losgekoppeld spreadsheet,
 Gedistribueerd onder de [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 ---
+
