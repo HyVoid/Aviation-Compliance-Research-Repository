@@ -240,6 +240,12 @@ Use the complete Excel workbook here:
 
 ---
 
+## Other Tools in This Series
+
+* **[Reckon-IIF-Converter](https://github.com/HyVoid/Reckon-IIF-Converter)** — How do we reduce accounting import and migration risk? — Convert CRM invoice exports into validated import-ready accounting file formats.
+* **[shopify-etsy-vat-calculator](https://github.com/HyVoid/shopify-etsy-vat-calculator)** — Can this month's multi-country VAT filing be submitted with confidence? — Calculate and validate monthly multi-country VAT liabilities across Shopify and Etsy transaction data.
+* **[eu-ppwr-compliance-tracker](https://github.com/HyVoid/eu-ppwr-compliance-tracker)** — Can we prove our packaging is actually PPWR-compliant and ready for EU DoC sign-off, or are we just holding incomplete supplier paperwork? — Verify supplier packaging declarations against regulatory thresholds and mass-balance tolerances, separating automated screening from expert evidence review and gating final technical-file sign-off.
+
 ## About This Project
 
 This workbook is part of a broader effort to translate complex operational and regulatory
